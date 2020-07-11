@@ -1,21 +1,35 @@
-= Bash: From Zero to 100
+= Bash and Azure: From Zero to 100
 Sashan Govender (c) 2020
 :toc:
 :sectnum:
-:description: Quick start guide to Bash
-:keywords: bash, shell, programming, code, script
+:description: Unlocking the power of Azure with Bash
+:keywords: bash, shell, azure, programming, code, script
 :source-highlighter: pygments
 
 == Introduction
 
-The problem with Bash is that its syntax is quirky and easy to forget.
+The problem with Bash is that its syntax is quirky. I had trouble learning it and
+had to pick it up on the job from scripts others had written. I often found that I could write it
+but could never remember trivial things, like how to write an if statement or how to write a loop. I
+found myself looking that up every time. It took me a while to cotton on to the underlying patterns.
+This guide attempts to provide a sane and consistent viewpoint (my own) on how to use it. It may not
+be the best most fancy way of doing things, but it's consistent. If you want fancy then see
+https://www.tldp.org/LDP/abs/html/sha-bang.html[advanced bash programming]. It's advanced but
+overwhelming and unstructured.
+
+Azure has a great web based user interface but like all things with a UI, it's slow when you need to
+repeat similar tasks. It's a lot faster to have a script to do that for you.
+
 This guide gathers commonly used patterns in one place.
+The guide starts with basic Bash and progresses into Azure.
 It should be useful for engineers in software development, system administration or devops.
+I expect that if you're reading this you're familiar with another language.
 
 To begin you'll need:
 
 - a Unix based operating system like a Mac or Linux machine
 - a text editor
+- an Azure account
 
 Some notes:
 
@@ -184,8 +198,9 @@ Doesn't look like it. This isn't how other languages work.
 
 IMPORTANT: if statements run a _command_. You can't use a parameter _directly_ in an if statement.
 
-How do you test a value of a parameter? If statements require a command so what's the command to
-test parameter values? It's called `test`.
+If you can't directly use a parameter in an `if` statement, how do you test a value of a parameter?
+If statements require a command which implies that there must be a command to test parameter
+values. It's called `test`. You can see how to use it in the next example.
 
 [source,bash]
 ----
@@ -220,6 +235,74 @@ ls -l '/usr/bin/['
 
 NOTE: Implementations of Bash will implement `[` as a builtin command. In other words it runs in the
 same process as the interpreter and the external command `/usr/bin/[` isn't called.
+
+=== Numeric and String comparisons
+
+When comparing strings and numbers `test` of `[` take different comparions parameters. Generally if
+conventional boolean operators are used, then it's a string comparison taking place. If it's `-eq` or
+`-gt`, single dash options, then numeric comparison is taking place.
+
+You can see the difference in the following two examples.
+
+In the first example numeric comparison is taking place. The values are equal. `01` and `1` are
+numerically the same.
+
+[source,bash]
+----
+VAR=1
+if [ "$VAR" -eq 01 ]; then
+  echo "equal"
+fi
+----
+
+.output
+-------
+equal
+-------
+
+In this next example we compare the same values but as strings.
+
+[source,bash]
+----
+include::string-comp.sh[]
+----
+
+.output
+-------
+not equal
+-------
+
+=== Negation and Boolean Operators
+
+Negation uses `!` like a lot of other languages to invert the truth value of an expression.
+
+[source, bash]
+----
+if ! true; then #<1>
+  echo "false"
+else
+  echo "true"
+fi
+----
+<1> true is a command. If you type `which true` at the command prompt you'll find it. There is also
+a `false` command.
+
+.output
+----
+true
+----
+
+You can combine expressions using boolean operators `&&` and `||`.
+
+[source,bash]
+----
+include::boolean.sh
+----
+
+`&&` applies short circuit evaluation. In other words, if the first expression is false then
+the following expressions are not evaluated. A similar thing happens with `||`. In this case, if the
+first expression is true, then the remaining expressions are not evaluated.
+
 
 === Case statements
 
