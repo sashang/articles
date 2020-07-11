@@ -5,3 +5,4 @@ function main {
 }
 
 main $@ #<2>
+exit
