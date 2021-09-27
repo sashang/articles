@@ -114,9 +114,9 @@ Why? Because whenever Bash sees a space it thinks that the text preceding is the
 and tries to run it, but `VAR` is not a binary in the `PATH`, and it can't be found.
 
 If you want to get at the value of a variable you need to prefix it with a `$`.
-Placing the `$` in front of a parameter causes *parameter substitution*.
+Placing the `$` in front of a parameter causes *parameter expansion*.
 
-TIP: Best practice is to use double quotes when performing parameter substitution.
+TIP: Best practice is to use double quotes when performing parameter expansion.
 
 [source,bash]
 ----
