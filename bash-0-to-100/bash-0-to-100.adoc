@@ -1,9 +1,8 @@
-= Bash and Azure: From Zero to 100
+= Bash: From Zero to 100
 Sashan Govender (c) 2020
-:toc:
 :sectnum:
-:description: Unlocking the power of Azure with Bash
-:keywords: bash, shell, azure, programming, code, script
+:description: A simple guide to Bash
+:keywords: bash, shell, programming, code, script
 :source-highlighter: pygments
 
 == Introduction
@@ -17,11 +16,7 @@ be the best most fancy way of doing things, but it's consistent. If you want fan
 https://www.tldp.org/LDP/abs/html/sha-bang.html[advanced bash programming]. It's advanced but
 overwhelming and unstructured.
 
-Azure has a great web based user interface but like all things with a UI, it's slow when you need to
-repeat similar tasks. It's a lot faster to have a script to do that for you.
-
 This guide gathers commonly used patterns in one place.
-The guide starts with basic Bash and progresses into Azure.
 It should be useful for engineers in software development, system administration or devops.
 I expect that if you're reading this you're familiar with another language.
 
@@ -29,7 +24,6 @@ To begin you'll need:
 
 - a Unix based operating system like a Mac or Linux machine
 - a text editor
-- an Azure account
 
 Some notes:
 
@@ -238,9 +232,9 @@ same process as the interpreter and the external command `/usr/bin/[` isn't call
 
 === Numeric and String comparisons
 
-When comparing strings and numbers `test` of `[` take different comparions parameters. Generally if
-conventional boolean operators are used, then it's a string comparison taking place. If it's `-eq` or
-`-gt`, single dash options, then numeric comparison is taking place.
+When comparing strings and numbers `test` and `[` take different comparions parameters.
+Generally if conventional boolean operators are used, then it's a string comparison taking place.
+If it's `-eq` or `-gt`, single dash options, then numeric comparison is taking place.
 
 You can see the difference in the following two examples.
 
@@ -303,81 +297,5 @@ include::boolean.sh[]
 the following expressions are not evaluated. A similar thing happens with `||`. In this case, if the
 first expression is true, then the remaining expressions are not evaluated.
 
-
-=== Case statements
-
-:TODO
-
-== Authenticating with Azure
-
-When using a command line tool the recommended way to authenticate is by using a service provider.
-What is a service provider? It's an indentity not linked to a user, and can be assigned roles. This
-means that operations that the command line tool performs can be restricted.
-
-=== Creating a Service Provider
-
-----
-az ad sp create-for-rbac --name bash-azure-cli --create-cert
-----
-
-.output
-----
-Changing "bash-azure-cli" to a valid URI of "http://bash-azure-cli", which is the required format used for service principal names
-Creating a role assignment under the scope of "/subscriptions/57216d61-eb4c-4f65-af23-b771e31ed4b6"
-Please copy /home/sashan/tmp0vrctoqh.pem to a safe place. When you run 'az login', provide the file path in the --password argument
-{
-  "appId": "f6b71ceb-fb84-4337-a504-8606f404037e",
-  "displayName": "bash-azure-cli",
-  "fileWithCertAndPrivateKey": "/home/sashan/tmp0vrctoqh.pem",
-  "name": "http://bash-azure-cli",
-  "password": null,
-  "tenant": "325e51ba-8b57-46b2-b422-0fe56493b316"
-}
->
-----
-
-This will create a service principal 'http://bash-azure-cli' and a PEM cert
-file. Copy the file somewhere safe.
-
-----
-cp /home/sashan/tmp0vrctoqh.pem bash-azure-cli.pem
-----
-
-
-Login again using the service principal name. 
-
-Have a look in the *Azure Portal -> Identity -> Azure Active Directory* for the tenant parameter.
-You'll need it to login using the service principal.
-
-.Tenant ID
-[#tenant-id]
-image::ad-tenant.png[Tenant ID]
-
-Then login using the service principal user name, the cert and the tenant id.
-
-.Login using the service principal
-----
-az login --service-principal -u http://bash-azure-cli -p bash-azure-cli.pem --tenant 325e51ba-8b57-46b2-b422-0fe56493b316
-----
-
-.output
-----
-[
-  {
-    "cloudName": "AzureCloud",
-    "homeTenantId": "325e51ba-8b57-46b2-b422-0fe56493b316",
-    "id": "57216d61-eb4c-4f65-af23-b771e31ed4b6",
-    "isDefault": true,
-    "managedByTenants": [],
-    "name": "Pay-as-you-go",
-    "state": "Enabled",
-    "tenantId": "325e51ba-8b57-46b2-b422-0fe56493b316",
-    "user": {
-      "name": "http://bash-azure-cli",
-      "type": "servicePrincipal"
-    }
-  }
-]
-----
 
 
