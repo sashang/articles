@@ -1,13 +1,23 @@
+<<<<<<< HEAD
 = Bash and Azure: From Zero to 100
 Sashan Govender (c) 2020
 :toc:
 :sectnum:
 :description: Unlocking the power of Azure with Bash
 :keywords: bash, shell, azure, programming, code, script
+=======
+= Bash: From Zero to 100
+Sashan Govender (c) 2020
+:toc:
+:sectnum:
+:description: Quick start guide to Bash
+:keywords: bash, shell, programming, code, script
+>>>>>>> master
 :source-highlighter: pygments
 
 == Introduction
 
+<<<<<<< HEAD
 The problem with Bash is that its syntax is quirky. I had trouble learning it and
 had to pick it up on the job from scripts others had written. I often found that I could write it
 but could never remember trivial things, like how to write an if statement or how to write a loop. I
@@ -24,12 +34,20 @@ This guide gathers commonly used patterns in one place.
 The guide starts with basic Bash and progresses into Azure.
 It should be useful for engineers in software development, system administration or devops.
 I expect that if you're reading this you're familiar with another language.
+=======
+The problem with Bash is that its syntax is quirky and easy to forget.
+This guide gathers commonly used patterns in one place.
+It should be useful for engineers in software development, system administration or devops.
+>>>>>>> master
 
 To begin you'll need:
 
 - a Unix based operating system like a Mac or Linux machine
 - a text editor
+<<<<<<< HEAD
 - an Azure account
+=======
+>>>>>>> master
 
 Some notes:
 
@@ -198,9 +216,14 @@ Doesn't look like it. This isn't how other languages work.
 
 IMPORTANT: if statements run a _command_. You can't use a parameter _directly_ in an if statement.
 
+<<<<<<< HEAD
 If you can't directly use a parameter in an `if` statement, how do you test a value of a parameter?
 If statements require a command which implies that there must be a command to test parameter
 values. It's called `test`. You can see how to use it in the next example.
+=======
+How do you test a value of a parameter? If statements require a command so what's the command to
+test parameter values? It's called `test`.
+>>>>>>> master
 
 [source,bash]
 ----
@@ -236,6 +259,7 @@ ls -l '/usr/bin/['
 NOTE: Implementations of Bash will implement `[` as a builtin command. In other words it runs in the
 same process as the interpreter and the external command `/usr/bin/[` isn't called.
 
+<<<<<<< HEAD
 === Numeric and String comparisons
 
 When comparing strings and numbers `test` of `[` take different comparions parameters. Generally if
@@ -304,10 +328,13 @@ the following expressions are not evaluated. A similar thing happens with `||`. 
 first expression is true, then the remaining expressions are not evaluated.
 
 
+=======
+>>>>>>> master
 === Case statements
 
 :TODO
 
+<<<<<<< HEAD
 == Authenticating with Azure
 
 When using a command line tool the recommended way to authenticate is by using a service provider.
@@ -381,3 +408,5 @@ az login --service-principal -u http://bash-azure-cli -p bash-azure-cli.pem --te
 ----
 
 
+=======
+>>>>>>> master
