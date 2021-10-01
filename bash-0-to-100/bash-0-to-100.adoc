@@ -10,22 +10,25 @@ Sashan Govender (c) 2020
 The problem with Bash is that its syntax is quirky. I had trouble learning it and
 had to pick it up on the job from scripts others had written. I often found that I could write it
 but could never remember trivial things, like how to write an if statement or how to write a loop. I
-found myself looking that up every time. It took me a while to cotton on to the underlying patterns.
-This guide attempts to provide a sane and consistent viewpoint (my own) on how to use it. It may not
-be the best most fancy way of doing things, but it's consistent. If you want fancy then see
-https://www.tldp.org/LDP/abs/html/sha-bang.html[advanced bash programming]. It's advanced but
-overwhelming and unstructured.
+found myself looking that up every time.
+And I had questions like _why can't I use a variable in my if statements_
+It took me a while to cotton on to the underlying patterns.
+This guide attempts to provide a sane and consistent viewpoint on how to use it.
+It may not be the best most fancy way of doing things, but it's consistent.
+If you want fancy then see
+https://www.tldp.org/LDP/abs/html/sha-bang.html[advanced bash programming].
+It's advanced but overwhelming and unstructured.
 
 This guide gathers commonly used patterns in one place.
 It should be useful for engineers in software development, system administration or devops.
-I expect that if you're reading this you're familiar with another language.
+I expect that if you're reading this you're familiar with another language. +
 
-To begin you'll need:
+To begin you'll need: +
 
 - a Unix based operating system like a Mac or Linux machine
 - a text editor
 
-Some notes:
+Some notes: +
 
 - I don't differentiate between shell and Bash. This is to keep this document simple. It adds a lot
   of extra work to differentiate POSIX compliant shell from Bash and for most people it's not
@@ -33,9 +36,9 @@ Some notes:
 
 === Hello World
 
-Start the terminal program.
+Start the terminal program. +
 
-At the command prompt type:
+At the command prompt type: +
 
 .Input
 -------------------
@@ -94,6 +97,7 @@ VAR="some val"
 ----
 
 WARNING: Spacing after a variable name matters. There can't be a space between the variable name and the value.
+
 [source,bash]
 ----
 VAR = "some val" #<1>
