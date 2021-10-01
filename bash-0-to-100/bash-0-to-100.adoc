@@ -1,4 +1,4 @@
-= Bash: From Zero to 100
+= Bash 0 to x
 Sashan Govender (c) 2020
 :sectnum:
 :description: A simple guide to Bash
@@ -11,7 +11,7 @@ The problem with Bash is that its syntax is quirky. I had trouble learning it an
 had to pick it up on the job from scripts others had written. I often found that I could write it
 but could never remember trivial things, like how to write an if statement or how to write a loop. I
 found myself looking that up every time.
-And I had questions like _why can't I use a variable in my if statements_
+And I had questions like _why can't I use a variable in my if statements_?
 It took me a while to cotton on to the underlying patterns. +
 
 This guide attempts to provide a sane and consistent viewpoint on how to use it.
