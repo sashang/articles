@@ -12,12 +12,13 @@ had to pick it up on the job from scripts others had written. I often found that
 but could never remember trivial things, like how to write an if statement or how to write a loop. I
 found myself looking that up every time.
 And I had questions like _why can't I use a variable in my if statements_
-It took me a while to cotton on to the underlying patterns.
+It took me a while to cotton on to the underlying patterns. +
+
 This guide attempts to provide a sane and consistent viewpoint on how to use it.
 It may not be the best most fancy way of doing things, but it's consistent.
 If you want fancy then see
 https://www.tldp.org/LDP/abs/html/sha-bang.html[advanced bash programming].
-It's advanced but overwhelming and unstructured.
+It's advanced but overwhelming and unstructured. +
 
 This guide gathers commonly used patterns in one place.
 It should be useful for engineers in software development, system administration or devops.
@@ -210,7 +211,7 @@ fi
 <1> `-eq` is short for equals
 
 There are many other options to `test`. At the command prompt type `man test` to see the manual for
-that command. You can move up and down inside the pager using `j` and `k`.  Use `q` to quit.
+that command. You can move up and down inside the pager using `j` and `k`.  Use `q` to quit. +
 
 But writing `test` everytime I want to test something is awkward. Is there another way? Yes.
 
@@ -221,10 +222,10 @@ if [ $VAR -eq 1 ]; then #<1>
   echo "yes"
 fi
 ----
-<1> [ is also a command.
+<1> [ is also a command. +
 
 But I thought you said if statements run commands only? Yes, that's true. `[` is a command. It's
-often installed under /usr/bin.
+often installed under /usr/bin. +
 
 ----
 ls -l '/usr/bin/['
@@ -232,18 +233,18 @@ ls -l '/usr/bin/['
 ----
 
 NOTE: Implementations of Bash will implement `[` as a builtin command. In other words it runs in the
-same process as the interpreter and the external command `/usr/bin/[` isn't called.
+same process as the interpreter and the external command `/usr/bin/[` isn't called. +
 
 === Numeric and String comparisons
 
 When comparing strings and numbers `test` and `[` take different comparions parameters.
 Generally if conventional boolean operators are used, then it's a string comparison taking place.
-If it's `-eq` or `-gt`, single dash options, then numeric comparison is taking place.
+If it's `-eq` or `-gt`, single dash options, then numeric comparison is taking place. +
 
-You can see the difference in the following two examples.
+You can see the difference in the following two examples. +
 
 In the first example numeric comparison is taking place. The values are equal. `01` and `1` are
-numerically the same.
+numerically the same. +
 
 [source,bash]
 ----
