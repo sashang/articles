@@ -1,4 +1,4 @@
-= 0 - A confession
+= 0
 :description: A simple guide to Bash
 :keywords: bash, shell, programming, code, script
 :stylesdir: styles

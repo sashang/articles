@@ -1,6 +1,8 @@
 = 2 - if statements
 :description: if statements
 :keywords: bash, shell, programming, code, script
+:stylesdir: styles
+:stylesheet: adoc-github.css
 
 If statements in Bash let us make decisions. The basic syntax is:
 
