@@ -64,7 +64,9 @@ fi
 bash: 1: command not found
 ----
 
-Doesn't look like it. This isn't how other languages work.
+Doesn't look like it. _This isn't how other languages work. What's going on?_
+The reason is in the grammar of the if statement. The stuff that follows the
+`if` has to be a _command_.
 
 IMPORTANT: if statements run a _command_. You can't use a parameter _directly_ in an if statement.
 
