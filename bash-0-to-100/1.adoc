@@ -1,6 +1,8 @@
 = 1 - Hello World
 :description: A simple guide to Bash, hello world
 :keywords: bash, shell, programming, code, script
+:stylesdir: styles
+:stylesheet: adoc-github.css
 
 Start the terminal program. +
 
