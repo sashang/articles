@@ -1,6 +1,8 @@
 = 0 - A confession
 :description: A simple guide to Bash
 :keywords: bash, shell, programming, code, script
+:stylesdir: styles
+:stylesheet: adoc-github.css
 
 I had trouble learning Bash.
 I found that I could never remember how to write simple things like an if statement.
