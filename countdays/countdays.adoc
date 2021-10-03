@@ -1,6 +1,10 @@
 Making the Compiler do the Work
 ================================
-Sashan Govender
+:description: Template metaprogram that counts days.
+:keywords: linux
+:stylesdir: styles
+:stylesheet: adoc-github.css
+:source-highlighter: pygments
 
 This was a program I wrote a while ago (2003) to demonstrate what can be done
 with template metaprogramming in `C++`. It's based on Todd Veldhuilzen's article

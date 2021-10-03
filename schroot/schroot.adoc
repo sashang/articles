@@ -1,6 +1,11 @@
+
 Creating schroots
 ===================
-Sashan Govender
+:description: before containers there was chroot
+:keywords: linux
+:stylesdir: styles
+:stylesheet: adoc-github.css
+:source-highlighter: pygments
 
 Chroot jails are a neat way of building for target Linux distros without having to run the distro in
 a vm. For example, in my case, I can host the filesystem for RHEL on my Arch linux machine and then
@@ -24,7 +29,7 @@ sudo rpm --root=/srv/chroot/rhel --nodeps -i redhat-release-server-6Server-6.6.0
 Then configure yum on the chroot to point to the yum repository you want to use. For example:
 
 ...........................
-$ cat /srv/chroot/rhel/etc/yum.repos.d/rhel-ericsson.repo 
+$ cat /srv/chroot/rhel/etc/yum.repos.d/rhel-ericsson.repo
 [rhel-x86_64-server-6.6]
 name=rhel-x86_64-server-6.6
 baseurl=http://yum.linux.ericsson.se/repos/rhel-x86_64-server-6.6.aus/
@@ -56,7 +61,7 @@ access to the chroot. `root-users` are users on the host you want to allow to lo
 the guest. `profile` is the name of the schroot profile described next. See `man schroot.conf` for a
 full description of all keys.
 
-Next create a directory with the same name assigned to `profile`. 
+Next create a directory with the same name assigned to `profile`.
 
 ...........................
 sudo mkdir /etc/schroot/rhel
@@ -65,7 +70,7 @@ sudo mkdir /etc/schroot/rhel
 Add the following files in that directory. For example:
 
 ...........................
-sashan@phoenix ~/code  > cat /etc/schroot/rhel/nssdatabases 
+sashan@phoenix ~/code  > cat /etc/schroot/rhel/nssdatabases
 # System databases to copy into the chroot from the host system.
 #
 # <database name>
@@ -76,11 +81,11 @@ gshadow
 services
 protocols
 hosts
-sashan@phoenix ~/code  > 
+sashan@phoenix ~/code  >
 ...........................
 
 ...........................
-sashan@phoenix ~/code  > cat /etc/schroot/rhel/copyfiles 
+sashan@phoenix ~/code  > cat /etc/schroot/rhel/copyfiles
 # Files to copy into the chroot from the host system.
 #
 # <source and destination>
@@ -88,7 +93,7 @@ sashan@phoenix ~/code  > cat /etc/schroot/rhel/copyfiles
 ...........................
 
 ...........................
-sashan@phoenix ~/code  > cat /etc/schroot/rhel/fstab 
+sashan@phoenix ~/code  > cat /etc/schroot/rhel/fstab
 # fstab: static file system information for chroots.
 # Note that the mount point will be prefixed by the chroot path
 # (CHROOT_PATH)
@@ -101,7 +106,7 @@ sashan@phoenix ~/code  > cat /etc/schroot/rhel/fstab
 /home           /home           none    rw,bind         0       0
 /tmp            /tmp            none    rw,bind         0       0
 
-sashan@phoenix ~/code  > 
+sashan@phoenix ~/code  >
 ...........................
 
 Then you are done. Now you can login to the chroot as your username or `root`. For example:
