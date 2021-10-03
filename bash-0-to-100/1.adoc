@@ -3,7 +3,7 @@
 :keywords: bash, shell, programming, code, script
 :stylesdir: styles
 :stylesheet: adoc-github.css
-:source-highlighter: highlight.js
+:source-highlighter: pygments
 
 Start the terminal program. +
 
