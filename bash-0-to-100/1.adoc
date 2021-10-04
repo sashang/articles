@@ -4,6 +4,7 @@
 :stylesdir: styles
 :stylesheet: adoc-github.css
 :source-highlighter: pygments
+:linkcss:
 
 Start the terminal program. +
 
