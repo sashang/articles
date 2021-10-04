@@ -2,9 +2,8 @@
 :description: A simple guide to Bash, hello world
 :keywords: bash, shell, programming, code, script
 :stylesdir: styles
-:stylesheet: adoc-github.css
+:stylesheet: readthedocs.css
 :source-highlighter: pygments
-:linkcss:
 
 Start the terminal program. +
 
