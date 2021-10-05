@@ -4,7 +4,7 @@
 :stylesheet: readthedocs.css
 :source-highlighter: pygments
 
-NOTE: This article was written circa 2015*
+NOTE: This article was written circa 2015
 
 Chroot jails are a neat way of building for target Linux distros without having to run the distro in
 a vm. For example, in my case, I can host the filesystem for RHEL on my Arch linux machine and then
