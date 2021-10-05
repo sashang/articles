@@ -1,10 +1,10 @@
-
-Creating schroots
-===================
+= Creating schroots
 :description: before containers there was chroot
 :keywords: linux
 :stylesheet: readthedocs.css
 :source-highlighter: pygments
+
+NOTE: This article was written circa 2015*
 
 Chroot jails are a neat way of building for target Linux distros without having to run the distro in
 a vm. For example, in my case, I can host the filesystem for RHEL on my Arch linux machine and then
@@ -17,6 +17,7 @@ the chroot 'guest' and you'll be able to use the system like it is a native (ins
 chroot here) distribution.
 
 == RHEL
+
 This is how I setup the RHEL chroot on Arch. Obviously I installed `schroot`, `rpm` and `yum`
 previously. How you install those programs depends on your distro.
 ...........................
