@@ -3,8 +3,7 @@ Creating schroots
 ===================
 :description: before containers there was chroot
 :keywords: linux
-:stylesdir: styles
-:stylesheet: adoc-github.css
+:stylesheet: readthedocs.css
 :source-highlighter: pygments
 
 Chroot jails are a neat way of building for target Linux distros without having to run the distro in
