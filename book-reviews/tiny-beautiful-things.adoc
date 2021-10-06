@@ -1,8 +1,6 @@
-= Tiny Beautiful Things
 :description: Review of Tiny Beautiful Things
 :keywords: Cheryl Strayed, self-help
 :stylesheet: readthedocs.css
-
 
 Empathetic without being saccharine (ok maybe it is a bit), honest advice
 without preaching, she manages to walk the line between brutal honesty and
