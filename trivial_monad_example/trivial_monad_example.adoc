@@ -1,6 +1,8 @@
-Trivial Monad Example in F#
-===========================
-Sashan Govender
+= Trivial Monad Example in F#
+:description: F#/Ocaml monad example, railway oriented
+:keywords: f#,ocaml,monadic error handling.
+:stylesheet: readthedocs.css
+:source-highlighter: pygments
 
 I was reading through the various monad tutorials on the web. There's one
 http://enfranchisedmind.com/blog/posts/a-monad-tutorial-for-ocaml[here in OCaml]
