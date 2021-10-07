@@ -21,7 +21,7 @@ function F on that something where F checks if input is bad then fail else apply
 function H on input etc....' This scenario can lead to a sequence of nested 'if
 ... then' statements or in the example below nested 'match' statements.
 
-[source,caml]
+[source,fsharp]
 --------------------------------------------------------------------------------
 let mul_3 x =
   printfn "3x"
@@ -49,7 +49,7 @@ Typically in 'monad speak' this function is called the 'bind' function. So what
 should the function do? Analyzing the repeated code in 'foo' above we can
 deduce it's fundamental input parameters.
 
-[source,caml]
+[source,fsharp]
 --------------------------------------------------------------------------------
   match (... param1 ...) with
   | None -> None
@@ -60,7 +60,7 @@ This tells us that one of the parameters is the monadic type itself and the
 other param is a chunk of code and therefore a function. Therefore we can define
 our 'bind' function as
 
-[source,caml]
+[source,fsharp]
 --------------------------------------------------------------------------------
 let bind (m : option<'a>)  (f : 'a -> option<'b>) : option<'b> =
   match m with
