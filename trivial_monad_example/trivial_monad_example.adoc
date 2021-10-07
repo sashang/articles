@@ -1,4 +1,3 @@
-= Trivial Monad Example in F#
 :description: F#/Ocaml monad example, railway oriented
 :keywords: f#,ocaml,monadic error handling.
 :stylesheet: readthedocs.css
