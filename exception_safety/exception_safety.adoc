@@ -1,6 +1,7 @@
-Exception unsafe
-================
-Sashan Govender
+:description: Exception safety
+:keywords: c++
+:stylesheet: readthedocs.css
+:source-highlighter: pygments
 
 I was reading up about exception safe code in C++ and the difference between
 the strong and basic exception guarantees. The article here
