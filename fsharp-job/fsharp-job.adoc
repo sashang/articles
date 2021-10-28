@@ -4,7 +4,7 @@
 
 
 ""Beauty is the first test: there is no permanent place in the world for ugly mathematics.""
--― G.H. Hardy, A Mathematician's Apology
+-- G.H. Hardy, A Mathematician's Apology
 
 Seems a bit surreal but I accepted a job offer for an F# role. At this moment I'm happy letting it sink in and getting in touch with my emotions. This piece isn't about the features of the language, or a piece about why everyone should use F#, or why it's better than _<insert language here>_. It's about the journey, and it's been a long one.
 
