@@ -58,7 +58,7 @@ match a with
     | Failure balance -> Failure balance
 | Failure balance -> Failure balance
 
---------------------------------------------------------------------------------
+----
 
 This works but the nested match statements are awkward to deal with.
 So how do we solve this? Well a good programmer will recognize the repeated
