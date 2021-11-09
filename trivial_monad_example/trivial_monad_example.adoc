@@ -1,83 +1,132 @@
 :description: F#/Ocaml monad example, railway oriented
-:keywords: f#,ocaml,monadic error handling.
+:keywords: f#,ocaml,monadic error handling,monad,monoid
 :stylesheet: readthedocs.css
 :source-highlighter: pygments
 
-I was reading through the various monad tutorials on the web. There's one
-http://enfranchisedmind.com/blog/posts/a-monad-tutorial-for-ocaml[here in OCaml]
-and there's a spiel
-http://channel9.msdn.com/Shows/Going+Deep/Brian-Beckman-The-Zen-of-Expressing-State-The-State-Monad[here
-that goes into lots of detail] but even after reading all these explanations
+I was reading through the various monad tutorials on the web but even after reading all these explanations
 stuff wasn't really sinking in. What was the use of creating these monadic
-types? It kinda sunk in when I realized that the thing you put into a monad is a
+types? It was all very abstract and the operations were defined on the abstractions,
+and not on the concrete instance that was being manipulated. I'm not https://en.wikipedia.org/wiki/Alexander_Grothendieck[Grothendieck]. 
+Apparently he worked on the generalisation first whereas most people spot patterns between specific instances and then generalise. Wild.
+
+It kinda sunk in when I realized that the thing you put into a monad is a
 chunk of code and that monads allow you to define operations on that chunk of
 code in a sane manner. I also figured that to apply it I needed some practice
 with them. So I concocted the example below. It's somewhat contrived but it
-illustrate the problem that monads can solve.
+illustrates the problem that monads can solve.
 
-The example below shows a typical flow of code that alot of programmers would be
+The example below shows a typical flow of code that many programmers are
 familiar with. Basically it's an 'if input is bad then fail else apply
 function F on that something where F checks if input is bad then fail else apply
 function H on input etc....' This scenario can lead to a sequence of nested 'if
-... then' statements or in the example below nested 'match' statements.
+... then' statements or in the example below nested 'match' statements. The nesting
+is typically awkward to deal with. A monadic approach to error handling
+allows it to be cleaned up.
+
+Let's start with a basic scenario. We have an account with some money and we
+want to debit from it. If the account doesn't have enough then we fail the debit. 
+We can represent the result of the transaction with the following DU.
 
 [source,fsharp]
+----
+type DebitResult =
+    | Success of int * string
+    | Failure of string
+----
+
+Each time we debit we check the result. If the account has enough money in it, the transaction
+will succeed. If it doesn't, it fails returning a DU with an error message.
+
+[source,fsharp]
+----
+let debit amount balance =
+    if balance >= amount then
+        let newBalance = balance - amount
+        let message = sprintf "Old Balance %d: Debit %d: New Balance: %d" balance amount newBalance
+        Success (newBalance, message)
+    else
+        Failure (sprintf "Failed to deduct %d from %d" amount balance)
+
+let a = debit 100 1000
+
+match a with
+| Success (balance, _) -> 
+    let b = debit 1000 balance
+    match b with
+    | Success (balance, _) ->
+        debit 100 balance
+    | Failure balance -> Failure balance
+| Failure balance -> Failure balance
+
 --------------------------------------------------------------------------------
-let mul_3 x =
-  printfn "3x"
-  Some (x * 3)
 
-let mul_4 x =
-  printfn "4x"
-  Some (x * 4)
-
-let foo () =
-  match (Some 2) with
-  | None -> None
-  | Some thing ->
-      match (mul_3 thing) with
-      | None -> None
-      | Some thing ->
-        match (mul_4 thing) with
-        | None -> None
-        | Some thing -> Some thing
---------------------------------------------------------------------------------
-
+This works but the nested match statements are awkward to deal with.
 So how do we solve this? Well a good programmer will recognize the repeated
 nested match statements and try to devise a function to abstract this away.
-Typically in 'monad speak' this function is called the 'bind' function. So what
-should the function do? Analyzing the repeated code in 'foo' above we can
-deduce it's fundamental input parameters.
+Typically in 'monad speak' this function is called the 'bind' function. 
+So what should our 'bind' function do? Analyzing the repeated code above we can
+deduce its fundamental input parameters.
 
 [source,fsharp]
 --------------------------------------------------------------------------------
   match (... param1 ...) with
-  | None -> None
-  | Some thing -> ..... param 2 ....
+  | Success balance -> ... do something ...
+  | Failure message -> Failure message
 --------------------------------------------------------------------------------
 
-This tells us that one of the parameters is the monadic type itself and the
-other param is a chunk of code and therefore a function. Therefore we can define
-our 'bind' function as
+This tells us that one of the parameters is the monadic type itself (param1) and the
+other parameter (do something) is a chunk of code and therefore a function.
+Therefore we can define our 'bind' function as
 
 [source,fsharp]
 --------------------------------------------------------------------------------
-let bind (m : option<'a>)  (f : 'a -> option<'b>) : option<'b> =
-  match m with
-  | None -> None
-  | Some x -> f x
+let bind (f : int -> DebitResult) (x : DebitResult)  =
+    match x with
+    | Success (balance, _) ->
+        f balance
+    | Failure b -> Failure b
 --------------------------------------------------------------------------------
 
 All this means is: if there is nothing then don't do anything otherwise apply
-the given function, `f`, on the value 'x'. Note that the type parameters `'a`
-and `'b` are in general different but in this example they evaluate to the same
-underlying type, an `int`.
+the given function, `f`, on the value 'x'. 
 
-[source,caml]
---------------------------------------------------------------------------------
-let bar () =
-  bind (bind (Some 2) mul_3) (fun x -> mul_4 x)
---------------------------------------------------------------------------------
+We can use map as follows. The nested match statements are elided, and the error
+handling path is hidden.
+
+[source,fsharp]
+----
+let balance = Success (1000, "")
+let result1 = bind balance (debit 100) 
+printBalance result1
+let result2 = bind result1 (debit 1000) 
+printBalance result2
+let result3 = bind result2 (debit 100) 
+printBalance result3
+----
+
+Using compose function we can chain a sequence of debits like this:
+
+[source,fsharp]
+----
+let debit1 = bind (debit 100)
+let debit2 = bind (debit 200)
+let debit3 = bind (debit 1000)
+let debits = debit1 >> debit2 >> debit3
+let initBalance = Success (1000, "")
+printBalance (debits initBalance)
+----
+
+The last parts might look weird if you're coming from an imperative background and
+there's a lot going on there. Partial application (e.g. `debit 100`) and compose are common in functional
+languages. Some things to note are that the `>>` works because the output type of `debit 100`
+is the same as the input. You might be tempted to expand these constructs mechanically on paper
+and that might be instructive, but for day to day work it's ponderous. It's
+easier to be fluent if it's bound to muscle memory. It's a bit like recursive functions, but once you
+get it, you get it. 
+
+Now we've seen how you may come up with a monadic type from trying to solve the problem of
+nested match functions.
+
 
 == Update April 2018
 
@@ -89,6 +138,6 @@ https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/results
 Here's a better more detailed explanation than mine above:
 https://swlaschin.gitbooks.io/fsharpforfunandprofit/content/posts/recipe-part2.html
 
-To be honest I wouldn't be surprised if other programmers were doing something
-similar within their code, as I was 7 years ago. It's nice that MS have formally
-added it to F# now.
+And I think this is really good. It relates monoids to groups.
+https://swlaschin.gitbooks.io/fsharpforfunandprofit/content/posts/monoids-without-tears.html
+
