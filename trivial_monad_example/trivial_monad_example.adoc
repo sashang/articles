@@ -55,8 +55,8 @@ match a with
     match b with
     | Success (balance, _) ->
         debit 100 balance
-    | Failure balance -> Failure balance
-| Failure balance -> Failure balance
+    | Failure msg -> Failure msg
+| Failure msg -> Failure msg
 
 ----
 
