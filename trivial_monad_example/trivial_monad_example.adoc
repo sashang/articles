@@ -90,7 +90,7 @@ let bind (f : int -> DebitResult) (x : DebitResult)  =
 All this means is: if there is nothing then don't do anything otherwise apply
 the given function, `f`, on the value 'x'. 
 
-We can use map as follows. The nested match statements are elided, and the error
+We can use bind as follows. The nested match statements are elided, and the error
 handling path is hidden.
 
 [source,fsharp]
@@ -104,7 +104,7 @@ let result3 = bind result2 (debit 100)
 printBalance result3
 ----
 
-Using compose function we can chain a sequence of debits like this:
+Using the compose function we can chain a sequence of debits like this:
 
 [source,fsharp]
 ----
@@ -118,20 +118,40 @@ printBalance (debits initBalance)
 
 The last parts might look weird if you're coming from an imperative background and
 there's a lot going on there. Partial application (e.g. `debit 100`) and compose are common in functional
-languages. Some things to note are that the `>>` works because the output type of `debit 100`
+languages. Note are that the `>>` works because the output type of `debit 100`
 is the same as the input. You might be tempted to expand these constructs mechanically on paper
 and that might be instructive, but for day to day work it's ponderous. It's
-easier to be fluent if it's bound to muscle memory. It's a bit like recursive functions, but once you
-get it, you get it. 
+easier to be fluent if it's bound to muscle memory. It's a bit like recursive functions. Once you
+get it, you get it.
 
 Now we've seen how you may come up with a monadic type from trying to solve the problem of
-nested match functions.
+nested match functions. _But surely there is something in .NET for this?_ Yes, there is the https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/results[Result type] which provides support for monadic error handling. Let's rewrite what we have above using
+the `Result` type.
+
+[source, fsharp]
+----
+let debitWithResult amount balance =
+    if balance >= amount then
+        let newBalance = balance - amount
+        Ok newBalance
+    else
+        Error (balance, (sprintf "Failed to deduct %d from %d" amount balance))
+
+let printBalanceWithResult balance =
+    match balance with
+    | Ok money -> printfn "Balance: %d" money
+    | Error (_, msg) -> printfn "%s" msg
+
+let initBalance : Result<int, (int * string)> = Ok 1000
+let debit1 = Result.bind (debitWithResult 100)
+let debit2 = Result.bind (debitWithResult 200)
+let debit3 = Result.bind (debitWithResult 1000)
+let debits = debit1 >> debit2 >> debit3
+printBalanceWithResult (debits initBalance)
+----
 
 
-== Update April 2018
-
-Looks like the F# community have refined this idea and called it 'Railway Oriented
-Programming'.
+== References
 
 https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/results
 
