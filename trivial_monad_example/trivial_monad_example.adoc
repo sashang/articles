@@ -150,6 +150,12 @@ let debits = debit1 >> debit2 >> debit3
 printBalanceWithResult (debits initBalance)
 ----
 
+== Summary
+
+- You can add more transactions to the chain and be sure that the check on the balance being greater than zero will
+always be executed.
+- Note that this doesn't use mutable variables. There is no state. No writes are made to a variable `balance`.
+Instead a new balance is calculated and passed as input to the next transaction in the chain.
 
 == References
 
