@@ -10,7 +10,7 @@
 
 Immutability is a core idiom in functional programming. If you stick with this
 pattern you will reap benefits when facing concurrent problems. For example the
-properties of REST, i.e. stateless and idempotent, naturally emerge if you the
+properties of REST, i.e. stateless and idempotent, naturally emerge if the
 code you write is immutable.
 
 [source, fsharp]
@@ -63,11 +63,12 @@ int fac(int x)
 
 == Side-effects
 
-Understand what a side-effect is. It's not the same as a medical side-effect, and the
-intentionality has nothing to do with it. In computer science the term side-effect has
-a different meaning from colloquial usage. It's from the perspective of the function.
-If a function returns a value and changes the state of another entity in the process
-of calculating that value to return, then it has a side-effect. For example the function
-could change a database. The change to the database is a side-effect. It happens as a
-side-effect of applying that function.
+Understand what a side-effect is. It's not the same as a medical side-effect,
+which is bad and unintended. Intentionallity has nothing to do with it. In
+computer science the term side-effect has a different meaning from colloquial
+usage. Understand it from the perspective of the function. If a function
+returns a value and changes the state of another entity in the process of
+calculating that value to return, then it has a side-effect. For example the
+function could change a database. The change to the database is a side-effect.
+It happens as a side-effect of applying that function.
 
