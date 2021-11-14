@@ -1,0 +1,73 @@
+:description: FSharp for Imperative.
+:keywords: f#, functional, imperative
+:stylesheet: readthedocs.css
+:source-highlighter: pygments
+
+""Discipline is freedom""
+-- J. Wilink, Extreme Ownership
+
+== Immutability
+
+Immutability is a core idiom in functional programming. If you stick with this
+pattern you will reap benefits when facing concurrent problems. For example the
+properties of REST, i.e. stateless and idempotent, naturally emerge if you the
+code you write is immutable.
+
+[source, fsharp]
+----
+let x = 1
+----
+
+is similar to
+
+[source, c++]
+----
+const int x = 1;
+----
+
+== Calling functions
+
+We don't. We say we `apply a function`, or a `function is applied`. _So how do I apply a function?_
+
+[source, fsharp]
+----
+let foo () = printfn "foo"
+----
+
+== Recursion versus Iteration
+
+We use recursion because iteration requires changing state, a mutable variable,
+and that breaks immutability. _But what about the stack?_ Don't worry about it
+for now. There are ways to get around it using `fold` and/or `tail recursion`.
+
+[source, fsharp]
+----
+let rec fac x =
+  match x with
+  | 0 -> 1
+  | _ -> x * (fac (x - 1))
+----
+
+[source, c++]
+----
+int fac(int x)
+{
+  int result = x;
+  for (int i = x-1; i > 1; --i)
+  {
+    result *= i;
+  }
+  return result;
+}
+----
+
+== Side-effects
+
+Understand what a side-effect is. It's not the same as a medical side-effect, and the
+intentionality has nothing to do with it. In computer science the term side-effect has
+a different meaning from colloquial usage. It's from the perspective of the function.
+If a function returns a value and changes the state of another entity in the process
+of calculating that value to return, then it has a side-effect. For example the function
+could change a database. The change to the database is a side-effect. It happens as a
+side-effect of applying that function.
+
