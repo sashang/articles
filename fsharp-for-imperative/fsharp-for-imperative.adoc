@@ -13,6 +13,7 @@ pattern you will reap benefits when facing concurrent problems. For example the
 properties of REST, i.e. stateless and idempotent, naturally emerge if the
 code you write is immutable.
 
+.fsharp
 [source, fsharp]
 ----
 let x = 1
@@ -20,6 +21,7 @@ let x = 1
 
 is similar to
 
+.c++
 [source, c++]
 ----
 const int x = 1;
@@ -29,10 +31,17 @@ const int x = 1;
 
 We don't. We say we `apply a function`, or a `function is applied`. _So how do I apply a function?_
 
+.fsharp
 [source, fsharp]
 ----
 let foo () = printfn "foo"
 ----
+
+== Returning values
+
+There's no `return` keyword in `F#`. Everything is an expression so just write
+the shape of want to return.
+
 
 == Recursion versus Iteration
 
@@ -40,14 +49,16 @@ We use recursion because iteration requires changing state, a mutable variable,
 and that breaks immutability. _But what about the stack?_ Don't worry about it
 for now. There are ways to get around it using `fold` and/or `tail recursion`.
 
+.fsharp
 [source, fsharp]
 ----
 let rec fac x =
   match x with
   | 0 -> 1
-  | _ -> x * (fac (x - 1))
+  | _ -> x * fac (x - 1)
 ----
 
+.c++
 [source, c++]
 ----
 int fac(int x)
@@ -61,6 +72,27 @@ int fac(int x)
 }
 ----
 
+=== Tail calls
+
+Tail calls are a way to overcome the stackoverflow problem when using recurison.
+When writing a recursive function try to make it tail recursive. _What is tail recursion?_
+It means the final function applied is the recursive function itself or a return path. How do we convert
+a recursive function into a tail recursive function. We thread an accumulator parameter
+through the function.
+
+This is tail recursive. When we get to the base case we return the accumulator.
+.fsharp
+[source, fsharp]
+----
+let rec fac x acc =
+  match x with
+  | 0 -> acc
+  | _ -> fac (x - 1) (x * acc)
+
+fac 5 1
+----
+
+
 == Side-effects
 
 Understand what a side-effect is. It's not the same as a medical side-effect,
@@ -72,3 +104,9 @@ calculating that value to return, then it has a side-effect. For example the
 function could change a database. The change to the database is a side-effect.
 It happens as a side-effect of applying that function.
 
+== Shapes and Matching
+
+This isn't part of the langauge. It's how I think about programming in a strongly typed
+functional language. You define shapes and functions to morph between shapes. I
+use the tools of the language to inspect or peel apart those shapes into their constituent parts,
+and reassemble them into other shapes. From the language perspective a shape is a type.
