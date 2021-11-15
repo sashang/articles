@@ -6,6 +6,21 @@
 ""Discipline is freedom""
 -- J. Wilink, Extreme Ownership
 
+
+== Console output
+
+Writing to the console we can use `printfn`.
+
+.F#
+[source, fsharp]
+----
+printfn "%s" "hello"
+----
+
+Format specifiers are similar to the ones in `C`, except `%A` which renders any
+type.
+
+
 == Immutability
 
 Immutability is a core idiom in functional programming. If you stick with this
@@ -13,7 +28,7 @@ pattern you will reap benefits when facing concurrent problems. For example the
 properties of REST, i.e. stateless and idempotent, naturally emerge if the
 code you write is immutable.
 
-.fsharp
+.F#
 [source, fsharp]
 ----
 let x = 1
@@ -27,21 +42,61 @@ is similar to
 const int x = 1;
 ----
 
-== Calling functions
+We say that `x` is bound to a value, and the construct is called a `let
+binding`. We don't use the term `assigned`.
+
+== Reading functions
 
 We don't. We say we `apply a function`, or a `function is applied`. _So how do I apply a function?_
 
-.fsharp
+.F#
 [source, fsharp]
 ----
 let foo () = printfn "foo"
+...
+foo ()
 ----
+
+The symbol `()` is not a function call operator.
+It is the `unit` value of type `unit`.
+We don't use parantheses to call functions.
+
+This brings us to reading a function.
+
+.F#
+[source, fsharp]
+----
+let add x y = x + y
+...
+add 1 2
+----
+
+You can see it's radically different from other imperative languages, but simpler.
+The arguments to `add` can themselves be expressions.
+They don't have to be values.
+
+.F#
+[source, fsharp]
+----
+let add x y = x + y
+...
+add (add 2 3) 2
+----
+
+Note the placement of parentheses.
+They encompass the first expression.
+
 
 == Returning values
 
-There's no `return` keyword in `F#`. Everything is an expression so just write
-the shape of want to return.
+There's no `return` keyword in `F#`. Everything is an expression so write
+the expression your function evaluates to.
 
+== Type Inference
+
+You'll notice that the examples don't follow the pattern of defining a variable by its type and then initialising it.
+This is because F# uses type inference to figure out what the type of the value is.
+This can take some getting used to, and the compiler errors can cause some frustration, but it comes with practice, and it's easier than dealing with `C++` template errors.
 
 == Recursion versus Iteration
 
@@ -49,7 +104,7 @@ We use recursion because iteration requires changing state, a mutable variable,
 and that breaks immutability. _But what about the stack?_ Don't worry about it
 for now. There are ways to get around it using `fold` and/or `tail recursion`.
 
-.fsharp
+.Recursive factorial in F#
 [source, fsharp]
 ----
 let rec fac x =
@@ -58,7 +113,7 @@ let rec fac x =
   | _ -> x * fac (x - 1)
 ----
 
-.c++
+.Iterative factorial in C++
 [source, c++]
 ----
 int fac(int x)
@@ -74,14 +129,16 @@ int fac(int x)
 
 === Tail calls
 
-Tail calls are a way to overcome the stackoverflow problem when using recurison.
-When writing a recursive function try to make it tail recursive. _What is tail recursion?_
-It means the final function applied is the recursive function itself or a return path. How do we convert
-a recursive function into a tail recursive function. We thread an accumulator parameter
-through the function.
+Tail calls are a way to overcome the stackoverflow problem when using
+recurison. When writing a recursive function try to make it tail recursive.
+_What is tail recursion?_ It means the final function applied is the recursive
+function itself or a return path. _How do we convert a recursive function into a
+tail recursive function?_ We thread an accumulator parameter through the
+function.
 
-This is tail recursive. When we get to the base case we return the accumulator.
-.fsharp
+For example, the following factorial functions is tail recursive.
+
+.F#
 [source, fsharp]
 ----
 let rec fac x acc =
@@ -92,21 +149,155 @@ let rec fac x acc =
 fac 5 1
 ----
 
+=== Fold
 
-== Side-effects
+:TODO
 
-Understand what a side-effect is. It's not the same as a medical side-effect,
-which is bad and unintended. Intentionallity has nothing to do with it. In
-computer science the term side-effect has a different meaning from colloquial
-usage. Understand it from the perspective of the function. If a function
-returns a value and changes the state of another entity in the process of
-calculating that value to return, then it has a side-effect. For example the
-function could change a database. The change to the database is a side-effect.
+== Types
+
+F# loves types.
+Working with types is easy in F# and you'll get the most out of
+the language in terms of correctness if you use them liberally and they will
+save you writing trivial unit tests, so you can focus on the unit tests that
+matter.
+You'll be surprised when your program runs correctly for the first time.
+
+Personally, I think of programming in F# as programming in with shapes.
+The shapes are the types you define, and the functions morph the shapes.
+F# has enough power to peel apart these shapes and recombine them easily.
+
+=== Unit
+
+Unit type is special. It's like `void` in `C++` but it's a proper type and has a literal symbol `()` that represents it.
+If you want your expression to evaluate to nothing, then end it with `()`.
+It's often used in contexts where imperative langauges are the norm, liek the .NET classes.
+
+.F#
+[source, fsharp]
+----
+let foo () =
+  do something
+  ()
+----
+
+=== Discriminated Unions
+
+These are so simple yet so powerful.
+They are like an `enum` in `C++` but they are types.
+
+.F#
+[source, fsharp]
+----
+type Fruit =
+  | Apple
+  | Orange
+  | Pear
+----
+
+The fruit names, `Apple` `Orange` and `Pear`, are called `constructors`.
+They are used to construct the type `Fruit`.
+
+.F#
+[source, fsharp]
+----
+let fruit = Apple
+----
+
+DU's go hand in hand with pattern matching and match expressions, so I'll show an example here:
+
+.F#
+[source, fsharp]
+----
+let fruitName fruit =
+  match fruit with
+  | Apple -> "apple"
+  | Orange -> "orange"
+  | Pear -> "pear"
+----
+
+A DU can be defined in terms of other types.
+
+.F#
+[source, fsharp]
+----
+type Fruit =
+  | Apple of string
+  | Orange of string
+  | Pear of string
+----
+
+=== Records
+
+A record is like a struct in `C++`.
+It can contain multiple distinct named types.
+
+.F#
+[source, fsharp]
+----
+type User =
+    { FirstName : string
+      LastName : string
+      Email : string }
+----
+
+You can create a record simply by writing it's inner names.
+
+[source, fsharp]
+----
+let initUser first last email =
+  {FirstName = first; LastName = last; Email = email}
+----
+
+If there is a name clash you can use the fully qualified name:
+
+[source, fsharp]
+----
+let initUser first last email =
+  {User.FirstName = first; User.LastName = last; User.Email = email}
+----
+
+Matching a record can be done like this:
+
+[source, fsharp]
+----
+match user with
+| {Firstname = "sashan"} -> printfn "alive"
+| _ -> printfn "unknown"
+----
+
+The `_` means _I don't care_ about that value. It matches anything.
+
+
+
+=== Tuples
+
+A tuple can contain multiple unamed distinct types.
+
+=== Option and Result
+
+:TODO
+
+
+=== Side-effects
+
+Understand what a side-effect is.
+It's not the same as a medical side-effect, which is bad and unintended. Intentionallity has nothing to do with it.
+In computer science the term side-effect has a different meaning from colloquial usage.
+Understand it from the perspective of the function.
+If a function returns a value and changes the state of another entity in the process of calculating that value to return, then it has a side-effect.
+For example the function could change a database. The change to the database is a side-effect.
 It happens as a side-effect of applying that function.
 
-== Shapes and Matching
+== Assignment
 
-This isn't part of the langauge. It's how I think about programming in a strongly typed
-functional language. You define shapes and functions to morph between shapes. I
-use the tools of the language to inspect or peel apart those shapes into their constituent parts,
-and reassemble them into other shapes. From the language perspective a shape is a type.
+Although we want to write code immutably, there will be times you will need assign values, especially when working with the .NET classes.
+To create a mutable value (a variable) we use the `mutable` keyword and use `<-` for assignment.
+
+.F#
+[source, fsharp]
+----
+let mutable x = 1
+
+x <- 2
+----
+
