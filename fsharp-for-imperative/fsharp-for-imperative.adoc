@@ -45,25 +45,86 @@ const int x = 1;
 We say that `x` is bound to a value, and the construct is called a `let
 binding`. We don't use the term `assigned`.
 
-== Reading functions
+== Functions
 
 We don't. We say we `apply a function`, or a `function is applied`. _So how do I apply a function?_
+You have to give it an argument.
 
-.F#
 [source, fsharp]
 ----
-let foo () = printfn "foo"
+let saySomething something = printfn "I say %s" something
 ...
-foo ()
+saySomething "hello"
 ----
 
-The symbol `()` is not a function call operator.
-It is the `unit` value of type `unit`.
-We don't use parantheses to call functions.
+We don't use parantheses to apply (call) functions.
+Instead we pass in the next argument.
+_But wait, I've seen cases where parantheses are used to call functions. What's going on?_
+Sometimes that's a tuple or the unit value.
 
-This brings us to reading a function.
+=== Functions, unit values and side-effect.
+The unit value is used when you want to run a function that has a side-effect.
 
-.F#
+For example, say you want a function that writes to the screen. Writing to the
+screen is considered a side-effect.
+It's changing state of something else, but the value returned by the function is the
+same all the time. For example `printfn` is such a function, since it changes the
+state of the screen, but returns the same unit value all the time.
+
+Say I want to write a function that writes some fixed text to the screen.
+
+Will I get three lines of "to the moon" on the screen? No.
+
+[source, fsharp]
+----
+> let tothemoon = printfn "to the moon";;
+to the moon
+val tothemoon : unit = ()
+
+> tothemoon;;
+val it : unit = ()
+
+> tothemoon;;
+val it : unit = ()
+
+> tothemoon;;
+val it : unit = ()
+
+>
+----
+
+So what's going on? F# realises that the `printfn` returns `unit` and binds that value to `tothemoon`.
+Remember, F# is a functional language and thinks that a function given the same input should return output that's the same.
+In this case, `tothemoon` takes no input arguments, therefore it's value should never change.
+If its value is never changing, there's no need to evaluate it more than once.
+And this is the chain of logic F# is following, which is why we don't see multiple lines of "to the moon" in the console.
+_So how can we change this?_
+We pass an argument, the unit value to the function.
+This tells F# that we expect the function to be evaluated.
+
+[source, fsharp]
+----
+> let tothemoon () = printfn "to the moon";;
+val tothemoon : unit -> unit
+
+> tothemoon ();;
+to the moon
+val it : unit = ()
+
+> tothemoon ();;
+to the moon
+val it : unit = ()
+
+> tothemoon ();;
+to the moon
+val it : unit = ()
+----
+
+`Ok, but that still doesn't make sense. The argument is always the same value, so shouldn't it only be evaluated once?`
+I don't know.
+I suspect F# is breaking some theoretical rule here.
+
+
 [source, fsharp]
 ----
 let add x y = x + y
@@ -89,8 +150,16 @@ They encompass the first expression.
 
 == Returning values
 
-There's no `return` keyword in `F#`. Everything is an expression so write
-the expression your function evaluates to.
+Everything is an expression so write the expression your function evaluates to.
+
+.F#
+[source, fsharp]
+----
+let add x y = x + y
+...
+add (add 2 3) 2
+----
+
 
 == Type Inference
 
