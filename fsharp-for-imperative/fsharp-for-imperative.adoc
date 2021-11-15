@@ -120,7 +120,7 @@ to the moon
 val it : unit = ()
 ----
 
-`Ok, but that still doesn't make sense. The argument is always the same value, so shouldn't it only be evaluated once?`
+_Ok, but that still doesn't make sense. The argument is always the same value, so shouldn't it only be evaluated once?_
 I don't know.
 I suspect F# is breaking some theoretical rule here.
 
