@@ -47,7 +47,9 @@ binding`. We don't use the term `assigned`.
 
 == Functions
 
-We don't. We say we `apply a function`, or a `function is applied`. _So how do I apply a function?_
+We don't call functions.
+We say we `apply a function`, or a `function is applied`.
+_So how do I apply a function?_
 You have to give it an argument.
 
 [source, fsharp]
@@ -57,23 +59,21 @@ let saySomething something = printfn "I say %s" something
 saySomething "hello"
 ----
 
-We don't use parantheses to apply (call) functions.
+We don't use parantheses to apply functions.
 Instead we pass in the next argument.
 _But wait, I've seen cases where parantheses are used to call functions. What's going on?_
 Sometimes that's a tuple or the unit value.
 
 === Functions, unit values and side-effect.
-The unit value is used when you want to run a function that has a side-effect.
+The unit value, `()`, is used when you want to run a function that has a side-effect and the function itself does not depend on the value of any input arguments.
 
-For example, say you want a function that writes to the screen. Writing to the
-screen is considered a side-effect.
+For example, say you want a function that writes to the screen.
+Writing to the screen is considered a side-effect.
 It's changing state of something else, but the value returned by the function is the
-same all the time. For example `printfn` is such a function, since it changes the
-state of the screen, but returns the same unit value all the time.
+same all the time.
+For example `printfn` is such a function, since it changes the state of the screen, but returns the same unit value all the time.
 
-Say I want to write a function that writes some fixed text to the screen.
-
-Will I get three lines of "to the moon" on the screen? No.
+It's best illustrated with an example.
 
 [source, fsharp]
 ----
@@ -95,12 +95,14 @@ val it : unit = ()
 
 So what's going on? F# realises that the `printfn` returns `unit` and binds that value to `tothemoon`.
 Remember, F# is a functional language and thinks that a function given the same input should return output that's the same.
-In this case, `tothemoon` takes no input arguments, therefore it's value should never change.
+In this case, `tothemoon` takes no input arguments, therefore its value should never change.
 If its value is never changing, there's no need to evaluate it more than once.
 And this is the chain of logic F# is following, which is why we don't see multiple lines of "to the moon" in the console.
-_So how can we change this?_
-We pass an argument, the unit value to the function.
-This tells F# that we expect the function to be evaluated.
+_So how can we change this, because I want the side-effect to happen?_
+We pass an argument to the function.
+It can be any other value or another function.
+In this case we will pass the unit value to the function.
+This tells F# that we expect the function to be evaluated every time.
 
 [source, fsharp]
 ----
@@ -122,33 +124,12 @@ val it : unit = ()
 
 _Ok, but that still doesn't make sense. The argument is always the same value, so shouldn't it only be evaluated once?_
 I don't know.
-I suspect F# is breaking some theoretical rule here.
+I suspect F# is breaking some theoretical rule here that covers this.
+I think Haskell, for example, handles effects differently, and functions aren't always evaluated when given an argument.
 
 
-[source, fsharp]
-----
-let add x y = x + y
-...
-add 1 2
-----
 
-You can see it's radically different from other imperative languages, but simpler.
-The arguments to `add` can themselves be expressions.
-They don't have to be values.
-
-.F#
-[source, fsharp]
-----
-let add x y = x + y
-...
-add (add 2 3) 2
-----
-
-Note the placement of parentheses.
-They encompass the first expression.
-
-
-== Returning values
+=== Returning values
 
 Everything is an expression so write the expression your function evaluates to.
 
@@ -157,8 +138,12 @@ Everything is an expression so write the expression your function evaluates to.
 ----
 let add x y = x + y
 ...
-add (add 2 3) 2
+add (mult 2 3) 2
 ----
+
+Note the placement of parentheses.
+They encompass the first expression.
+You have to do this since whitespace delimits arguments, so if the argument itself is an expression, then you need to use parantheses to group it, and tell the compiler that the expression is a single argument.
 
 
 == Type Inference
