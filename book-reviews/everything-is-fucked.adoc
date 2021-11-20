@@ -1,0 +1,27 @@
+:description: Everything is Fucked
+:keywords: self-help
+:stylesheet: readthedocs.css
+
+The subtitle of this book is 'a book about hope'. However, it won't be the hope
+that you expect.
+It's not a solipsistic, self-indulgent book that panders to your emotional needs.
+Those sort of books make leave you wanting.
+Manson's insight into hope is counter-intuitive and unexpected.
+His insight into the human condition, the experience of being human, is remarkable.
+Analytical people might find his mechanism for drawing general conclusions sloppy but this book is for the general public and not a philosophy major.
+He takes liberties when describing the work of Kant and Nietzsche.
+He's able to extrapolate and articulate general truths about the experience of life that are incredibly deep, however, the cavalier way he presents it might cause you to dismiss it.
+The book tackles the existential question about the uncomfortable truth about life, that there is no meaning to it, and it's up to the individual to define some sort of meaning to it.
+The realisation that everything we do is to give us significance, because when we look out at the universe, we feel that there must be a greater significance to our existence.
+However, that feeling is misleading, and the reality is there is none.
+It goes on to describe the conventional ways humans have invented meaning for life, first via religion, and then via science, and he describes the problems with each.
+Religions tap into people's insecurities and gives them an easy answer.
+The scientific process is a better value system than any religion but it forces one to come to terms with the fact that there is no god and therefore religion's answers to your insecurities aren't right.
+This, in turn, forces people to either throw science away to preserve their precious beliefs or to concoct a hypocritical bargain in their heads, where they can live in a world where they benefit from science, but keep their beliefs for the parts of life they feel science has an answer for, but the answer does not satisfy their misguided emotional drivers.
+More self-aware people acknowledge that there is a gap in the emotional landscape that science misses, but that doesn't make science wrong, and it doesn't imply that it should be filled with a religion either.
+If you're interested in living a better life, I'd recommend reading it.
+
+""Don't hope for better. Be better. Be something better. Be more compassionate, more resilient, more humble, more disciplined.""
+-- Mark Manson, Everything is F_cked.
+
+
