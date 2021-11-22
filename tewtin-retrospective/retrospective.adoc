@@ -42,7 +42,6 @@ There's a lesson here.
 Try not to build a product that requires real-time customer support as a budget conscious independent developer.
 You really need a pile of cash for that sort of thing.
 
-Additionally there is the cost of WebRTC.
 Anecdotal accounts from the students using Tewtin is that they prefer it to Zoom.
 It's less distracting than Zoom, and WebRTC integrates within the browser, making it cross-platform.
 Students use it from their iPads.
