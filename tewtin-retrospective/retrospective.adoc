@@ -1,0 +1,60 @@
+:description: Tewtin retrospective
+:keywords: tewtin, f#, programming, startup
+:stylesheet: readthedocs.css
+:source-highlighter: pygments
+
+I've been running https://tewtin.com[Tewtin] for about 3 years.
+It started in 2018 as a project to help a tutor (my mother) with her classes.
+She gets about 70 students a week (this is a lot for a tutor) and the administrative overhead is high.
+However, it does make her a leader in her field.
+Leaders in a field have followers.
+They follow what the leader does and attempt to model their workflow based on the leaders workflow.
+I knew that building a product for her problem had potential to scale based on that.
+She was running classes out of a room in her home and wanted to support remote learning via video conference.
+I wanted to make something because I found my day job intrinsically unsatisfying and I wasn't growing.
+I needed to learn something new.
+I thought about using another streaming product, like Zoom, but I could make something better by getting rid of the need to email links every time a class is about to start.
+I could at a later date add support for schedules, management of students, and their resources and assignments.
+I found a community of like minded people at https://www.indiehackers.com/[IndieHackers].
+They're the sort of people who are creative and make things.
+I looked into the VC and angel investor scene but their values weren't in alignment with mine.
+I wasn't looking to build a unicorn, and I couldn't envision the product that I was building being something that would 10x their investment.
+They also seemed to want a proven product that had an existing customer base that they could throw money at to scale.
+I had less ambitious goals and the IndieHacker ethos was in strategic alignment.
+I wanted to build something that I found interesting and I could live off.
+I chose https://fsharp.org/[F#] because I could write the front-end and backend in `F#` and I already knew the language, having experimented with it and OCaml over the years.
+https://dotnet.microsoft.com/[.NET] had recently been ported to Linux.
+There was also a web framework, https://safe-stack.github.io/[SAFE], that I could use to get something up and running quickly.
+I decided to commit, bit the bullet, took time off work and started the project.
+
+It took about 2 months of effort to get it working.
+This meant integrating with a WebRTC provider for the streaming and creating the database code to register students and tutors, map students to tutors, and creating the front end for students, tutors and the admin user.
+By the start of 2019 it was being used, and I let it run with minor updates during the year.
+It was during that year I realised the biggest problem was the level of support expected.
+The times when the video streaming did not work was when there was a misconfiguration in the client.
+In other words, the browser was not configured to allow access to the microphone or camera.
+If I was going to charge for it, then customers would expect to have some level of support while they were streaming their lessons to the class.
+To the customer, they have no idea why a student can't connect, and the easiest thing to blame is Tewtin itself.
+They'd want someone to help them fix the student's connection issues regardless of the source of the issue.
+For that reason, I didn't bother trying to onboard more tutors.
+More tutors would have swamped me.
+There's a lesson here.
+Try not to build a product that requires real-time customer support as a budget conscious independent developer.
+You really need a pile of cash for that sort of thing.
+
+Additionally there is the cost of WebRTC.
+Anecdotal accounts from the students using Tewtin is that they prefer it to Zoom.
+It's less distracting than Zoom, and WebRTC integrates within the browser, making it cross-platform.
+Students use it from their iPads.
+There's no need to send email links around, which opens a security hole where anyone who has the link can join the meeting.
+At least with Tewtin, identity is verified via Google OAuth so you know as a tutor, that the people in your class are ones you've explicitly authorised.
+However, the cost using WebRTC is greater than that of Zoom, so Tewtin needed to provide enough value to offset that cost, and the value in the current state isn't there.
+
+In terms of choice of technology for building Tewtin, `F#` worked out very well.
+I didn't need to learn a Javascript and another backend language.
+Working with a strongly statically typed functional language like `F#` is a joy.
+There are very few corner cases and exceptions to the rule, and it has the property that once your code compiles it just works the first time it runs.
+And someone noticed me and I got a better job offer (they offered more than what I asked for, which either means I'm really good at negotiating or I don't know what I'm worth!) to work with `F#` on transaction processing systems at https://tab.com.au[Tabcorp].
+I posted about it on https://twitter.comsashan16/status/1453709925377474574?s=20/[Twitter].
+Naturally, I'm excited about this new opportuniy, as I get to work on problems that require creative application of data structures and algorithms, using a functional language in a company that I can grow.
+
