@@ -54,7 +54,19 @@ In terms of choice of technology for building Tewtin, `F#` worked out very well.
 I didn't need to learn a Javascript and another backend language.
 Working with a strongly statically typed functional language like `F#` is a joy.
 There are very few corner cases and exceptions to the rule, and it has the property that once your code compiles it just works the first time it runs.
+The community is amazing and incredibly helpful.
+Some of the people who wrote open source libraries without which I wouldn't have been able to build Tewtin are:
+- https://twitter.com/MangelMaxime[Maxime Mangel] - Fulma, the front-end Bulma based CSS stuff.
+- https://twitter.com/DiEsmerio[Diego Esmerio] - Elmish Bridge a websockets library.
+- https://twitter.com/k_cieslak[Krzysztof Cieślak] - Saturn, Ionide.
+- https://twitter.com/zaid_ajaj[Zaid Ajaj] - Elmish
+
 And someone noticed me and I got a better job offer to work with `F#` on transaction processing systems at https://tab.com.au[Tabcorp].
-They offered more than what I asked for, which either means I'm really good at negotiating or I don't know what I'm worth! Actually, I suspect I know what happened. The quality of my answers in the interview determined my level. I posted about it on https://twitter.com/sashan16/status/1453709925377474574?s=20/[Twitter].
+They offered more than what I asked for, which either means I'm really good at negotiating or I don't know what I'm worth! Actually, I suspect I know what happened. I thought they did a good job during the interview of trying to get as much of a signal from the candidate about their ability.
+I was glad that they didn't only ask buzzword type questions, but were more probing, and wanted a creative and thoughtful response.
+There were times in the interview when I said the wrong name of something, for example I said 'duplicate' the SQL table instead of 'partition' to solve a problem.
+Point was it didn't matter, because I figured out why I needed to partition the table without knowing the correct name of the process.
+Therefore, I suspect it was the quality of my answers in the interview combined with my experience with `F#` that determined my remuneration.
+I posted about it on https://twitter.com/sashan16/status/1453709925377474574?s=20/[Twitter].
 Naturally, I'm excited about this new opportunity, as I get to work on problems that require creative application of data structures and algorithms, using a functional language in a company that I can grow.
 
