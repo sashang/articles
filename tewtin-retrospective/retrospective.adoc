@@ -8,7 +8,7 @@ It started in 2018 as a project to help a tutor (my mother) with her classes.
 She gets about 70 students a week (this is a lot for a tutor) and the administrative overhead is high.
 However, it does make her a leader in her field.
 Leaders in a field have followers.
-They follow what the leader does and attempt to model their workflow based on the leaders workflow.
+They follow what the leader does and attempt to model their work flow based on the leaders work flow.
 I knew that building a product for her problem had potential to scale based on that.
 She was running classes out of a room in her home and wanted to support remote learning via video conference.
 I wanted to make something because I found my day job intrinsically unsatisfying and I wasn't growing.
@@ -22,7 +22,7 @@ I wasn't looking to build a unicorn, and I couldn't envision the product that I 
 They also seemed to want a proven product that had an existing customer base that they could throw money at to scale.
 I had less ambitious goals and the IndieHacker ethos was in strategic alignment.
 I wanted to build something that I found interesting and I could live off.
-I chose https://fsharp.org/[F#] because I could write the front-end and backend in `F#` and I already knew the language, having experimented with it and OCaml over the years.
+I chose https://fsharp.org/[F#] because I could write the front-end and back-end in `F#` and I already knew the language, having experimented with it and OCaml over the years.
 https://dotnet.microsoft.com/[.NET] had recently been ported to Linux.
 There was also a web framework, https://safe-stack.github.io/[SAFE], that I could use to get something up and running quickly.
 I decided to commit, bit the bullet, took time off work and started the project.
@@ -54,7 +54,7 @@ In terms of choice of technology for building Tewtin, `F#` worked out very well.
 I didn't need to learn a Javascript and another backend language.
 Working with a strongly statically typed functional language like `F#` is a joy.
 There are very few corner cases and exceptions to the rule, and it has the property that once your code compiles it just works the first time it runs.
-And someone noticed me and I got a better job offer (they offered more than what I asked for, which either means I'm really good at negotiating or I don't know what I'm worth!) to work with `F#` on transaction processing systems at https://tab.com.au[Tabcorp].
-I posted about it on https://twitter.comsashan16/status/1453709925377474574?s=20/[Twitter].
-Naturally, I'm excited about this new opportuniy, as I get to work on problems that require creative application of data structures and algorithms, using a functional language in a company that I can grow.
+And someone noticed me and I got a better job offer to work with `F#` on transaction processing systems at https://tab.com.au[Tabcorp].
+They offered more than what I asked for, which either means I'm really good at negotiating or I don't know what I'm worth! Actually, I suspect I know what happened. The quality of my answers in the interview determined my level. I posted about it on https://twitter.com/sashan16/status/1453709925377474574?s=20/[Twitter].
+Naturally, I'm excited about this new opportunity, as I get to work on problems that require creative application of data structures and algorithms, using a functional language in a company that I can grow.
 
