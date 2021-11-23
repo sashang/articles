@@ -123,11 +123,9 @@ val it : unit = ()
 ----
 
 _Ok, but that still doesn't make sense. The argument is always the same value, so shouldn't it only be evaluated once?_
-I don't know.
-I suspect F# is breaking some theoretical rule here that covers this.
-I think Haskell, for example, handles effects differently, and functions aren't always evaluated when given an argument.
-
-
+I asked the https://stackoverflow.com/questions/69997578/whats-the-theoretical-loophole-that-allows-f-or-any-functional-language-to-a/69999798#69999798[question on StackOverflow].
+Basically F# makes no distinction between pure and impure functions therefore the compiler cannot memoize the function.
+Haskell, for example, handles effects differently, and functions aren't always evaluated when given an argument.
 
 === Returning values
 
@@ -195,12 +193,14 @@ For example, the following factorial functions is tail recursive.
 .F#
 [source, fsharp]
 ----
-let rec fac x acc =
-  match x with
-  | 0 -> acc
-  | _ -> fac (x - 1) (x * acc)
+let fac x =
+  let rec helper x acc =
+    match x with
+    | 0 -> acc
+    | _ -> helper (x - 1) (x * acc)
+  helper x 1
 
-fac 5 1
+fac 5
 ----
 
 === Fold
@@ -259,7 +259,6 @@ let fruit = Apple
 
 DU's go hand in hand with pattern matching and match expressions, so I'll show an example here:
 
-.F#
 [source, fsharp]
 ----
 let fruitName fruit =
@@ -271,7 +270,6 @@ let fruitName fruit =
 
 A DU can be defined in terms of other types.
 
-.F#
 [source, fsharp]
 ----
 type Fruit =
@@ -280,12 +278,18 @@ type Fruit =
   | Pear of string
 ----
 
+And can be created using the `constructor`:
+
+[source, fsharp]
+----
+let a = Apple "apple"
+----
+
 === Records
 
 A record is like a struct in `C++`.
 It can contain multiple distinct named types.
 
-.F#
 [source, fsharp]
 ----
 type User =
@@ -294,7 +298,7 @@ type User =
       Email : string }
 ----
 
-You can create a record simply by writing it's inner names.
+You can create a record simply by writing its inner names.
 
 [source, fsharp]
 ----
@@ -321,16 +325,19 @@ match user with
 
 The `_` means _I don't care_ about that value. It matches anything.
 
-
-
 === Tuples
 
 A tuple can contain multiple unamed distinct types.
 
 === Option and Result
 
-:TODO
+Use this type instead of sentinel value.
 
+=== Structural equality
+
+`F#` has structural equality.
+All types can be compared for equality without writing a comparison object, as you might have to do in `C#`
+Additionally, because there are no nulls in the language, one doesn't have to write code to check for that invariant.
 
 === Side-effects
 
