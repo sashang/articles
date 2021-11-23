@@ -18,9 +18,13 @@ I could at a later date add support for schedules, management of students, and t
 I found a community of like minded people at https://www.indiehackers.com/[IndieHackers].
 They're the sort of people who are creative and make things.
 I looked into the VC and angel investor scene but their values weren't in alignment with mine.
-I wasn't looking to build a unicorn, and I couldn't envision the product that I was building being something that would 10x their investment.
+I wasn't looking to build a unicorn, and I couldn't envisage the product that I was building being something that would 10x their investment.
 They also seemed to want a proven product that had an existing customer base that they could throw money at to scale.
-I had less ambitious goals and the IndieHacker ethos was in strategic alignment.
+I felt that this defeated the purpose of being a VC.
+Surely the purpose of getting into the VC game is to help someone build a product and not look for a ready made product with a proven market?
+And if you meet someone with a product and a proven market, why the hell would they want you?
+There's no need for a VC at that stage.
+I had less ambitious goals than 10x someone's investement and the IndieHacker ethos was in strategic alignment.
 I wanted to build something that I found interesting and I could live off.
 I chose https://fsharp.org/[F#] because I could write the front-end and back-end in `F#` and I already knew the language, having experimented with it and OCaml over the years.
 https://dotnet.microsoft.com/[.NET] had recently been ported to Linux.
