@@ -1,9 +1,12 @@
-Notes about Git
-===============
-Sashan Govender
+:description: Notes about git
+:keywords: git,subversion
+:stylesheet: readthedocs.css
+:stylesdir: ../styles/
+:source-highlighter: pygments
 
-These are my notes about git for use as quick reference. The notes describe
-using git and git with svn. In the case of svn the header is marked with `svn`.
+These are my (ancient) notes about git from around the late 2000's when I was
+using Subversion and transitioning to git. The notes describe using git and git
+with svn. In the case of svn the header is marked with `svn`.
 
 Fundamentals
 ------------
@@ -13,7 +16,7 @@ of all changes. Then there's your local development directory where you checkout
 a copy of the repositories contents, do some edits and then commit them back to
 the repository. Git breaks this model and adds an intermediate stage called the
 'index' that sits between your working directory and the git repository. Changes
-make there way from the working tree to the index then to the repository.
+make their way from the working tree to the index then to the repository.
 
 image::git_commit_workflow.png["Commit Workflow", title="Commit Workflow"]
 
