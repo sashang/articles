@@ -50,6 +50,15 @@ val y : int = 3
 
 Note that when using the compiler you don't need the double semi-colon to end an expression.
 
+== Whitespace and Identation
+
+`F#` is whitespace and indentation sensitive. The guide to formatting is https://docs.microsoft.com/en-us/dotnet/fsharp/style-guide/formatting[here].
+In summary:
+
+- Use spaces not tabs.
+- 4 spaces is prefered.
+- You can use https://github.com/fsprojects/fantomas/#fantomas[Fantomas] to format code.
+
 == Immutability
 
 Immutability is a core idiom in functional programming. If you stick with this
@@ -94,15 +103,17 @@ _But wait, I've seen cases where parantheses are used to call functions. What's 
 Sometimes that's a tuple or the unit value.
 
 === Functions, unit values and side-effect.
-The unit value, `()`, is used when you want to run a function that has a side-effect and the function itself does not depend on the value of any input arguments.
 
-For example, say you want a function that writes to the screen.
-Writing to the screen is considered a side-effect.
-It's changing state of something else, but the value returned by the function is the
-same all the time.
-For example `printfn` is such a function, since it changes the state of the screen, but returns the same unit value all the time.
+There is a difference between binding a name to a value and a name to a function.
 
-It's best illustrated with an example.
+For example, in the following code, the value `1` is bound to `x`
+[source, fsharp]
+----
+let x = 1
+----
+
+A value is only ever evaluated once.
+This can be seen in the following example.
 
 [source, fsharp]
 ----
@@ -122,7 +133,7 @@ val it : unit = ()
 >
 ----
 
-So what's going on? `F#` realises that the `printfn` returns `unit` and binds that value to `tothemoon`.
+So what's going on? `F#` realises that the `printfn` returns `unit`, evalutes the expression, and binds the resultant value to the indentifier `tothemoon`.
 Remember, `F#` is a functional language and thinks that a function given the same input should return output that's the same.
 In this case, `tothemoon` takes no input arguments, therefore its value should never change.
 If its value is never changing, there's no need to evaluate it more than once.
@@ -131,7 +142,8 @@ _So how can we change this, because I want the side-effect to happen?_
 We pass an argument to the function.
 It can be any other value or another function.
 In this case we will pass the unit value to the function.
-This tells `F#` that we expect the function to be evaluated every time.
+The unit value is a special value of type unit.
+It simply acts as a space filler, a do nothing argument.
 
 [source, fsharp]
 ----
@@ -153,8 +165,7 @@ val it : unit = ()
 
 _Ok, but that still doesn't make sense. The argument is always the same value, so shouldn't it only be evaluated once?_
 I asked the https://stackoverflow.com/questions/69997578/whats-the-theoretical-loophole-that-allows-f-or-any-functional-language-to-a/69999798#69999798[question on StackOverflow].
-Basically `F#` makes no distinction between pure and impure functions therefore the compiler cannot memoize the function.
-Haskell, for example, handles effects differently, and functions aren't always evaluated when given an argument.
+Basically `F#` makes no distinction between pure and impure functions therefore the compiler cannot memoize the function, so it can't remember that the previous result of a call to that function with a specific argument.
 
 === Returning values
 
@@ -170,8 +181,6 @@ add (mult 2 3) 2
 Note the placement of parentheses.
 They encompass the first expression.
 You have to do this since whitespace delimits arguments, so if the argument itself is an expression, then you need to use parantheses to group it, and tell the compiler that the expression is a single argument.
-
-
 
 == Recursion versus Iteration
 
@@ -233,14 +242,15 @@ fac 5
 
 `F#` loves types.
 Working with types is easy in `F#` and you'll get the most out of
-the language in terms of correctness if you use them liberally and they will
-save you writing trivial unit tests, so you can focus on the unit tests that
+the language in terms of correctness if you use them liberally.
+They will save you writing trivial unit tests, so you can focus on the unit tests that
 matter.
 You'll be surprised when your program runs correctly for the first time.
 
 Personally, I think of programming in `F#` as programming in with shapes.
 The shapes are the types you define, and the functions morph the shapes.
-`F#` has enough power to peel apart these shapes and recombine them easily.
+Along the way you fill in the shapes with untyped data, bringing type information to what was previously untyped, and safely transform the typed data with your functions.
+`F#` has enough power to peel apart these shapes, via pattern matching, and recombine them easily.
 
 === Type Inference
 
