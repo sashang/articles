@@ -13,7 +13,6 @@ be used in conjunction with F#-declared types, and in practice null-reference ex
 
 == F# Interactive
 
-
 === How do I start the interactive mode?
 
 There is a `F#` interpreter you can use interactively.
@@ -146,12 +145,25 @@ let main argv =
 /home/sashan/code/tests/test/Program.fs(6,1): error FS3118: Incomplete value or function definition. If this is in an expression, the body of the expression must be indented to the same column as the 'let' keyword. [/home/sashan/code/tests/test/test.fsproj]
 ```
 
-== Immutability
+== Concepts
+
+=== Why are variables immutable by default?
+
+This will probably be a mind expanding experience for those familiar with normal languages.
+It makes programming in a functional language harder, harder because you can't just reach out and change the state of a variable.
+In general you have to take the old value as input to function, use the function to transform the value, and return a new value.
+If this seems like pointless effort, well you're half right. Effort - yes. Pointless - no.
+Immutability makes it easier to reason about program correctness.
+This becomes important when dealing with concurrent systems, beFor example the
+properties of REST, i.e. stateless and idempotent, naturally emerge if the code you write is immutable.
+cause you can't test if a concurrent system is correct, because results are non-deterministic.
+Since correctness and robustness of programs was a core design property of F#, immutability became a property of the language.
+That said, because F# is also pragmatic, there are traditional variables in the language, that can be mutated.
+However where possible start with the immutable version of the program and add state where needed.
+Eventually, somewhere, you will need state, and state will need to change.
 
 Immutability is a core idiom in functional programming. If you stick with this
-pattern you will reap benefits when facing concurrent problems. For example the
-properties of REST, i.e. stateless and idempotent, naturally emerge if the
-code you write is immutable.
+pattern you will reap benefits when facing concurrent problems.
 
 .F#
 [source, fsharp]
