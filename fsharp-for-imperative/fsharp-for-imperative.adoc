@@ -154,16 +154,14 @@ It makes programming in a functional language harder, harder because you can't j
 In general you have to take the old value as input to function, use the function to transform the value, and return a new value.
 If this seems like pointless effort, well you're half right. Effort - yes. Pointless - no.
 Immutability makes it easier to reason about program correctness.
-This becomes important when dealing with concurrent systems, beFor example the
-properties of REST, i.e. stateless and idempotent, naturally emerge if the code you write is immutable.
+This becomes important when dealing with concurrent systems, since the correctness of a concurrent program cannot be verified via deterministic methods like unit tests.
+You need a proof, or logical argument to show that it is correct.
+
+For example the properties of REST, i.e. stateless and idempotent, naturally emerge if the code you write is immutable.
 cause you can't test if a concurrent system is correct, because results are non-deterministic.
 Since correctness and robustness of programs was a core design property of F#, immutability became a property of the language.
 That said, because F# is also pragmatic, there are traditional variables in the language, that can be mutated.
-However where possible start with the immutable version of the program and add state where needed.
-Eventually, somewhere, you will need state, and state will need to change.
-
-Immutability is a core idiom in functional programming. If you stick with this
-pattern you will reap benefits when facing concurrent problems.
+However, using immutable variables will synchronize well with the rest of the F# ecosystem.
 
 .F#
 [source, fsharp]
