@@ -158,10 +158,10 @@ This becomes important when dealing with concurrent systems, since the correctne
 You need a proof, or logical argument to show that it is correct.
 
 For example the properties of REST, i.e. stateless and idempotent, naturally emerge if the code you write is immutable.
-cause you can't test if a concurrent system is correct, because results are non-deterministic.
 Since correctness and robustness of programs was a core design property of F#, immutability became a property of the language.
 That said, because F# is also pragmatic, there are traditional variables in the language, that can be mutated.
-However, using immutable variables will synchronize well with the rest of the F# ecosystem.
+However, if you write your programs maximising the use of immutable variables, it will synchronize well with the rest of the F# ecosystem, and makes programming using the language easy.
+`F#` is designed to work with immutable variables, and often it's just a question of unlearning the imperative way of doing something and mapping it to the functional way of doing that something.
 
 .F#
 [source, fsharp]
