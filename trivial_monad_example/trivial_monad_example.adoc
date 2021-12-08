@@ -41,7 +41,7 @@ if (acc.transact(-100)) {
       cout << "Failed to transact 1000" << endl;
     }
   } else {
-    cout << Failed to transact 200" << endl;
+    cout << "Failed to transact 200" << endl;
   }
 } else {
   cout << "Failed to transact 1000" << endl;
