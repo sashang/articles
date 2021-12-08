@@ -72,12 +72,11 @@ Overly abstracted classes and state, encapsulated within objects, that mutate va
 Let's go back to the original problem, the repeeated `if..else`.
 What would a functional programmer do?
 First thing to notice is the repeated pattern of `if .. else`.
-It's kinda stupid to say notice it, because it's one of those things that is right infront of you, like your optical blindspot.
-It's so obvious and so ingrained that we don't notice it, especially if you've spent decades working with a language like Java.
-The problem is people notice but miss the most obvious thing about it, the thing that is being repeated.
+It's kinda stupid to say notice it, because it's one of those things that, like your optical blind spot, is right infront of you.
+It's so obvious and so ingrained that we don't notice it, especially if you've spent decades working with a language like Java, or any imperative language, that you miss the thing that is being repeated.
 In this case it's the `if` statements.
-Stuff that's repeated gets to be put in a loop or a list for processing in a loop.
-Wouldn't it be nice if we could put an `if` statement in a list?
+Stuff that's repeated gets to be put in a loop or into a function or into a list for processing in a loop.
+*Wouldn't it be nice if we could put an `if` statement into a function and pass it a parameter that is the function to apply on a successful test?*
 Of course we can! We're functional programmers so statements in imperative langauges can be translated into expressions in a functional one.
 Expressions are just values once evaluated, and values are immutable variables that can be passed around to other functions.
 Those functions can be evaluated and passed around to other functions ad infinitum.
