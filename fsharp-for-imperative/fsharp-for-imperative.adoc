@@ -1,7 +1,7 @@
 :description: FSharp for Imperative.
 :keywords: f#, functional, imperative
 :stylesheet: readthedocs.css
-:source-highlighter: pygments
+:source-highlighter: highlight.js
 :toc:
 
 ""I call it my billion-dollar mistake."
@@ -144,6 +144,69 @@ let main argv =
 /home/sashan/code/tests/test/Program.fs(8,3): error FS0010: Unexpected keyword 'let' or 'use' in binding. Expected incomplete structured construct at or before this point or other token. [/home/sashan/code/tests/test/test.fsproj]
 /home/sashan/code/tests/test/Program.fs(6,1): error FS3118: Incomplete value or function definition. If this is in an expression, the body of the expression must be indented to the same column as the 'let' keyword. [/home/sashan/code/tests/test/test.fsproj]
 ```
+
+
+== How do I resolve type mismatch errors?
+
+This is probably the most common error you will get when trying to get your F# code to compile.
+Let's have a look at the example below.
+
+----
+> let foo x =
+-     x + 2.0;;
+val foo : x:float -> float
+
+> foo 1;;
+
+  foo 1;;
+  ----^
+
+/home/sashan/code/articles/fsharp-for-imperative/stdin(3,5): error FS0001: This expression was expected to have type
+    'float'
+but here has type
+    'int'
+
+>
+----
+
+What's going on here? The compiler parses the function `foo` and infers the type of the argument to be a `float` because the type of the expression `x + 2.0` is inferred to be a `float` because the type of `2.0` is float.
+Effectively the compiler recurses through the expressions to find a terminal type to infer the type of the non-terminal expressions.
+In this case it's easier to resolve the type but in other cases it can be more complicated to see what's going on.
+You can do a similar thing, and pretend to be the compiler and recurse until you find a terminal type.
+Let's look at a more complicated example.
+
+[source, fsharp]
+----
+type R1 = {
+    Name : string
+    Age : int
+    Email : string
+}
+
+type R2 = {
+    Name : string
+    Email : string
+}
+
+let printName x =
+    let {R1.Name = name} = x
+    printfn "%s" name
+
+let x = {Name = "bob";Email="bob@somewhere.com"}
+
+printName x
+----
+
+In this case we get the following error:
+
+----
+Error: input.fsx (18,11)-(18,12) typecheck error This expression was expected to have type
+    'R1'    
+but here has type
+    'R2'    
+----
+
+at the line `printName x`. Clearly here it has resolved `x` to be of type `R2`, however in the function definition we match on `R1` when destructuring the value.
 
 == Concepts
 
