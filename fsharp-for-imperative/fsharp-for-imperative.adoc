@@ -2,6 +2,7 @@
 :keywords: f#, functional, imperative
 :stylesheet: readthedocs.css
 :source-highlighter: highlight.js
+:highlightjs-languages: fsharp
 :toc:
 
 ""I call it my billion-dollar mistake."
