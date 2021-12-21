@@ -172,7 +172,6 @@ but here has type
 
 What's going on here? The compiler parses the function `foo` and infers the type of the argument to be a `float` because the type of the expression `x + 2.0` is inferred to be a `float` because the type of `2.0` is float.
 Effectively the compiler recurses through the expressions to find a terminal type to infer the type of the non-terminal expressions.
-In this case it's easier to resolve the type but in other cases it can be more complicated to see what's going on.
 You can do a similar thing, and pretend to be the compiler and recurse until you find a terminal type.
 Let's look at a more complicated example.
 
@@ -559,3 +558,122 @@ let mutable x = 1
 x <- 2
 ----
 
+== Generics
+
+=== How do statically resolved type parameters work?
+
+Statically resolved type parameters are used to constrain types passed to functions.
+They're a way to specify that a parameter to a function should support certain members if it is to be used within that function.
+It does this by allowing you to specify constraints for that parameter, for example, the specific function that the parameter should have.
+You can say _oh this function only works with types that have a member function called `foo`_
+
+
+NOTE: statically resolved types are only useable in inline functions. This is because the compiler has to generate specialisations for each function when the types infered are different. `C++` programmers will probably recognise the similarity here with the template mechanism.
+
+In fact, statically resolved types have more in common behaviourally with templates than the standard generic type parameters.
+The example given in the https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/generics/statically-resolved-type-parameters[MSDN is complicated] so I've concocted a simpler one here, just to try and get a feel for it.
+Here's a simple example.
+We define 3 types.
+
+[source, fsharp]
+----
+type T =
+    | TCons
+    static member identity x = x
+
+type U =
+    | UCons
+    static member identity x = x
+
+type W =
+    | WCons
+
+let inline foo< ^a when ^a : (static member identity : ^a -> ^a) > (x : ^a) =
+    T.identity x
+----
+
+NOTE: The space between `<` and  `^a` in the type parameter of `foo` is important. 
+It won't compile without the space.
+
+Two of them have a member `identity` that does nothing, i.e. it returns its argument unchanged.
+The function `foo` takes a parameter of type `^a` which is constrained. The constraint itself, that is starting to look a lot like line noise, says the type `^a` should have a member `identity` that takes a parameter that is the same as itself, `^a`, and returns a value of type `^a`.
+If a type is passed to `foo` that does not satisfy that constraint the compiler will complain.
+
+[source, fsharp]
+----
+let x = TCons
+let y = UCons
+let z = WCons
+
+foo x // Ok
+foo y // Ok
+foo z // Not ok
+----
+
+You get the error
+
+----
+error FS0001: The type 'W' does not support the operator 'identity'
+----
+
+because `W` does not have a member `identity` that satisfies the contraint on `foo`.
+
+But there's still something not quite right here. I want my function `foo` to call the `identity` member function that is of the same type of the value. In other words, instead of:
+
+[source,fsharp]
+----
+T.identity x
+----
+
+I want:
+
+[source, fsharp]
+----
+^a.identity
+----
+
+Except this doesn't compile.
+The good news is that there is a way to do this.
+The bad news is that the syntax is awkward.
+
+[source, fsharp]
+----
+let inline foo< ^a when ^a : (static member identity : ^a -> ^a) > (x : ^a) =
+    (^a : (static member identity : ^a -> ^a) x)
+----
+
+And that does it.
+When `identity` is applied from `foo` that will use the member function belonging to the type `x`.
+You can see it in action here in the following code.
+
+[source, fsharp]
+----
+type T =
+    | TCons
+    static member identity x = printfn "T identity"; x
+
+type U =
+    | UCons
+    static member identity x = printfn "U identity"; x
+
+type W =
+    | WCons
+
+let inline foo< ^a when ^a : (static member identity : ^a -> ^a) > (x : ^a) =
+    (^a : (static member identity : ^a -> ^a) x)
+
+let x = TCons
+let y = UCons
+
+printfn "%A" (foo x)
+printfn "%A" (foo y)
+----
+
+and the output
+
+----
+T identity
+TCons
+U identity
+UCons
+----
