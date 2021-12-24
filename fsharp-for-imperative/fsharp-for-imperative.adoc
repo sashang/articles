@@ -201,9 +201,9 @@ In this case we get the following error:
 
 ----
 Error: input.fsx (18,11)-(18,12) typecheck error This expression was expected to have type
-    'R1'    
+    'R1'
 but here has type
-    'R2'    
+    'R2'
 ----
 
 at the line `printName x`. Clearly here it has resolved `x` to be of type `R2`, however in the function definition we match on `R1` when destructuring the value.
@@ -567,12 +567,13 @@ They're a way to specify that a parameter to a function should support certain m
 It does this by allowing you to specify constraints for that parameter, for example, the specific function that the parameter should have.
 You can say _oh this function only works with types that have a member function called `foo`_
 
-
-NOTE: statically resolved types are only useable in inline functions. This is because the compiler has to generate specialisations for each function when the types infered are different. `C++` programmers will probably recognise the similarity here with the template mechanism.
+NOTE: Statically resolved types are only useable in inline functions.
+This is because the compiler has to generate specialisations for each function when the types infered are different.
+`C++` programmers will probably recognise the similarity here with the template mechanism.
 
 In fact, statically resolved types have more in common behaviourally with templates than the standard generic type parameters.
-The example given in the https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/generics/statically-resolved-type-parameters[MSDN is complicated] so I've concocted a simpler one here, just to try and get a feel for it.
-Here's a simple example.
+The example given at https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/generics/statically-resolved-type-parameters[MSDN is complicated] felt like playing Doom with a controller, so I've concocted a simpler example here.
+
 We define 3 types.
 
 [source, fsharp]
@@ -592,11 +593,12 @@ let inline foo< ^a when ^a : (static member identity : ^a -> ^a) > (x : ^a) =
     T.identity x
 ----
 
-NOTE: The space between `<` and  `^a` in the type parameter of `foo` is important. 
+NOTE: The space between `<` and  `^a` in the type parameter of `foo` is important.
 It won't compile without the space.
 
 Two of them have a member `identity` that does nothing, i.e. it returns its argument unchanged.
-The function `foo` takes a parameter of type `^a` which is constrained. The constraint itself, that is starting to look a lot like line noise, says the type `^a` should have a member `identity` that takes a parameter that is the same as itself, `^a`, and returns a value of type `^a`.
+The function `foo` takes a parameter of type `^a` which is constrained.
+The constraint itself, that is starting to look a lot like line noise, says the type `^a` should have a member `identity` that takes a parameter that is the same as itself, `^a`, and returns a value of type `^a`.
 If a type is passed to `foo` that does not satisfy that constraint the compiler will complain.
 
 [source, fsharp]
@@ -618,7 +620,10 @@ error FS0001: The type 'W' does not support the operator 'identity'
 
 because `W` does not have a member `identity` that satisfies the contraint on `foo`.
 
-But there's still something not quite right here. I want my function `foo` to call the `identity` member function that is of the same type of the value. In other words, instead of:
+But there's still something not quite right here.
+I want my function `foo` to call the `identity` member function that is of the same type of the value.
+
+In other words, instead of:
 
 [source,fsharp]
 ----
@@ -644,7 +649,7 @@ let inline foo< ^a when ^a : (static member identity : ^a -> ^a) > (x : ^a) =
 
 And that does it.
 When `identity` is applied from `foo` that will use the member function belonging to the type `x`.
-You can see it in action here in the following code.
+If we add some `printfn` expressions to the `identity` functions then we can trace the execution of `identity` functions.
 
 [source, fsharp]
 ----
@@ -665,15 +670,19 @@ let inline foo< ^a when ^a : (static member identity : ^a -> ^a) > (x : ^a) =
 let x = TCons
 let y = UCons
 
-printfn "%A" (foo x)
-printfn "%A" (foo y)
+foo x
+foo y
 ----
 
 and the output
 
 ----
 T identity
-TCons
 U identity
-UCons
 ----
+
+Technically this is an example of _parametric polymorphism_.
+We're getting polymorphic behaviour, because a different `identity` function is executed depending on the type of the parameter.
+The other type of polymorphism you are familiar with, _dynamic polymorphism_, presents itself in the context of inheritance in object oriented programming.
+In that case the function called is selected at runtime.
+In the case of statically resolved type parameters the function is selected at compile time.
