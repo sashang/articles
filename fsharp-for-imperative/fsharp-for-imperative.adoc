@@ -217,14 +217,11 @@ It makes programming in a functional language harder, harder because you can't j
 In general you have to take the old value as input to function, use the function to transform the value, and return a new value.
 If this seems like pointless effort, well you're half right. Effort - yes. Pointless - no.
 Immutability makes it easier to reason about program correctness.
-This becomes important when dealing with concurrent systems, since the correctness of a concurrent program cannot be verified via deterministic methods like unit tests.
-You need a proof, or logical argument to show that it is correct.
-
+Programs that manipulate shared mutable variables require access to that state to be locked. This opens to the door to other problems such as deadlocks and race conditions. The tradeoff is that performance traditionally is improved by the use of shared state, whereas immutability often implies copying of data, which incurs a performance cost.
 For example the properties of REST, i.e. stateless and idempotent, naturally emerge if the code you write is immutable.
 Since correctness and robustness of programs was a core design property of F#, immutability became a property of the language.
-That said, because F# is also pragmatic, there are traditional variables in the language, that can be mutated.
-However, if you write your programs maximising the use of immutable variables, it will synchronize well with the rest of the F# ecosystem, and makes programming using the language easy.
-`F#` is designed to work with immutable variables, and often it's just a question of unlearning the imperative way of doing something and mapping it to the functional way of doing that something.
+That said, because F# is also pragmatic and needs to operate with .NET which is imperative, there is support for mutable variables in the language.
+However, if you write your programs maximising the use of immutable variables, it will synchronize well with the rest of the F# ecosystem, and makes programming using the language easy. There are some edge cases where this doesn't apply, task expressions being one of them.
 
 .F#
 [source, fsharp]
@@ -358,26 +355,42 @@ let rec fac x =
   | _ -> x * fac (x - 1)
 ----
 
-.Iterative factorial in C++
-[source, c++]
+.Iterative factorial
+[source, fsharp++]
 ----
-int fac(int x)
-{
-  int result = x;
-  for (int i = x-1; i > 1; --i)
-  {
-    result *= i;
-  }
-  return result;
-}
+let fac x =
+    let mutable state = 1
+    for i in 1 .. x do
+        state <- state * i
+    state
 ----
 
 === Tail calls
 
 Tail calls are a way to overcome the stackoverflow problem when using
 recurison. When writing a recursive function try to make it tail recursive.
-_What is tail recursion?_ It means the final function applied is the recursive
-function itself or a return path. _How do we convert a recursive function into a
+Typically a recursive function will store the state of the previous call to that function on the stack.
+This consumes memory on the stack and after time will result in a stack overflow error depending on how deep the recursion goes and the stack size.
+Recursive functions that are tail recursive eliminate the need for the result to be stored on the stack.
+
+_What is tail recursion?_ It means the final thing that the function does is is the recursive
+function itself.
+
+Note that the factorial function above is not tail recursive.
+The last thing that function does is multiply 2 values.
+The example below shows a tail recursive function. It prints the elements in the list.
+
+[source, fsharp]
+----
+let rec tailf l =
+    match l with
+    | [] -> ()
+    | x::xs ->
+        printfn "%A" x
+        tailf xs
+----
+
+_How do we convert a recursive function into a
 tail recursive function?_ We thread an accumulator parameter through the
 function.
 
@@ -392,12 +405,22 @@ let fac x =
     | _ -> helper (x - 1) (x * acc)
   helper x 1
 
-fac 5
 ----
 
 === Fold
 
-:TODO
+Fold is an extension of the accumulator idea shown above. The modules list, seq and array all have `fold` functions in them.
+
+The following example shows how one can sum the elements using a fold.
+
+[source, fsharp]
+----
+let l = [1;2;3]
+List.fold (fun acc x -> x + acc) 0 l
+----
+
+The first parameter to `fold` is the function that operates on the accumulated value (state). It's a function of 2 parameters that takes the accumulator and an element from the list. The accumulator is used to thread the value between calls to the function. The second parameter is the initial value of the accumulator. In this case, because we want to sum the elements, we set it to 0.
+Internally `fold` uses a for loop and a mutable state variable, which means it's safe from stack overflow.
 
 == Types
 
