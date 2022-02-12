@@ -344,9 +344,10 @@ You have to do this since whitespace delimits arguments, so if the argument itse
 
 == Recursion versus Iteration
 
-We use recursion because iteration requires changing state, a mutable variable,
-and that breaks immutability. _But what about the stack?_ Don't worry about it
-for now. There are ways to get around it using `fold` and/or `tail recursion`.
+A fundamental difference between recursion and iteration is that the recursive one requires no mutable variables.
+Therefore a guideline when to use recursion is when immutability provides a benefit, for example, in concurrent programming.
+The downside of recursion, is that it consumes stack space and recursing too deeply will eventually cause a stack overflow.
+There are ways to get around it using `fold` and/or `tail recursion`.
 
 .Recursive factorial in F#
 [source, fsharp]
@@ -424,19 +425,22 @@ and it's easier than dealing with `C++` template errors.
 
 Unit type is special. It's like `void` in `C++` but it's a proper type and has a literal symbol `()` that represents it.
 If you want your expression to evaluate to nothing, then end it with `()`.
-It's often used in contexts where imperative langauges are the norm, liek the .NET classes.
+It's often used in contexts where imperative langauges are the norm, like the .NET classes.
 
 [source, fsharp]
 ----
 let foo () =
-  do something
+  bar param1
   ()
 ----
 
 === Discriminated Unions
 
 These are so simple yet so powerful.
-They are like an `enum` in `C++` but they are types.
+At first glance they might look like an `enum` or a `union` in `C++` but they are very different.
+They can be used to represent enumerations but they can scale to represent other things as well.
+They are unions, like unions in `C`, in the sense that only one of them is valid at the same time.
+But where a union in `C` is more like syntactic sugar for representing the underlying memory, discriminated unions form a set of from which a variable of that type can only take on one value.
 
 [source, fsharp]
 ----
@@ -454,6 +458,8 @@ They are used to construct the type `Fruit`.
 let fruit = Apple
 ----
 
+Now that we know the type of `fruit` we know that it can only be one of the constructors in the set defined by the DU `Fruit`.
+This gives the compiler more information to work.
 DU's go hand in hand with pattern matching and match expressions, so I'll show an example here:
 
 [source, fsharp]
@@ -464,6 +470,11 @@ let fruitName fruit =
   | Orange -> "orange"
   | Pear -> "pear"
 ----
+
+The compiler can make use of the knowledge about `Fruit`.
+If for example a match clause is missed, like `Pear` above, the compiler will warn you that you've missed a case.
+This extends even deeper and works with pattern matched clauses as well. It's not simply a literal `oh I'm missing a Pear from my
+match statement therefore I must warn` algorithm.
 
 A DU can be defined in terms of other types.
 
@@ -481,6 +492,8 @@ And can be created using the `constructor`:
 ----
 let a = Apple "apple"
 ----
+
+NOTE: The type of `a` is `Fruit` and not `Apple`. `Fruit` has a set of constructors of which `Apple` is one.
 
 === Records
 
@@ -557,6 +570,31 @@ let mutable x = 1
 
 x <- 2
 ----
+
+== Asynchronous programming
+
+One of `F#'s` core features is a model for asynchronous programming.
+Since then other languages have added support for asynchronous programming, in various ways.
+`F#` added it to the language based on an underlying extensible feature called _computation expressions_.
+Computation expressions essentially allow one to define a monadic type.
+However, all of this is already getting too academic, and detracting from the core of what I want to show, that is how to use `async expressions`.
+
+=== Problem
+The problem that `async` solves are the problems associated with callback funtions.
+In `C`, for example, say you wanted to read from the console. One way to do it would be to call a function that waits for the input from the user.
+This is synchronous programming.
+Control flow is paused and the thread waits for the operating system to tell it when the data is available to return to the user.
+Another way is to register a callback function. This function is called back by the operating system when data is available.
+This allows asynchronousity at the expense of cohesion.
+Control flow is inverted which makes it hard to trace through the logic of the code as a human who has to understand it.
+Additonally one must think about how to share variables between the callback and the main flow of the program.
+
+=== A basic example
+
+[source, fsharp]
+----
+----
+
 
 == Generics
 
