@@ -610,13 +610,57 @@ Control flow is paused and the thread waits for the operating system to tell it 
 Another way is to register a callback function. This function is called back by the operating system when data is available.
 This allows asynchronousity at the expense of cohesion.
 Control flow is inverted which makes it hard to trace through the logic of the code as a human who has to understand it.
-Additonally one must think about how to share variables between the callback and the main flow of the program.
+Additonally one must think about how to share variables between the callback function and the main flow of the program.
 
 === A basic example
 
+Here's an example of a request to get a webpage. In this case I haven't handled the async call `GetAsync` properly and if run the code will exit before the value from the async is returned.
+
 [source, fsharp]
 ----
+open System.Net.Http
+
+let get () =
+    let uri = "http://www.contoso.com"
+    use client = new HttpClient()
+    let response = client.GetAsync(uri)
+    printfn "%A" response
+
+get ()
 ----
+
+Now I'm going to handle the async call with a 'callback' that prints the response.
+
+[source, fsharp]
+----
+open System.Net.Http
+
+let get = async {
+    let uri = "http://www.contoso.com"
+    use client = new HttpClient()
+    let! response = client.GetAsync(uri) |> Async.AwaitTask
+    // here onwards is the callback
+    printfn "%A" response
+}
+get |> Async.RunSynchronously
+----
+
+There you go. That's it. The callback is really the stuff at the printfn line and beyond.
+This will look like magic to `C/C++` programmers. When I learned `F#` around 2010 it looked like magic to me.
+In fact it was mind-blowing. Now I could handle the same variable in scope and flow of control wasn't inverted.
+However, now in 2022, most languages have caught onto this paradigm.
+
+Let's explain what's going on here.
+The `async { ... }` block is a _computation expression_. Don't worry about what that is for now, just know that it's another feature of the the language and you can define your own computation expressions.
+However, computation expressions open the door to `let!` and other keywords that are suffixed with a `!`.
+What does that `!` mean?
+It means `await` the result of the expression and in the case of `let!` bind it to the name given.
+What is being waited on (awaited)? We need something that is `Async<'u>` to await. However the return type of GetAsync is a `Task<'u>` object. When interoperating with .NET libraries you'll find that most of them return `Task`.
+Now we have to convert this task to an `Async<'u>` and that's what `Async.AwaitTask` lets us do.
+Now we can await the result and bind it using `let! response =...`. You can think of `let!` as a way to unwrap the type and get at what is inside `Async`. Thus, `response` becomes a value of type `'u`.
+
+Finally we have the line `get |> Async.RunSynchronously`. It takes an async block and runs it.
+If we don't pass the block to `RunSynchronously` it won't run.
 
 
 == Generics
