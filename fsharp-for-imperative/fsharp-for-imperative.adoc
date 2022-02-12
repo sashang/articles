@@ -648,7 +648,8 @@ get |> Async.RunSynchronously
 There you go. That's it. The callback is really the stuff at the printfn line and beyond.
 This will look like magic to `C/C++` programmers. When I learned `F#` around 2010 it looked like magic to me.
 In fact it was mind-blowing. Now I could handle the same variable in scope and flow of control wasn't inverted.
-However, now in 2022, most languages have caught onto this paradigm.
+Now it's 2022 and a lot of languages have caught onto this paradigm and have some way to do asynchronous programming.
+Probably the most famous of these is `Go`. footnote:[It's interesting and somewhat scary to think that `F#` had a model for doing async before `Go` was born, yet the industry overlooked `F#` or didn't recognise that it had this quality that could have made many programmers jobs writing concurrent systems a lot easier. Why? A hive minded mentality from developers? Nobody gets blamed for using `C#` or `Java` for some enterprisey system. Java had a lot of hype in the 2000s, was the people's choice and came out of the underdog Sun Microsystems. They were Unix and they had beards, and that meant they must be smart, smarter than Microsoft the bad guy. All those factors combined to make it hard for F# to stand out despite what at the time was a killer feature that no other language had. Now it's 2022, most mainstream languages have some support for asynchronous programming, either cleanly or butchered into the language, and Oracle's the bad guy, Microsoft ship Linux inside Windows and own Github (two things Linus Torvalds created), and Sun Microsystems doesn't exist.]
 
 Let's explain what's going on here.
 The `async { ... }` block is a _computation expression_. Don't worry about what that is for now, just know that it's another feature of the the language and you can define your own computation expressions.
