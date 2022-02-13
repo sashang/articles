@@ -146,6 +146,31 @@ let main argv =
 /home/sashan/code/tests/test/Program.fs(6,1): error FS3118: Incomplete value or function definition. If this is in an expression, the body of the expression must be indented to the same column as the 'let' keyword. [/home/sashan/code/tests/test/test.fsproj]
 ```
 
+Another example that doesn't compile. The line `printfn "something"` does not start in the same column as the the
+first character after the equals.
+
+[source, fsharp]
+----
+let foo () = printfn "foo"
+    printfn "something" //this won't compile
+----
+
+The corrected version.
+
+[source, fsharp]
+----
+let foo () = printfn "foo"
+             printfn "something" //now this compiles
+----
+
+However it's better to write it like this:
+
+[source, fsharp]
+----
+let foo () =
+    printfn "foo"
+    printfn "something" //now this compiles
+----
 
 == How do I resolve type mismatch errors?
 
