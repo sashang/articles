@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.17">
-<meta name="description" content="Notes about git">
-<meta name="keywords" content="git,subversion">
-<title>Fundamentals</title>
+<meta name="description" content="Tewtin retrospective">
+<meta name="keywords" content="tewtin, f#, programming, startup">
+<title>Untitled</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -731,323 +731,93 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </div>
 <div id="content">
 <div class="paragraph">
-<p>These are my (ancient) notes about git from around the late 2000&#8217;s when I was
-using Subversion and transitioning to git. The notes describe using git and git
-with svn. In the case of svn the header is marked with <code>svn</code>.</p>
-</div>
-<div class="sect1">
-<h2 id="_fundamentals">Fundamentals</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Typically a version control system has a repository where it stores the history
-of all changes. Then there&#8217;s your local development directory where you checkout
-a copy of the repositories contents, do some edits and then commit them back to
-the repository. Git breaks this model and adds an intermediate stage called the
-'index' that sits between your working directory and the git repository. Changes
-make their way from the working tree to the index then to the repository.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="git_commit_workflow.png" alt="Commit Workflow">
-</div>
-<div class="title">Figure 1. Commit Workflow</div>
-</div>
-<div class="paragraph">
-<div class="title">Checking out repository</div>
-<p>Use <code>git clone &#8230;&#8203;</code> to clone a git repository locally.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git clone ssh://git@github.com/repo_path/repo.git</pre>
-</div>
+<p>I&#8217;ve been running <a href="https://tewtin.com">Tewtin</a> for about 3 years.
+It started in 2018 as a project to help a tutor (my mother) with her classes.
+She gets about 70 students a week (this is a lot for a tutor) and the administrative overhead is high.
+However, it does make her a leader in her field.
+Leaders in a field have followers.
+They follow what the leader does and attempt to model their work flow based on the leaders work flow.
+I knew that building a product for her problem had potential to scale based on that.
+She was running classes out of a room in her home and wanted to support remote learning via video conference.
+I wanted to make something because I found my day job intrinsically unsatisfying and I wasn&#8217;t growing.
+I needed to learn something new.
+I thought about using another streaming product, like Zoom, but I could make something better by getting rid of the need to email links every time a class is about to start.
+I could at a later date add support for schedules, management of students, and their resources and assignments.
+I found a community of like minded people at <a href="https://www.indiehackers.com/">IndieHackers</a>.
+They&#8217;re the sort of people who are creative and make things.
+I looked into the VC and angel investor scene but their values weren&#8217;t in alignment with mine.
+I wasn&#8217;t looking to build a unicorn, and I couldn&#8217;t envisage the product that I was building being something that would 10x their investment.
+They also seemed to want a proven product that had an existing customer base that they could throw money at to scale.
+I felt that this defeated the purpose of being a VC.
+Surely the purpose of getting into the VC game is to help someone build a product and not look for a ready made product with a proven market?
+And if you meet someone with a product and a proven market, why the hell would they want you?
+There&#8217;s no need for a VC at that stage.
+I had less ambitious goals than 10x someone&#8217;s investement and the IndieHacker ethos was in strategic alignment.
+I wanted to build something that I found interesting and I could live off.
+I chose <a href="https://fsharp.org/">F#</a> because I could write the front-end and back-end in <code>F#</code> and I already knew the language, having experimented with it and OCaml over the years.
+<a href="https://dotnet.microsoft.com/">.NET</a> had recently been ported to Linux.
+There was also a web framework, <a href="https://safe-stack.github.io/">SAFE</a>, that I could use to get something up and running quickly.
+I decided to commit, bit the bullet, took time off work and started the project.</p>
 </div>
 <div class="paragraph">
-<div class="title">Checking out repository (svn)</div>
-<p>You can use git with a svn repository. Note that this step can take a few hours
-because git checkouts out every revision in the svn repository and commits it
-locally.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git svn clone http://llvm.org/svn/llvm-project/libcxx/trunk libcxx</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Updating your sources</div>
-<div class="content">
-<pre>git pull</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Updating your sources (svn)</div>
-<div class="content">
-<pre>git svn rebase</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Updating your sources after editing</div>
-<div class="content">
-<pre>sashan@cyclops clang master $ git svn rebase
-include/clang/AST/Stmt.h: needs update
-lib/AST/Stmt.cpp: needs update
-update-index --refresh: command returned error: 1</pre>
-</div>
+<p>It took about 2 months of effort to get it working.
+This meant integrating with a WebRTC provider for the streaming and creating the database code to register students and tutors, map students to tutors, and creating the front end for students, tutors and the admin user.
+By the start of 2019 it was being used, and I let it run with minor updates during the year.
+It was during that year I realised the biggest problem was the level of support expected.
+The times when the video streaming did not work was when there was a misconfiguration in the client.
+In other words, the browser was not configured to allow access to the microphone or camera.
+If I was going to charge for it, then customers would expect to have some level of support while they were streaming their lessons to the class.
+To the customer, they have no idea why a student can&#8217;t connect, and the easiest thing to blame is Tewtin itself.
+They&#8217;d want someone to help them fix the student&#8217;s connection issues regardless of the source of the issue.
+For that reason, I didn&#8217;t bother trying to onboard more tutors.
+More tutors would have swamped me.
+There&#8217;s a lesson here.
+Try not to build a product that requires real-time customer support as a budget conscious independent developer.
+You really need a pile of cash for that sort of thing.</p>
 </div>
 <div class="paragraph">
-<p>Oops &#8230;&#8203; git&#8217;s complaining that you have edited files in the working tree. Use
-<strong>git stash</strong> to save the changes locally.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master 1 $ git stash
-Saved working directory and index state WIP on master: 3923c27 Fix diagnostic reporting of previous default statements.
-HEAD is now at 3923c27 Fix diagnostic reporting of previous default statements.</pre>
-</div>
+<p>Anecdotal accounts from the students using Tewtin is that they prefer it to Zoom.
+It&#8217;s less distracting than Zoom, and WebRTC integrates within the browser, making it cross-platform.
+Students use it from their iPads.
+There&#8217;s no need to send email links around, which opens a security hole where anyone who has the link can join the meeting.
+At least with Tewtin, identity is verified via Google OAuth so you know as a tutor, that the people in your class are ones you&#8217;ve explicitly authorised.
+However, the cost using WebRTC is greater than that of Zoom, so Tewtin needed to provide enough value to offset that cost, and the value in the current state isn&#8217;t there.</p>
 </div>
 <div class="paragraph">
-<p>Now you can rebase.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git svn rebase
-	M	docs/UsersManual.html
-r121768 = 024394010048e704192f4f34f21836a550f37a9f (refs/remotes/git-svn)</pre>
-</div>
+<p>In terms of choice of technology for building Tewtin, <code>F#</code> worked out very well.
+I didn&#8217;t need to learn a Javascript and another backend language.
+Working with a strongly statically typed functional language like <code>F#</code> is a joy.
+There are very few corner cases and exceptions to the rule, and it has the property that once your code compiles it just works the first time it runs.
+The community is amazing and incredibly helpful.</p>
 </div>
 <div class="paragraph">
-<p>And then apply the stashed changes</p>
+<p>Some of the people who wrote open source libraries without which I wouldn&#8217;t have been able to build Tewtin are:</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master 1 $ git stash pop</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Committing changes in the working tree directly to the repository</div>
-<p>This will add all editted files to index and then to repository. It will also
-prompt you to enter a commit log message. The -a parameter tells git to add
-all edited files.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git commit -a</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Selecting the files to commit</div>
-<p>This stages files for committing adding them to the index.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git add &lt;file name&gt;</pre>
-</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://twitter.com/MangelMaxime">Maxime Mangel</a>  Fulma, the front-end Bulma based CSS stuff.</p>
+</li>
+<li>
+<p><a href="https://twitter.com/DiEsmerio">Diego Esmerio</a>  Elmish Bridge a websockets library.</p>
+</li>
+<li>
+<p><a href="https://twitter.com/k_cieslak">Krzysztof Cieślak</a>  Saturn, Ionide.</p>
+</li>
+<li>
+<p><a href="https://twitter.com/zaid_ajaj">Zaid Ajaj</a>  Elmish</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>After this you should run git commit to commit the files. This will commit the
-changes to your local repository.</p>
-</div>
-<div class="paragraph">
-<div class="title">Committing to a svn repository</div>
-<p>When you&#8217;re happy with the changes made locally you can commit them to the
-upstream repository as shown below:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git svn dcommit</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Generating a patch for email submission</div>
-<p>This will generate a patch file of the most recent commit that you can email as
-an attachment.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git format-patch -1 -p
-0001-Fix-diagnostic-reporting-of-previous-default-stateme.patch</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Adding edited files to the index</div>
-<p>Sometimes you want to add changes in the working tree to the index without
-committing to the repository at the same time. In this case doing a git commit
--a won&#8217;t help. You need to use git add. The example below shows a session
-using git add -ui. The '-u' is for update and means that only modified paths
-in the working tree will be added to the index. New paths won&#8217;t.  The '-i' is
-for interactive and therefore git will prompt you for a response. In the session
-below I enter interactive mode, choose to update the index, and then select a
-range of paths, 1 to 7, to update the index with. Importantly, after finishing
-the update I 'hit enter to exit the interactive update mode'.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang use_std_set_for_switch_cases $ git add -ui
-           staged     unstaged path
-  1:    unchanged      +51/-31 include/clang/AST/Stmt.h
-  2:    unchanged        +6/-1 lib/AST/Stmt.cpp
-  3:    unchanged        +4/-4 lib/Sema/JumpDiagnostics.cpp
-  4:    unchanged        +5/-3 lib/Sema/SemaCodeComplete.cpp
-  5:    unchanged       +14/-6 lib/Sema/SemaStmt.cpp
-  6:    unchanged        +8/-2 lib/Serialization/ASTReaderStmt.cpp
-  7:    unchanged        +3/-3 lib/Serialization/ASTWriterStmt.cpp
-
-*** Commands ***
-  1: status	  2: update	  3: revert	  4: add untracked
-  5: patch	  6: diff	  7: quit	  8: help
-What now&gt; 2
-           staged     unstaged path
-  1:    unchanged      +51/-31 include/clang/AST/Stmt.h
-  2:    unchanged        +6/-1 lib/AST/Stmt.cpp
-  3:    unchanged        +4/-4 lib/Sema/JumpDiagnostics.cpp
-  4:    unchanged        +5/-3 lib/Sema/SemaCodeComplete.cpp
-  5:    unchanged       +14/-6 lib/Sema/SemaStmt.cpp
-  6:    unchanged        +8/-2 lib/Serialization/ASTReaderStmt.cpp
-  7:    unchanged        +3/-3 lib/Serialization/ASTWriterStmt.cpp
-Update&gt;&gt; 1-7
-           staged     unstaged path
-* 1:    unchanged      +51/-31 include/clang/AST/Stmt.h
-* 2:    unchanged        +6/-1 lib/AST/Stmt.cpp
-* 3:    unchanged        +4/-4 lib/Sema/JumpDiagnostics.cpp
-* 4:    unchanged        +5/-3 lib/Sema/SemaCodeComplete.cpp
-* 5:    unchanged       +14/-6 lib/Sema/SemaStmt.cpp
-* 6:    unchanged        +8/-2 lib/Serialization/ASTReaderStmt.cpp
-* 7:    unchanged        +3/-3 lib/Serialization/ASTWriterStmt.cpp
-Update&gt;&gt;
-updated 7 paths
-
-*** Commands ***
-  1: status	  2: update	  3: revert	  4: add untracked
-  5: patch	  6: diff	  7: quit	  8: help
-What now&gt; 7
-Bye.</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Bisecting to find the commit that introduced new behaviour</div>
-<p>git bisect lets you find a commit that resulted in different behaviour. The man
-page describes it as 'git-bisect - Find by binary search the change that
-introduced a bug' but it&#8217;s a slightly misleading since it really finds the
-commit that introduced a certain behaviour and behaviour in this case, doesn&#8217;t
-have to be a bug.</p>
-</div>
-<div class="paragraph">
-<p>Anyway, to start, find out the commit hashes within which you know the behaviour
-changed and pass them to `git start &#8230;&#8203; ` as shown below with the oldest commit
-hash first:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops src (no $ git bisect start 22e6ee96f2daab9b7fcc135eff8ec133579da12d 7639a06e1d7f014929a9ab22fe5a35153bf9be85</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>git will checkout a branch with the head set to a commit in the middle of the 2
-commits identified by the hashes above. Build the program and test for the
-desired behaviour. If what you see in the new build is the desired behaviour
-then mark it with <code>git bisect good</code> otherwise mark it with <code>git bisect bad</code>.
-Keep doing this until there are 0 bisections left. The head of the tree now will
-be at the commit that introduced the change.</p>
-</div>
-<div class="paragraph">
-<p>Anyway, to start, find out the commit hashes within which you know the behaviour
-changed and pass them to `git start &#8230;&#8203; ` as shown below with the oldest commit
-hash first:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops src (no $ git bisect start 22e6ee96f2daab9b7fcc135eff8ec133579da12d 7639a06e1d7f014929a9ab22fe5a35153bf9be85</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>git will checkout a branch with the head set to a commit in the middle of the 2
-commits identified by the hashes above. Build the program and test for the
-desired behaviour. If what you see in the new build is the desired behaviour
-then mark it with <code>git bisect good</code> otherwise mark it with <code>git bisect bad</code>.
-Keep doing this until there are 0 bisections left. The head of the tree now will
-be at the commit that introduced the change.</p>
-</div>
-<div class="paragraph">
-<div class="title">Rewriting History</div>
-<p>Hopefully this is something you will never need to do but sometimes people stupidly commit binaries
-and tarballs and password files into the repository. To remove them use <code>git filter-branch</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git filter-branch -f --tree-filter \
-  "rm -rf *.tar.gz; rm -rf some/shitty/dir" \
-  --tag-name-filter "cat" --prune-empty -- --all</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The <code>tree-filter</code> option takes a shell command and executes it from the root of the repository. The
-option <code>--tag-name-filter</code> renames the tags. In this case <code>cat</code> is the command so the tag name
-remains the same as the original.</p>
-</div>
-<div class="paragraph">
-<div class="title">Branching</div>
-<p>Branches give you the ability to work on a change in a parallel stream without affecting the master
-branch. Confusingly you use <code>git checkout -b &lt;branch name&gt;</code> to create a branch (confusingly you can
-also use <code>git checkout</code> to reset a file to its state at HEAD).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>master &gt; git checkout -b test-branch-2
-test-branch-2 &gt; git branch -avv
-master                     b392b5c [origin/master] Add function that reads config from an xml file. Add example settings.xml file.
-* test-branch-2              b392b5c Add function that reads config from an xml file. Add example settings.xml file.
-remotes/origin/HEAD        -&gt; origin/master
-remotes/origin/master      b392b5c Add function that reads config from an xml file. Add example settings.xml file.
-remotes/origin/test-branch 84459ad Just testing github workflow.</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now say you want this local branch to be created at the upstream. Then use <code>git push
---set-upstream</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>test-branch-2 &gt; git push --set-upstream origin test-branch-2
-Total 0 (delta 0), reused 0 (delta 0)
-
-To github.com:sashang/giraffe-sample.git
- * [new branch]      test-branch-2 -&gt; test-branch-2
-Branch 'test-branch-2' set up to track remote branch 'test-branch-2' from 'origin'.</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now say you want to delete the local branch:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>test-branch-2 &gt; git branch -D test-branch-2
-error: Cannot delete branch 'test-branch-2' checked out at</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Oops. We have to switch out of the branch first.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>test-branch-2 1 &gt; git checkout master
-Switched to branch 'master'
-Your branch is up to date with 'origin/master'.
-master &gt; git branch -D test-branch-2
-Deleted branch test-branch-2 (was b392b5c).
-master &gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then say we come back after a few months and we want to checkout that branch from the remote
-location:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>master &gt; git checkout -b tb2 origin/test-branch-2
-Branch 'tb2' set up to track remote branch 'test-branch-2' from 'origin'.
-Switched to a new branch 'tb2'</pre>
-</div>
-</div>
-</div>
+<p>And someone noticed me and I got a better job offer to work with <code>F#</code> on transaction processing systems at <a href="https://tab.com.au">Tabcorp</a>.
+They offered more than what I asked for, which either means I&#8217;m really good at negotiating or I don&#8217;t know what I&#8217;m worth! Actually, I suspect I know what happened. I thought they did a good job during the interview of trying to get as much of a signal from the candidate about their ability.
+I was glad that they didn&#8217;t only ask buzzword type questions, but were more probing, and wanted a creative and thoughtful response.
+There were times in the interview when I said the wrong name of something, for example I said 'duplicate' the SQL table instead of 'partition' to solve a problem.
+Point was it didn&#8217;t matter, because I figured out why I needed to partition the table without knowing the correct name of the process.
+Therefore, I suspect it was the quality of my answers in the interview combined with my experience with <code>F#</code> that determined my remuneration.
+I posted about it on <a href="https://twitter.com/sashan16/status/1453709925377474574?s=20/">Twitter</a>.
+Naturally, I&#8217;m excited about this new opportunity, as I get to work on problems that require creative application of data structures and algorithms, using a functional language in a company that I can grow.</p>
 </div>
 </div>
 <div id="footer">

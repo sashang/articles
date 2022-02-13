@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.17">
-<meta name="description" content="Notes about git">
-<meta name="keywords" content="git,subversion">
-<title>Fundamentals</title>
+<meta name="description" content="if statements">
+<meta name="keywords" content="bash, shell, programming, code, script">
+<title>2 - if statements</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -725,327 +725,392 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 #footer-text { color: #eee; font-size: 0.8em; text-align: center; }
 
 </style>
+<style>
+pre.pygments .hll { background-color: #ffffcc }
+pre.pygments { background: #f8f8f8; }
+pre.pygments .tok-c { color: #408080; font-style: italic } /* Comment */
+pre.pygments .tok-err { border: 1px solid #FF0000 } /* Error */
+pre.pygments .tok-k { color: #008000; font-weight: bold } /* Keyword */
+pre.pygments .tok-o { color: #666666 } /* Operator */
+pre.pygments .tok-ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+pre.pygments .tok-cm { color: #408080; font-style: italic } /* Comment.Multiline */
+pre.pygments .tok-cp { color: #BC7A00 } /* Comment.Preproc */
+pre.pygments .tok-cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+pre.pygments .tok-c1 { color: #408080; font-style: italic } /* Comment.Single */
+pre.pygments .tok-cs { color: #408080; font-style: italic } /* Comment.Special */
+pre.pygments .tok-gd { color: #A00000 } /* Generic.Deleted */
+pre.pygments .tok-ge { font-style: italic } /* Generic.Emph */
+pre.pygments .tok-gr { color: #FF0000 } /* Generic.Error */
+pre.pygments .tok-gh { color: #000080; font-weight: bold } /* Generic.Heading */
+pre.pygments .tok-gi { color: #00A000 } /* Generic.Inserted */
+pre.pygments .tok-go { color: #888888 } /* Generic.Output */
+pre.pygments .tok-gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+pre.pygments .tok-gs { font-weight: bold } /* Generic.Strong */
+pre.pygments .tok-gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+pre.pygments .tok-gt { color: #0044DD } /* Generic.Traceback */
+pre.pygments .tok-kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+pre.pygments .tok-kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+pre.pygments .tok-kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+pre.pygments .tok-kp { color: #008000 } /* Keyword.Pseudo */
+pre.pygments .tok-kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+pre.pygments .tok-kt { color: #B00040 } /* Keyword.Type */
+pre.pygments .tok-m { color: #666666 } /* Literal.Number */
+pre.pygments .tok-s { color: #BA2121 } /* Literal.String */
+pre.pygments .tok-na { color: #7D9029 } /* Name.Attribute */
+pre.pygments .tok-nb { color: #008000 } /* Name.Builtin */
+pre.pygments .tok-nc { color: #0000FF; font-weight: bold } /* Name.Class */
+pre.pygments .tok-no { color: #880000 } /* Name.Constant */
+pre.pygments .tok-nd { color: #AA22FF } /* Name.Decorator */
+pre.pygments .tok-ni { color: #999999; font-weight: bold } /* Name.Entity */
+pre.pygments .tok-ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+pre.pygments .tok-nf { color: #0000FF } /* Name.Function */
+pre.pygments .tok-nl { color: #A0A000 } /* Name.Label */
+pre.pygments .tok-nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+pre.pygments .tok-nt { color: #008000; font-weight: bold } /* Name.Tag */
+pre.pygments .tok-nv { color: #19177C } /* Name.Variable */
+pre.pygments .tok-ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+pre.pygments .tok-w { color: #bbbbbb } /* Text.Whitespace */
+pre.pygments .tok-mb { color: #666666 } /* Literal.Number.Bin */
+pre.pygments .tok-mf { color: #666666 } /* Literal.Number.Float */
+pre.pygments .tok-mh { color: #666666 } /* Literal.Number.Hex */
+pre.pygments .tok-mi { color: #666666 } /* Literal.Number.Integer */
+pre.pygments .tok-mo { color: #666666 } /* Literal.Number.Oct */
+pre.pygments .tok-sa { color: #BA2121 } /* Literal.String.Affix */
+pre.pygments .tok-sb { color: #BA2121 } /* Literal.String.Backtick */
+pre.pygments .tok-sc { color: #BA2121 } /* Literal.String.Char */
+pre.pygments .tok-dl { color: #BA2121 } /* Literal.String.Delimiter */
+pre.pygments .tok-sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+pre.pygments .tok-s2 { color: #BA2121 } /* Literal.String.Double */
+pre.pygments .tok-se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+pre.pygments .tok-sh { color: #BA2121 } /* Literal.String.Heredoc */
+pre.pygments .tok-si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+pre.pygments .tok-sx { color: #008000 } /* Literal.String.Other */
+pre.pygments .tok-sr { color: #BB6688 } /* Literal.String.Regex */
+pre.pygments .tok-s1 { color: #BA2121 } /* Literal.String.Single */
+pre.pygments .tok-ss { color: #19177C } /* Literal.String.Symbol */
+pre.pygments .tok-bp { color: #008000 } /* Name.Builtin.Pseudo */
+pre.pygments .tok-fm { color: #0000FF } /* Name.Function.Magic */
+pre.pygments .tok-vc { color: #19177C } /* Name.Variable.Class */
+pre.pygments .tok-vg { color: #19177C } /* Name.Variable.Global */
+pre.pygments .tok-vi { color: #19177C } /* Name.Variable.Instance */
+pre.pygments .tok-vm { color: #19177C } /* Name.Variable.Magic */
+pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
+</style>
 </head>
 <body class="article">
 <div id="header">
+<h1>2 - if statements</h1>
 </div>
 <div id="content">
-<div class="paragraph">
-<p>These are my (ancient) notes about git from around the late 2000&#8217;s when I was
-using Subversion and transitioning to git. The notes describe using git and git
-with svn. In the case of svn the header is marked with <code>svn</code>.</p>
-</div>
-<div class="sect1">
-<h2 id="_fundamentals">Fundamentals</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Typically a version control system has a repository where it stores the history
-of all changes. Then there&#8217;s your local development directory where you checkout
-a copy of the repositories contents, do some edits and then commit them back to
-the repository. Git breaks this model and adds an intermediate stage called the
-'index' that sits between your working directory and the git repository. Changes
-make their way from the working tree to the index then to the repository.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="git_commit_workflow.png" alt="Commit Workflow">
-</div>
-<div class="title">Figure 1. Commit Workflow</div>
-</div>
-<div class="paragraph">
-<div class="title">Checking out repository</div>
-<p>Use <code>git clone &#8230;&#8203;</code> to clone a git repository locally.</p>
+<p>If statements in Bash let us make decisions. The basic syntax is:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git clone ssh://git@github.com/repo_path/repo.git</pre>
+<pre>if &lt;command&gt;; then
+fi</pre>
 </div>
 </div>
 <div class="paragraph">
-<div class="title">Checking out repository (svn)</div>
-<p>You can use git with a svn repository. Note that this step can take a few hours
-because git checkouts out every revision in the svn repository and commits it
-locally.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git svn clone http://llvm.org/svn/llvm-project/libcxx/trunk libcxx</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Updating your sources</div>
-<div class="content">
-<pre>git pull</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Updating your sources (svn)</div>
-<div class="content">
-<pre>git svn rebase</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Updating your sources after editing</div>
-<div class="content">
-<pre>sashan@cyclops clang master $ git svn rebase
-include/clang/AST/Stmt.h: needs update
-lib/AST/Stmt.cpp: needs update
-update-index --refresh: command returned error: 1</pre>
-</div>
+<p><em>command</em> can be a function or a program.</p>
 </div>
 <div class="paragraph">
-<p>Oops &#8230;&#8203; git&#8217;s complaining that you have edited files in the working tree. Use
-<strong>git stash</strong> to save the changes locally.</p>
+<p>With what we know so far lets make a script that searches a file for some text and prints <strong>"found
+it!"</strong> if it finds the text.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sashan@cyclops clang master 1 $ git stash
-Saved working directory and index state WIP on master: 3923c27 Fix diagnostic reporting of previous default statements.
-HEAD is now at 3923c27 Fix diagnostic reporting of previous default statements.</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now you can rebase.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git svn rebase
-	M	docs/UsersManual.html
-r121768 = 024394010048e704192f4f34f21836a550f37a9f (refs/remotes/git-svn)</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>And then apply the stashed changes</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master 1 $ git stash pop</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Committing changes in the working tree directly to the repository</div>
-<p>This will add all editted files to index and then to repository. It will also
-prompt you to enter a commit log message. The -a parameter tells git to add
-all edited files.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git commit -a</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Selecting the files to commit</div>
-<p>This stages files for committing adding them to the index.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git add &lt;file name&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>After this you should run git commit to commit the files. This will commit the
-changes to your local repository.</p>
-</div>
-<div class="paragraph">
-<div class="title">Committing to a svn repository</div>
-<p>When you&#8217;re happy with the changes made locally you can commit them to the
-upstream repository as shown below:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git svn dcommit</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Generating a patch for email submission</div>
-<p>This will generate a patch file of the most recent commit that you can email as
-an attachment.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git format-patch -1 -p
-0001-Fix-diagnostic-reporting-of-previous-default-stateme.patch</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Adding edited files to the index</div>
-<p>Sometimes you want to add changes in the working tree to the index without
-committing to the repository at the same time. In this case doing a git commit
--a won&#8217;t help. You need to use git add. The example below shows a session
-using git add -ui. The '-u' is for update and means that only modified paths
-in the working tree will be added to the index. New paths won&#8217;t.  The '-i' is
-for interactive and therefore git will prompt you for a response. In the session
-below I enter interactive mode, choose to update the index, and then select a
-range of paths, 1 to 7, to update the index with. Importantly, after finishing
-the update I 'hit enter to exit the interactive update mode'.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang use_std_set_for_switch_cases $ git add -ui
-           staged     unstaged path
-  1:    unchanged      +51/-31 include/clang/AST/Stmt.h
-  2:    unchanged        +6/-1 lib/AST/Stmt.cpp
-  3:    unchanged        +4/-4 lib/Sema/JumpDiagnostics.cpp
-  4:    unchanged        +5/-3 lib/Sema/SemaCodeComplete.cpp
-  5:    unchanged       +14/-6 lib/Sema/SemaStmt.cpp
-  6:    unchanged        +8/-2 lib/Serialization/ASTReaderStmt.cpp
-  7:    unchanged        +3/-3 lib/Serialization/ASTWriterStmt.cpp
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/bash</span>
 
-*** Commands ***
-  1: status	  2: update	  3: revert	  4: add untracked
-  5: patch	  6: diff	  7: quit	  8: help
-What now&gt; 2
-           staged     unstaged path
-  1:    unchanged      +51/-31 include/clang/AST/Stmt.h
-  2:    unchanged        +6/-1 lib/AST/Stmt.cpp
-  3:    unchanged        +4/-4 lib/Sema/JumpDiagnostics.cpp
-  4:    unchanged        +5/-3 lib/Sema/SemaCodeComplete.cpp
-  5:    unchanged       +14/-6 lib/Sema/SemaStmt.cpp
-  6:    unchanged        +8/-2 lib/Serialization/ASTReaderStmt.cpp
-  7:    unchanged        +3/-3 lib/Serialization/ASTWriterStmt.cpp
-Update&gt;&gt; 1-7
-           staged     unstaged path
-* 1:    unchanged      +51/-31 include/clang/AST/Stmt.h
-* 2:    unchanged        +6/-1 lib/AST/Stmt.cpp
-* 3:    unchanged        +4/-4 lib/Sema/JumpDiagnostics.cpp
-* 4:    unchanged        +5/-3 lib/Sema/SemaCodeComplete.cpp
-* 5:    unchanged       +14/-6 lib/Sema/SemaStmt.cpp
-* 6:    unchanged        +8/-2 lib/Serialization/ASTReaderStmt.cpp
-* 7:    unchanged        +3/-3 lib/Serialization/ASTWriterStmt.cpp
-Update&gt;&gt;
-updated 7 paths
+<span class="tok-k">function</span> main <span class="tok-o">{</span>
+  <span class="tok-k">if</span> grep -q <span class="tok-nv">$1</span> <span class="tok-nv">$2</span><span class="tok-p">;</span> <span class="tok-k">then</span> #<b class="conum">(1)</b> <b class="conum">(2)</b> <b class="conum">(3)</b>
+    <span class="tok-nb">echo</span> <span class="tok-s2">&quot;found it!&quot;</span>
+  <span class="tok-k">fi</span>
+<span class="tok-o">}</span>
 
-*** Commands ***
-  1: status	  2: update	  3: revert	  4: add untracked
-  5: patch	  6: diff	  7: quit	  8: help
-What now&gt; 7
-Bye.</pre>
+main <span class="tok-nv">$@</span></code></pre>
 </div>
 </div>
-<div class="paragraph">
-<div class="title">Bisecting to find the commit that introduced new behaviour</div>
-<p>git bisect lets you find a commit that resulted in different behaviour. The man
-page describes it as 'git-bisect - Find by binary search the change that
-introduced a bug' but it&#8217;s a slightly misleading since it really finds the
-commit that introduced a certain behaviour and behaviour in this case, doesn&#8217;t
-have to be a bug.</p>
-</div>
-<div class="paragraph">
-<p>Anyway, to start, find out the commit hashes within which you know the behaviour
-changed and pass them to `git start &#8230;&#8203; ` as shown below with the oldest commit
-hash first:</p>
+<div class="colist arabic">
+<ol>
+<li>
+<p><code>grep</code> is a program that runs a regular expression search on the file. Regular expressions are a
+complicated topic and some of it will be touched on later.</p>
+</li>
+<li>
+<p>We use positional arguments <code>1</code> and <code>2</code>. The first is the string to find. The second is the name of the
+file.</p>
+</li>
+<li>
+<p>-q option to grep means <em>quiet</em>. It suppresses output from grep.</p>
+</li>
+</ol>
 </div>
 <div class="listingblock">
+<div class="title">Example</div>
 <div class="content">
-<pre>sashan@cyclops src (no $ git bisect start 22e6ee96f2daab9b7fcc135eff8ec133579da12d 7639a06e1d7f014929a9ab22fe5a35153bf9be85</pre>
+<pre>./found-it.sh "command" bash-0-to-100.adoc
+found it!</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>git will checkout a branch with the head set to a commit in the middle of the 2
-commits identified by the hashes above. Build the program and test for the
-desired behaviour. If what you see in the new build is the desired behaviour
-then mark it with <code>git bisect good</code> otherwise mark it with <code>git bisect bad</code>.
-Keep doing this until there are 0 bisections left. The head of the tree now will
-be at the commit that introduced the change.</p>
+<p>Here we search of the string <em>command</em> in this file.</p>
 </div>
 <div class="paragraph">
-<p>Anyway, to start, find out the commit hashes within which you know the behaviour
-changed and pass them to `git start &#8230;&#8203; ` as shown below with the oldest commit
-hash first:</p>
+<p>If it finds the string then <code>grep</code> returns <code>0</code>. If not it returns <code>1</code>.
+This might surprise you.
+In shell script <code>0</code> is true and any other value is interpreted as false.</p>
+</div>
+<div class="paragraph">
+<p>We can also use <code>if</code> statements with functions we define. Let&#8217;s create a function <code>quiet_grep</code> which
+calls <code>grep</code> with <code>-q</code>.</p>
 </div>
 <div class="listingblock">
+<div class="title">quiet grep</div>
 <div class="content">
-<pre>sashan@cyclops src (no $ git bisect start 22e6ee96f2daab9b7fcc135eff8ec133579da12d 7639a06e1d7f014929a9ab22fe5a35153bf9be85</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>git will checkout a branch with the head set to a commit in the middle of the 2
-commits identified by the hashes above. Build the program and test for the
-desired behaviour. If what you see in the new build is the desired behaviour
-then mark it with <code>git bisect good</code> otherwise mark it with <code>git bisect bad</code>.
-Keep doing this until there are 0 bisections left. The head of the tree now will
-be at the commit that introduced the change.</p>
-</div>
-<div class="paragraph">
-<div class="title">Rewriting History</div>
-<p>Hopefully this is something you will never need to do but sometimes people stupidly commit binaries
-and tarballs and password files into the repository. To remove them use <code>git filter-branch</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git filter-branch -f --tree-filter \
-  "rm -rf *.tar.gz; rm -rf some/shitty/dir" \
-  --tag-name-filter "cat" --prune-empty -- --all</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The <code>tree-filter</code> option takes a shell command and executes it from the root of the repository. The
-option <code>--tag-name-filter</code> renames the tags. In this case <code>cat</code> is the command so the tag name
-remains the same as the original.</p>
-</div>
-<div class="paragraph">
-<div class="title">Branching</div>
-<p>Branches give you the ability to work on a change in a parallel stream without affecting the master
-branch. Confusingly you use <code>git checkout -b &lt;branch name&gt;</code> to create a branch (confusingly you can
-also use <code>git checkout</code> to reset a file to its state at HEAD).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>master &gt; git checkout -b test-branch-2
-test-branch-2 &gt; git branch -avv
-master                     b392b5c [origin/master] Add function that reads config from an xml file. Add example settings.xml file.
-* test-branch-2              b392b5c Add function that reads config from an xml file. Add example settings.xml file.
-remotes/origin/HEAD        -&gt; origin/master
-remotes/origin/master      b392b5c Add function that reads config from an xml file. Add example settings.xml file.
-remotes/origin/test-branch 84459ad Just testing github workflow.</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now say you want this local branch to be created at the upstream. Then use <code>git push
---set-upstream</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>test-branch-2 &gt; git push --set-upstream origin test-branch-2
-Total 0 (delta 0), reused 0 (delta 0)
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/bash</span>
 
-To github.com:sashang/giraffe-sample.git
- * [new branch]      test-branch-2 -&gt; test-branch-2
-Branch 'test-branch-2' set up to track remote branch 'test-branch-2' from 'origin'.</pre>
+<span class="tok-k">function</span> quiet_grep <span class="tok-o">{</span>
+  <span class="tok-k">if</span> grep -q <span class="tok-nv">$1</span> <span class="tok-nv">$2</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+    <span class="tok-k">return</span> <span class="tok-m">0</span> #<b class="conum">(1)</b>
+  <span class="tok-k">else</span>
+    <span class="tok-k">return</span> <span class="tok-m">1</span>
+  <span class="tok-k">fi</span>
+<span class="tok-o">}</span>
+
+<span class="tok-k">function</span> main <span class="tok-o">{</span>
+  <span class="tok-k">if</span> quiet_grep <span class="tok-nv">$1</span> <span class="tok-nv">$2</span><span class="tok-p">;</span> <span class="tok-k">then</span> #<b class="conum">(2)</b>
+    <span class="tok-nb">echo</span> <span class="tok-s2">&quot;found it!&quot;</span>
+  <span class="tok-k">fi</span>
+<span class="tok-o">}</span>
+
+main <span class="tok-nv">$@</span></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Note the return value of 0 for truth.</p>
+</li>
+<li>
+<p>Call our new function <code>quiet_grep</code>.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+Bash uses <code>0</code> for truth and any other value as false. This is different from other programming languages.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Now say you want to delete the local branch:</p>
+<p>Can we use if statements with variables as in other languages?</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>test-branch-2 &gt; git branch -D test-branch-2
-error: Cannot delete branch 'test-branch-2' checked out at</pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">VAR</span><span class="tok-o">=</span><span class="tok-m">1</span>
+<span class="tok-k">if</span> <span class="tok-nv">$VAR</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;yes&quot;</span>
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">output</div>
+<div class="content">
+<pre>bash: 1: command not found</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Oops. We have to switch out of the branch first.</p>
+<p>Doesn&#8217;t look like it. <em>This isn&#8217;t how other languages work. What&#8217;s going on?</em>
+The reason is in the grammar of the if statement. The stuff that follows the
+<code>if</code> has to be a <em>command</em>.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+if statements run a <em>command</em>. You can&#8217;t use a parameter <em>directly</em> in an if statement.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you can&#8217;t directly use a parameter in an <code>if</code> statement, how do you test a value of a parameter?
+If statements require a command which implies that there must be a command to test parameter
+values. It&#8217;s called <code>test</code>. You can see how to use it in the next example.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>test-branch-2 1 &gt; git checkout master
-Switched to branch 'master'
-Your branch is up to date with 'origin/master'.
-master &gt; git branch -D test-branch-2
-Deleted branch test-branch-2 (was b392b5c).
-master &gt;</pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">VAR</span><span class="tok-o">=</span><span class="tok-m">1</span>
+<span class="tok-k">if</span> <span class="tok-nb">test</span> <span class="tok-nv">$VAR</span> -eq <span class="tok-m">1</span><span class="tok-p">;</span> <span class="tok-k">then</span> #<b class="conum">(1)</b>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;yes&quot;</span>
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p><code>-eq</code> is short for equals</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>There are many other options to <code>test</code>. At the command prompt type <code>man test</code> to see the manual for
+that command. You can move up and down inside the pager using <code>j</code> and <code>k</code>.  Use <code>q</code> to quit.<br></p>
+</div>
+<div class="paragraph">
+<p>But writing <code>test</code> everytime I want to test something is awkward. Is there another way? Yes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">VAR</span><span class="tok-o">=</span><span class="tok-m">1</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-nv">$VAR</span> -eq <span class="tok-m">1</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span> #<b class="conum">(1)</b>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;yes&quot;</span>
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>[ is also a command.<br></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>But I thought you said if statements run commands only? Yes, that&#8217;s true. <code>[</code> is a command. It&#8217;s
+often installed under /usr/bin.<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>ls -l '/usr/bin/['
+-rwxr-xr-x 1 root root 59528 Mar  7 00:01 '/usr/bin/['</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Implementations of Bash will implement <code>[</code> as a builtin command. In other words it runs in the
+same process as the interpreter and the external command <code>/usr/bin/[</code> isn&#8217;t called.<br>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_numeric_and_string_comparisons">Numeric and String comparisons</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When comparing strings and numbers <code>test</code> and <code>[</code> take different comparions parameters.
+Generally if conventional boolean operators are used, then it&#8217;s a string comparison taking place.
+If it&#8217;s <code>-eq</code> or <code>-gt</code>, single dash options, then numeric comparison is taking place.<br></p>
+</div>
+<div class="paragraph">
+<p>You can see the difference in the following two examples.<br></p>
+</div>
+<div class="paragraph">
+<p>In the first example numeric comparison is taking place. The values are equal. <code>01</code> and <code>1</code> are
+numerically the same.<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">VAR</span><span class="tok-o">=</span><span class="tok-m">1</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$VAR</span><span class="tok-s2">&quot;</span> -eq <span class="tok-m">01</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;equal&quot;</span>
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">output</div>
+<div class="content">
+<pre>equal</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Then say we come back after a few months and we want to checkout that branch from the remote
-location:</p>
+<p>In this next example we compare the same values but as strings.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>master &gt; git checkout -b tb2 origin/test-branch-2
-Branch 'tb2' set up to track remote branch 'test-branch-2' from 'origin'.
-Switched to a new branch 'tb2'</pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/bash</span>
+
+<span class="tok-nv">VAR</span><span class="tok-o">=</span><span class="tok-m">1</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$VAR</span><span class="tok-s2">&quot;</span> <span class="tok-o">=</span> <span class="tok-m">01</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;equal&quot;</span>
+<span class="tok-k">else</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;not equal&quot;</span>
+<span class="tok-k">fi</span></code></pre>
 </div>
+</div>
+<div class="listingblock">
+<div class="title">output</div>
+<div class="content">
+<pre>not equal</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_negation_and_boolean_operators">Negation and Boolean Operators</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Negation uses <code>!</code> like a lot of other languages to invert the truth value of an expression.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-k">if</span> ! true<span class="tok-p">;</span> <span class="tok-k">then</span> #<b class="conum">(1)</b>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;false&quot;</span>
+<span class="tok-k">else</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;true&quot;</span>
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>true is a command. If you type <code>which true</code> at the command prompt you&#8217;ll find it. There is also
+a <code>false</code> command.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="title">output</div>
+<div class="content">
+<pre>true</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can combine expressions using boolean operators <code>&amp;&amp;</code> and <code>||</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/bash</span>
+
+<span class="tok-nv">VAR1</span><span class="tok-o">=</span><span class="tok-m">20</span>
+<span class="tok-nv">VAR2</span><span class="tok-o">=</span><span class="tok-m">20</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$VAR1</span><span class="tok-s2">&quot;</span> -gt <span class="tok-m">10</span> <span class="tok-o">]</span> <span class="tok-o">&amp;&amp;</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$VAR2</span><span class="tok-s2">&quot;</span> -gt <span class="tok-m">10</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;both </span><span class="tok-nv">$VAR1</span><span class="tok-s2"> and </span><span class="tok-nv">$VAR2</span><span class="tok-s2"> are greater than 10&quot;</span>
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>&amp;&amp;</code> applies short circuit evaluation. In other words, if the first expression is false then
+the following expressions are not evaluated. A similar thing happens with <code>||</code>. In this case, if the
+first expression is true, then the remaining expressions are not evaluated.</p>
 </div>
 </div>
 </div>

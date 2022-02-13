@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.17">
-<meta name="description" content="Notes about git">
-<meta name="keywords" content="git,subversion">
-<title>Fundamentals</title>
+<meta name="description" content="A simple guide to Bash, hello world">
+<meta name="keywords" content="bash, shell, programming, code, script">
+<title>1 - Hello World</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -725,327 +725,256 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 #footer-text { color: #eee; font-size: 0.8em; text-align: center; }
 
 </style>
+<style>
+pre.pygments .hll { background-color: #ffffcc }
+pre.pygments { background: #f8f8f8; }
+pre.pygments .tok-c { color: #408080; font-style: italic } /* Comment */
+pre.pygments .tok-err { border: 1px solid #FF0000 } /* Error */
+pre.pygments .tok-k { color: #008000; font-weight: bold } /* Keyword */
+pre.pygments .tok-o { color: #666666 } /* Operator */
+pre.pygments .tok-ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+pre.pygments .tok-cm { color: #408080; font-style: italic } /* Comment.Multiline */
+pre.pygments .tok-cp { color: #BC7A00 } /* Comment.Preproc */
+pre.pygments .tok-cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+pre.pygments .tok-c1 { color: #408080; font-style: italic } /* Comment.Single */
+pre.pygments .tok-cs { color: #408080; font-style: italic } /* Comment.Special */
+pre.pygments .tok-gd { color: #A00000 } /* Generic.Deleted */
+pre.pygments .tok-ge { font-style: italic } /* Generic.Emph */
+pre.pygments .tok-gr { color: #FF0000 } /* Generic.Error */
+pre.pygments .tok-gh { color: #000080; font-weight: bold } /* Generic.Heading */
+pre.pygments .tok-gi { color: #00A000 } /* Generic.Inserted */
+pre.pygments .tok-go { color: #888888 } /* Generic.Output */
+pre.pygments .tok-gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+pre.pygments .tok-gs { font-weight: bold } /* Generic.Strong */
+pre.pygments .tok-gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+pre.pygments .tok-gt { color: #0044DD } /* Generic.Traceback */
+pre.pygments .tok-kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+pre.pygments .tok-kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+pre.pygments .tok-kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+pre.pygments .tok-kp { color: #008000 } /* Keyword.Pseudo */
+pre.pygments .tok-kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+pre.pygments .tok-kt { color: #B00040 } /* Keyword.Type */
+pre.pygments .tok-m { color: #666666 } /* Literal.Number */
+pre.pygments .tok-s { color: #BA2121 } /* Literal.String */
+pre.pygments .tok-na { color: #7D9029 } /* Name.Attribute */
+pre.pygments .tok-nb { color: #008000 } /* Name.Builtin */
+pre.pygments .tok-nc { color: #0000FF; font-weight: bold } /* Name.Class */
+pre.pygments .tok-no { color: #880000 } /* Name.Constant */
+pre.pygments .tok-nd { color: #AA22FF } /* Name.Decorator */
+pre.pygments .tok-ni { color: #999999; font-weight: bold } /* Name.Entity */
+pre.pygments .tok-ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+pre.pygments .tok-nf { color: #0000FF } /* Name.Function */
+pre.pygments .tok-nl { color: #A0A000 } /* Name.Label */
+pre.pygments .tok-nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+pre.pygments .tok-nt { color: #008000; font-weight: bold } /* Name.Tag */
+pre.pygments .tok-nv { color: #19177C } /* Name.Variable */
+pre.pygments .tok-ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+pre.pygments .tok-w { color: #bbbbbb } /* Text.Whitespace */
+pre.pygments .tok-mb { color: #666666 } /* Literal.Number.Bin */
+pre.pygments .tok-mf { color: #666666 } /* Literal.Number.Float */
+pre.pygments .tok-mh { color: #666666 } /* Literal.Number.Hex */
+pre.pygments .tok-mi { color: #666666 } /* Literal.Number.Integer */
+pre.pygments .tok-mo { color: #666666 } /* Literal.Number.Oct */
+pre.pygments .tok-sa { color: #BA2121 } /* Literal.String.Affix */
+pre.pygments .tok-sb { color: #BA2121 } /* Literal.String.Backtick */
+pre.pygments .tok-sc { color: #BA2121 } /* Literal.String.Char */
+pre.pygments .tok-dl { color: #BA2121 } /* Literal.String.Delimiter */
+pre.pygments .tok-sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+pre.pygments .tok-s2 { color: #BA2121 } /* Literal.String.Double */
+pre.pygments .tok-se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+pre.pygments .tok-sh { color: #BA2121 } /* Literal.String.Heredoc */
+pre.pygments .tok-si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+pre.pygments .tok-sx { color: #008000 } /* Literal.String.Other */
+pre.pygments .tok-sr { color: #BB6688 } /* Literal.String.Regex */
+pre.pygments .tok-s1 { color: #BA2121 } /* Literal.String.Single */
+pre.pygments .tok-ss { color: #19177C } /* Literal.String.Symbol */
+pre.pygments .tok-bp { color: #008000 } /* Name.Builtin.Pseudo */
+pre.pygments .tok-fm { color: #0000FF } /* Name.Function.Magic */
+pre.pygments .tok-vc { color: #19177C } /* Name.Variable.Class */
+pre.pygments .tok-vg { color: #19177C } /* Name.Variable.Global */
+pre.pygments .tok-vi { color: #19177C } /* Name.Variable.Instance */
+pre.pygments .tok-vm { color: #19177C } /* Name.Variable.Magic */
+pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
+</style>
 </head>
 <body class="article">
 <div id="header">
+<h1>1 - Hello World</h1>
 </div>
 <div id="content">
-<div class="paragraph">
-<p>These are my (ancient) notes about git from around the late 2000&#8217;s when I was
-using Subversion and transitioning to git. The notes describe using git and git
-with svn. In the case of svn the header is marked with <code>svn</code>.</p>
-</div>
-<div class="sect1">
-<h2 id="_fundamentals">Fundamentals</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Typically a version control system has a repository where it stores the history
-of all changes. Then there&#8217;s your local development directory where you checkout
-a copy of the repositories contents, do some edits and then commit them back to
-the repository. Git breaks this model and adds an intermediate stage called the
-'index' that sits between your working directory and the git repository. Changes
-make their way from the working tree to the index then to the repository.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="git_commit_workflow.png" alt="Commit Workflow">
-</div>
-<div class="title">Figure 1. Commit Workflow</div>
+<p>Start the terminal program.<br></p>
 </div>
 <div class="paragraph">
-<div class="title">Checking out repository</div>
-<p>Use <code>git clone &#8230;&#8203;</code> to clone a git repository locally.</p>
+<p>At the command prompt type:<br></p>
 </div>
 <div class="listingblock">
+<div class="title">Input</div>
 <div class="content">
-<pre>git clone ssh://git@github.com/repo_path/repo.git</pre>
+<pre>$ echo "hello world"</pre>
 </div>
 </div>
+<div class="listingblock">
+<div class="title">Output</div>
+<div class="content">
+<pre>hello world</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_a_starting_point">A Starting Point</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<div class="title">Checking out repository (svn)</div>
-<p>You can use git with a svn repository. Note that this step can take a few hours
-because git checkouts out every revision in the svn repository and commits it
-locally.</p>
+<p>I like my shell scripts to start with a main function.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git svn clone http://llvm.org/svn/llvm-project/libcxx/trunk libcxx</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Updating your sources</div>
-<div class="content">
-<pre>git pull</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Updating your sources (svn)</div>
-<div class="content">
-<pre>git svn rebase</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Updating your sources after editing</div>
-<div class="content">
-<pre>sashan@cyclops clang master $ git svn rebase
-include/clang/AST/Stmt.h: needs update
-lib/AST/Stmt.cpp: needs update
-update-index --refresh: command returned error: 1</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Oops &#8230;&#8203; git&#8217;s complaining that you have edited files in the working tree. Use
-<strong>git stash</strong> to save the changes locally.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master 1 $ git stash
-Saved working directory and index state WIP on master: 3923c27 Fix diagnostic reporting of previous default statements.
-HEAD is now at 3923c27 Fix diagnostic reporting of previous default statements.</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now you can rebase.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git svn rebase
-	M	docs/UsersManual.html
-r121768 = 024394010048e704192f4f34f21836a550f37a9f (refs/remotes/git-svn)</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>And then apply the stashed changes</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master 1 $ git stash pop</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Committing changes in the working tree directly to the repository</div>
-<p>This will add all editted files to index and then to repository. It will also
-prompt you to enter a commit log message. The -a parameter tells git to add
-all edited files.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git commit -a</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Selecting the files to commit</div>
-<p>This stages files for committing adding them to the index.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git add &lt;file name&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>After this you should run git commit to commit the files. This will commit the
-changes to your local repository.</p>
-</div>
-<div class="paragraph">
-<div class="title">Committing to a svn repository</div>
-<p>When you&#8217;re happy with the changes made locally you can commit them to the
-upstream repository as shown below:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git svn dcommit</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Generating a patch for email submission</div>
-<p>This will generate a patch file of the most recent commit that you can email as
-an attachment.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git format-patch -1 -p
-0001-Fix-diagnostic-reporting-of-previous-default-stateme.patch</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Adding edited files to the index</div>
-<p>Sometimes you want to add changes in the working tree to the index without
-committing to the repository at the same time. In this case doing a git commit
--a won&#8217;t help. You need to use git add. The example below shows a session
-using git add -ui. The '-u' is for update and means that only modified paths
-in the working tree will be added to the index. New paths won&#8217;t.  The '-i' is
-for interactive and therefore git will prompt you for a response. In the session
-below I enter interactive mode, choose to update the index, and then select a
-range of paths, 1 to 7, to update the index with. Importantly, after finishing
-the update I 'hit enter to exit the interactive update mode'.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang use_std_set_for_switch_cases $ git add -ui
-           staged     unstaged path
-  1:    unchanged      +51/-31 include/clang/AST/Stmt.h
-  2:    unchanged        +6/-1 lib/AST/Stmt.cpp
-  3:    unchanged        +4/-4 lib/Sema/JumpDiagnostics.cpp
-  4:    unchanged        +5/-3 lib/Sema/SemaCodeComplete.cpp
-  5:    unchanged       +14/-6 lib/Sema/SemaStmt.cpp
-  6:    unchanged        +8/-2 lib/Serialization/ASTReaderStmt.cpp
-  7:    unchanged        +3/-3 lib/Serialization/ASTWriterStmt.cpp
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/bash</span>
 
-*** Commands ***
-  1: status	  2: update	  3: revert	  4: add untracked
-  5: patch	  6: diff	  7: quit	  8: help
-What now&gt; 2
-           staged     unstaged path
-  1:    unchanged      +51/-31 include/clang/AST/Stmt.h
-  2:    unchanged        +6/-1 lib/AST/Stmt.cpp
-  3:    unchanged        +4/-4 lib/Sema/JumpDiagnostics.cpp
-  4:    unchanged        +5/-3 lib/Sema/SemaCodeComplete.cpp
-  5:    unchanged       +14/-6 lib/Sema/SemaStmt.cpp
-  6:    unchanged        +8/-2 lib/Serialization/ASTReaderStmt.cpp
-  7:    unchanged        +3/-3 lib/Serialization/ASTWriterStmt.cpp
-Update&gt;&gt; 1-7
-           staged     unstaged path
-* 1:    unchanged      +51/-31 include/clang/AST/Stmt.h
-* 2:    unchanged        +6/-1 lib/AST/Stmt.cpp
-* 3:    unchanged        +4/-4 lib/Sema/JumpDiagnostics.cpp
-* 4:    unchanged        +5/-3 lib/Sema/SemaCodeComplete.cpp
-* 5:    unchanged       +14/-6 lib/Sema/SemaStmt.cpp
-* 6:    unchanged        +8/-2 lib/Serialization/ASTReaderStmt.cpp
-* 7:    unchanged        +3/-3 lib/Serialization/ASTWriterStmt.cpp
-Update&gt;&gt;
-updated 7 paths
+<span class="tok-k">function</span> main <span class="tok-o">{</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;hello world&quot;</span>
+<span class="tok-o">}</span>
 
-*** Commands ***
-  1: status	  2: update	  3: revert	  4: add untracked
-  5: patch	  6: diff	  7: quit	  8: help
-What now&gt; 7
-Bye.</pre>
+main
+<span class="tok-nb">exit</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<div class="title">Bisecting to find the commit that introduced new behaviour</div>
-<p>git bisect lets you find a commit that resulted in different behaviour. The man
-page describes it as 'git-bisect - Find by binary search the change that
-introduced a bug' but it&#8217;s a slightly misleading since it really finds the
-commit that introduced a certain behaviour and behaviour in this case, doesn&#8217;t
-have to be a bug.</p>
-</div>
-<div class="paragraph">
-<p>Anyway, to start, find out the commit hashes within which you know the behaviour
-changed and pass them to `git start &#8230;&#8203; ` as shown below with the oldest commit
-hash first:</p>
+<p>You can copy and paste the text above into a file.
+To run it you&#8217;ll need to enable execute permissions on the file using <code>chmod</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sashan@cyclops src (no $ git bisect start 22e6ee96f2daab9b7fcc135eff8ec133579da12d 7639a06e1d7f014929a9ab22fe5a35153bf9be85</pre>
+<pre>chmod +x main.sh
+./main.sh</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>git will checkout a branch with the head set to a commit in the middle of the 2
-commits identified by the hashes above. Build the program and test for the
-desired behaviour. If what you see in the new build is the desired behaviour
-then mark it with <code>git bisect good</code> otherwise mark it with <code>git bisect bad</code>.
-Keep doing this until there are 0 bisections left. The head of the tree now will
-be at the commit that introduced the change.</p>
+<p>File permissions are explained later.
+Remember, to run the script prefix the file with <code>./</code>.
+<code>.</code> points to the current directory.
+Unlike Windows the current directory is not in the <code>PATH</code> environment variable which is why we
+explicitly tell the shell the path to the binary to execute.</p>
 </div>
+<div class="sect2">
+<h3 id="_command_line_arguments">Command Line Arguments</h3>
 <div class="paragraph">
-<p>Anyway, to start, find out the commit hashes within which you know the behaviour
-changed and pass them to `git start &#8230;&#8203; ` as shown below with the oldest commit
-hash first:</p>
+<p>All arguments to the script can be captured using <code>$@</code>. If you know which argument you want you can
+use the positional arguments to get them.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sashan@cyclops src (no $ git bisect start 22e6ee96f2daab9b7fcc135eff8ec133579da12d 7639a06e1d7f014929a9ab22fe5a35153bf9be85</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>git will checkout a branch with the head set to a commit in the middle of the 2
-commits identified by the hashes above. Build the program and test for the
-desired behaviour. If what you see in the new build is the desired behaviour
-then mark it with <code>git bisect good</code> otherwise mark it with <code>git bisect bad</code>.
-Keep doing this until there are 0 bisections left. The head of the tree now will
-be at the commit that introduced the change.</p>
-</div>
-<div class="paragraph">
-<div class="title">Rewriting History</div>
-<p>Hopefully this is something you will never need to do but sometimes people stupidly commit binaries
-and tarballs and password files into the repository. To remove them use <code>git filter-branch</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git filter-branch -f --tree-filter \
-  "rm -rf *.tar.gz; rm -rf some/shitty/dir" \
-  --tag-name-filter "cat" --prune-empty -- --all</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The <code>tree-filter</code> option takes a shell command and executes it from the root of the repository. The
-option <code>--tag-name-filter</code> renames the tags. In this case <code>cat</code> is the command so the tag name
-remains the same as the original.</p>
-</div>
-<div class="paragraph">
-<div class="title">Branching</div>
-<p>Branches give you the ability to work on a change in a parallel stream without affecting the master
-branch. Confusingly you use <code>git checkout -b &lt;branch name&gt;</code> to create a branch (confusingly you can
-also use <code>git checkout</code> to reset a file to its state at HEAD).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>master &gt; git checkout -b test-branch-2
-test-branch-2 &gt; git branch -avv
-master                     b392b5c [origin/master] Add function that reads config from an xml file. Add example settings.xml file.
-* test-branch-2              b392b5c Add function that reads config from an xml file. Add example settings.xml file.
-remotes/origin/HEAD        -&gt; origin/master
-remotes/origin/master      b392b5c Add function that reads config from an xml file. Add example settings.xml file.
-remotes/origin/test-branch 84459ad Just testing github workflow.</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now say you want this local branch to be created at the upstream. Then use <code>git push
---set-upstream</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>test-branch-2 &gt; git push --set-upstream origin test-branch-2
-Total 0 (delta 0), reused 0 (delta 0)
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-ch">#!/bin/bash</span>
 
-To github.com:sashang/giraffe-sample.git
- * [new branch]      test-branch-2 -&gt; test-branch-2
-Branch 'test-branch-2' set up to track remote branch 'test-branch-2' from 'origin'.</pre>
+<span class="tok-k">function</span> main <span class="tok-o">{</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$1</span><span class="tok-s2"> </span><span class="tok-nv">$2</span><span class="tok-s2">&quot;</span> #<b class="conum">(1)</b>
+<span class="tok-o">}</span>
+
+main <span class="tok-nv">$@</span> #<b class="conum">(2)</b>
+<span class="tok-nb">exit</span></code></pre>
 </div>
 </div>
+<div class="colist arabic">
+<ol>
+<li>
+<p><code>1</code> and <code>2</code> are positional arguments.</p>
+</li>
+<li>
+<p><code>@</code> you can think of as a an array of all the positional parameters.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_parameters">Parameters</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Now say you want to delete the local branch:</p>
+<p>Parameters are Bash&#8217;s variables.
+Bash is untyped so you can think of them as strings.</p>
+</div>
+<div class="listingblock">
+<div class="title">Setting a parameter</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">VAR</span><span class="tok-o">=</span><span class="tok-s2">&quot;some val&quot;</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+Spacing after a variable name matters. There can&#8217;t be a space between the variable name and the value.
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>test-branch-2 &gt; git branch -D test-branch-2
-error: Cannot delete branch 'test-branch-2' checked out at</pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">VAR</span> <span class="tok-o">=</span> <span class="tok-s2">&quot;some val&quot;</span> #<b class="conum">(1)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Spaces after a paramter name are bad.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p>Oops. We have to switch out of the branch first.</p>
+<p>If you try and run this you&#8217;ll see and error like:</p>
+</div>
+<div class="paragraph">
+<p><code>VAR: command not found</code></p>
+</div>
+<div class="paragraph">
+<p>Why? Because whenever Bash sees a space it thinks that the text preceding is the start of a command,
+and tries to run it, but <code>VAR</code> is not a binary in the <code>PATH</code>, and it can&#8217;t be found.</p>
+</div>
+<div class="paragraph">
+<p>If you want to get at the value of a variable you need to prefix it with a <code>$</code>.
+Placing the <code>$</code> in front of a parameter causes <strong>parameter expansion</strong>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+Best practice is to use double quotes when performing parameter expansion.
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>test-branch-2 1 &gt; git checkout master
-Switched to branch 'master'
-Your branch is up to date with 'origin/master'.
-master &gt; git branch -D test-branch-2
-Deleted branch test-branch-2 (was b392b5c).
-master &gt;</pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span><span class="tok-nv">VAR</span><span class="tok-o">=</span><span class="tok-s2">&quot;some file&quot;</span>
+touch <span class="tok-s2">&quot;</span><span class="tok-nv">$VAR</span><span class="tok-s2">&quot;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Then say we come back after a few months and we want to checkout that branch from the remote
-location:</p>
+<p>Why double quote? In the case above, <code>touch</code> is a program that creates a file. If double quotes were
+not used then two files, <code>some</code> and <code>file</code>, would be created.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>master &gt; git checkout -b tb2 origin/test-branch-2
-Branch 'tb2' set up to track remote branch 'test-branch-2' from 'origin'.
-Switched to a new branch 'tb2'</pre>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Bash has quite a few special parameters. We&#8217;ve seen some already, the positional paramters
+like <code>1</code> and <code>2</code> and <code>@</code> which expands all the positional paramters.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>

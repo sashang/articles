@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.17">
-<meta name="description" content="Notes about git">
-<meta name="keywords" content="git,subversion">
-<title>Fundamentals</title>
+<meta name="description" content="F#/Ocaml monad example, railway oriented">
+<meta name="keywords" content="f#,ocaml,monadic error handling,monad,monoid">
+<title>Advanced</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -725,327 +725,301 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 #footer-text { color: #eee; font-size: 0.8em; text-align: center; }
 
 </style>
+<style>
+pre.pygments .hll { background-color: #ffffcc }
+pre.pygments { background: #f8f8f8; }
+pre.pygments .tok-c { color: #408080; font-style: italic } /* Comment */
+pre.pygments .tok-err { border: 1px solid #FF0000 } /* Error */
+pre.pygments .tok-k { color: #008000; font-weight: bold } /* Keyword */
+pre.pygments .tok-o { color: #666666 } /* Operator */
+pre.pygments .tok-ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+pre.pygments .tok-cm { color: #408080; font-style: italic } /* Comment.Multiline */
+pre.pygments .tok-cp { color: #BC7A00 } /* Comment.Preproc */
+pre.pygments .tok-cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+pre.pygments .tok-c1 { color: #408080; font-style: italic } /* Comment.Single */
+pre.pygments .tok-cs { color: #408080; font-style: italic } /* Comment.Special */
+pre.pygments .tok-gd { color: #A00000 } /* Generic.Deleted */
+pre.pygments .tok-ge { font-style: italic } /* Generic.Emph */
+pre.pygments .tok-gr { color: #FF0000 } /* Generic.Error */
+pre.pygments .tok-gh { color: #000080; font-weight: bold } /* Generic.Heading */
+pre.pygments .tok-gi { color: #00A000 } /* Generic.Inserted */
+pre.pygments .tok-go { color: #888888 } /* Generic.Output */
+pre.pygments .tok-gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+pre.pygments .tok-gs { font-weight: bold } /* Generic.Strong */
+pre.pygments .tok-gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+pre.pygments .tok-gt { color: #0044DD } /* Generic.Traceback */
+pre.pygments .tok-kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+pre.pygments .tok-kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+pre.pygments .tok-kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+pre.pygments .tok-kp { color: #008000 } /* Keyword.Pseudo */
+pre.pygments .tok-kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+pre.pygments .tok-kt { color: #B00040 } /* Keyword.Type */
+pre.pygments .tok-m { color: #666666 } /* Literal.Number */
+pre.pygments .tok-s { color: #BA2121 } /* Literal.String */
+pre.pygments .tok-na { color: #7D9029 } /* Name.Attribute */
+pre.pygments .tok-nb { color: #008000 } /* Name.Builtin */
+pre.pygments .tok-nc { color: #0000FF; font-weight: bold } /* Name.Class */
+pre.pygments .tok-no { color: #880000 } /* Name.Constant */
+pre.pygments .tok-nd { color: #AA22FF } /* Name.Decorator */
+pre.pygments .tok-ni { color: #999999; font-weight: bold } /* Name.Entity */
+pre.pygments .tok-ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+pre.pygments .tok-nf { color: #0000FF } /* Name.Function */
+pre.pygments .tok-nl { color: #A0A000 } /* Name.Label */
+pre.pygments .tok-nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+pre.pygments .tok-nt { color: #008000; font-weight: bold } /* Name.Tag */
+pre.pygments .tok-nv { color: #19177C } /* Name.Variable */
+pre.pygments .tok-ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+pre.pygments .tok-w { color: #bbbbbb } /* Text.Whitespace */
+pre.pygments .tok-mb { color: #666666 } /* Literal.Number.Bin */
+pre.pygments .tok-mf { color: #666666 } /* Literal.Number.Float */
+pre.pygments .tok-mh { color: #666666 } /* Literal.Number.Hex */
+pre.pygments .tok-mi { color: #666666 } /* Literal.Number.Integer */
+pre.pygments .tok-mo { color: #666666 } /* Literal.Number.Oct */
+pre.pygments .tok-sa { color: #BA2121 } /* Literal.String.Affix */
+pre.pygments .tok-sb { color: #BA2121 } /* Literal.String.Backtick */
+pre.pygments .tok-sc { color: #BA2121 } /* Literal.String.Char */
+pre.pygments .tok-dl { color: #BA2121 } /* Literal.String.Delimiter */
+pre.pygments .tok-sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+pre.pygments .tok-s2 { color: #BA2121 } /* Literal.String.Double */
+pre.pygments .tok-se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+pre.pygments .tok-sh { color: #BA2121 } /* Literal.String.Heredoc */
+pre.pygments .tok-si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+pre.pygments .tok-sx { color: #008000 } /* Literal.String.Other */
+pre.pygments .tok-sr { color: #BB6688 } /* Literal.String.Regex */
+pre.pygments .tok-s1 { color: #BA2121 } /* Literal.String.Single */
+pre.pygments .tok-ss { color: #19177C } /* Literal.String.Symbol */
+pre.pygments .tok-bp { color: #008000 } /* Name.Builtin.Pseudo */
+pre.pygments .tok-fm { color: #0000FF } /* Name.Function.Magic */
+pre.pygments .tok-vc { color: #19177C } /* Name.Variable.Class */
+pre.pygments .tok-vg { color: #19177C } /* Name.Variable.Global */
+pre.pygments .tok-vi { color: #19177C } /* Name.Variable.Instance */
+pre.pygments .tok-vm { color: #19177C } /* Name.Variable.Magic */
+pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
+</style>
 </head>
 <body class="article">
 <div id="header">
 </div>
 <div id="content">
 <div class="paragraph">
-<p>These are my (ancient) notes about git from around the late 2000&#8217;s when I was
-using Subversion and transitioning to git. The notes describe using git and git
-with svn. In the case of svn the header is marked with <code>svn</code>.</p>
+<p>I was reading through the various monad tutorials on the web but even after reading all these explanations
+stuff wasn&#8217;t really sinking in. What was the use of creating these monadic
+types? It was all very abstract and the operations were defined on the abstractions,
+and not on the concrete instance that was being manipulated. I&#8217;m not <a href="https://en.wikipedia.org/wiki/Alexander_Grothendieck">Grothendieck</a>.
+Apparently he worked on the generalisation first whereas most people spot patterns between specific instances and then generalise. Wild.</p>
+</div>
+<div class="paragraph">
+<p>It kinda sunk in when I realized that the thing you put into a monad is a
+chunk of code and that monads allow you to define operations on that chunk of
+code in a sane manner. I also figured that to apply it I needed some practice
+with them. So I concocted the example below. It&#8217;s somewhat contrived but it
+illustrates the problem that monads can solve.</p>
+</div>
+<div class="paragraph">
+<p>The example below shows a typical flow of code that many programmers are
+familiar with. Basically it&#8217;s an 'if input is bad then fail else apply
+function F on that something where F checks if input is bad then fail else apply
+function H on input etc&#8230;&#8203;.' This scenario can lead to a sequence of nested 'if
+&#8230;&#8203; then' statements or in the example below nested 'match' statements. The nesting
+is typically awkward to deal with. A monadic approach to error handling
+allows it to be cleaned up.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s start with a basic scenario.
+We have an account with some money and we want to debit from it multiple times.
+In other words we have a sequence of transactions and we want to know if the entire process will fail or succeed.
+<em>Ok, then just sum the transactions and if the result is less than or equal to the money in the account, then it succeeds.</em>
+That&#8217;s fine, but what if we want to know which transaction fails, i.e. which transaction in the sequence will cause the account to drop below zero.
+We can&#8217;t just sum all the transactions because the information about the order of transactions will be squashed into the sum.
+In an imperative OO language, assuming we have an object <code>acc</code> with method <code>transact</code>, we could come up with something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c++"><span></span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">acc</span><span class="tok-p">.</span><span class="tok-n">transact</span><span class="tok-p">(</span><span class="tok-mi">-100</span><span class="tok-p">))</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">  </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">acc</span><span class="tok-p">.</span><span class="tok-n">transact</span><span class="tok-p">(</span><span class="tok-mi">-200</span><span class="tok-p">))</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">acc</span><span class="tok-p">.</span><span class="tok-n">transact</span><span class="tok-p">(</span><span class="tok-mi">-1000</span><span class="tok-p">))</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">      </span><span class="tok-n">cout</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-s">&quot;Transaction succeeded&quot;</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-n">endl</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"> </span><span class="tok-k">else</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">      </span><span class="tok-n">cout</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-s">&quot;Failed to transact 1000&quot;</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-n">endl</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-w">  </span><span class="tok-p">}</span><span class="tok-w"> </span><span class="tok-k">else</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">cout</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-s">&quot;Failed to transact 200&quot;</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-n">endl</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">  </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"> </span><span class="tok-k">else</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">  </span><span class="tok-n">cout</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-s">&quot;Failed to transact 1000&quot;</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-n">endl</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>However this isn&#8217;t clean and the nested <code>else</code> statements make it hard to read.
+Moreover, it doesn&#8217;t scale well at all.
+Trying to add 10 more transactions will be like digging a grave with a spoon.
+Then the 'lead architect' comes along and draws some diagrams, and writes a 50 page word document describing a bunch of classes, with names such as <code>AbstractFactoryInterface</code> and <code>TransactionInterface</code> and <code>TransactionErrorObserver</code>.
+And after employing a project manager, engaging an outsourcing provider who outsource again because if it works once it will work twice, a few months and 10000 lines later we can say something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="Java"><span></span>List&lt;MetaTransaction&gt; transactions = {Debit(100), Debit(200), Debit(1000)};
+for (List&lt;Transation&gt;::Enumerator e = transactions.Begin(); e != transactions.End(); ++e)
+  acc.transact(e)
+System.Console.Interface.TheRealConsole(acc.status());
+System.Console.WhitespaceSelectorInterface&lt;Newline&gt;.Print();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Forgive my Java, for I don&#8217;t know that langauge.</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s a lot nicer on the surface and I can execute a list of transactions.
+But it&#8217;s a pig of thing underneath.
+Overly abstracted classes and state, encapsulated within objects, that mutate variables that will need to be locked if concurrency requirements enter.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s go back to the original problem, the repeeated <code>if..else</code>.
+What would a functional programmer do?
+First thing to notice is the repeated pattern of <code>if .. else</code>.
+It&#8217;s kinda stupid to say notice it, because it&#8217;s one of those things that, like your optical blind spot, is right infront of you.
+It&#8217;s so obvious and so ingrained that we don&#8217;t notice it, especially if you&#8217;ve spent decades working with a language like Java, or any imperative language, that you miss the thing that is being repeated.
+In this case it&#8217;s the <code>if</code> statements.
+Stuff that&#8217;s repeated gets to be put in a loop or into a function or into a list for processing in a loop.
+<strong>Wouldn&#8217;t it be nice if we could put an <code>if</code> statement into a function and pass it a parameter that is the function to apply on a successful test?</strong>
+Of course we can! We&#8217;re functional programmers so statements in imperative langauges can be translated into expressions in a functional one.
+Expressions are just values once evaluated, and values are immutable variables that can be passed around to other functions.
+Those functions can be evaluated and passed around to other functions ad infinitum.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s switch to F# since it&#8217;s easier to write this stuff in F#.
+In the success case we need to apply the transaction.
+So let&#8217;s create a <code>transact</code> function and a type to record the result of any transaction.
+In the failure case we record an error.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="fsharp"><span></span><span class="tok-k">type</span> <span class="tok-nc">TransactResult</span> <span class="tok-o">=</span>
+  <span class="tok-o">|</span> <span class="tok-n">Success</span> <span class="tok-k">of</span> <span class="tok-n">int</span> <span class="tok-c1">// amount in account</span>
+  <span class="tok-o">|</span> <span class="tok-n">Failure</span> <span class="tok-k">of</span> <span class="tok-kt">string</span> <span class="tok-c1">// amount in account at failure and an error message</span>
+
+<span class="tok-k">let</span> <span class="tok-nv">transact</span> <span class="tok-n">amount</span> <span class="tok-n">account</span> <span class="tok-o">=</span>
+  <span class="tok-k">if</span> <span class="tok-n">account</span> <span class="tok-o">+</span> <span class="tok-n">amount</span> <span class="tok-o">&gt;=</span> <span class="tok-mi">0</span> <span class="tok-k">then</span>
+    <span class="tok-n">Success</span> <span class="tok-o">(</span><span class="tok-n">account</span> <span class="tok-o">+</span> <span class="tok-n">amount</span><span class="tok-o">)</span>
+  <span class="tok-k">else</span>
+    <span class="tok-n">Failure</span> <span class="tok-o">($</span><span class="tok-s">&quot;Failed to transact {amount} from {account}&quot;</span><span class="tok-o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we need to chain multiple transactions together.
+In mondadic terms this function is traditionally called <code>bind</code>, so we will reuse the name here.
+We need to chain the return value of a transaction to the input of another transaction.
+This means that both ends, the input and output, must have the same type.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="fsharp"><span></span><span class="tok-k">let</span> <span class="tok-nv">bind</span> <span class="tok-o">(</span><span class="tok-n">f</span> <span class="tok-o">:</span> <span class="tok-n">int</span> <span class="tok-o">-&gt;</span> <span class="tok-n">TransactResult</span><span class="tok-o">)</span> <span class="tok-o">(</span><span class="tok-n">account</span> <span class="tok-o">:</span> <span class="tok-n">TransactResult</span><span class="tok-o">)</span> <span class="tok-o">=</span>
+  <span class="tok-k">match</span> <span class="tok-n">account</span> <span class="tok-k">with</span>
+  <span class="tok-o">|</span> <span class="tok-n">Success</span> <span class="tok-n">amount</span> <span class="tok-o">-&gt;</span>
+    <span class="tok-n">f</span> <span class="tok-n">amount</span>
+  <span class="tok-o">|</span> <span class="tok-n">Failure</span> <span class="tok-n">x</span> <span class="tok-o">-&gt;</span> <span class="tok-n">Failure</span> <span class="tok-n">x</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can use bind as follows. The nested match statements are elided, and the error
+handling path is hidden. Problem solved. You can try it for yourself in an F# interactive session.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="fsharp"><span></span><span class="tok-o">&gt;</span> <span class="tok-k">let</span> <span class="tok-nv">a</span> <span class="tok-o">=</span> <span class="tok-n">bind</span> <span class="tok-o">(</span><span class="tok-n">transact</span> <span class="tok-mi">100</span><span class="tok-o">)</span> <span class="tok-o">(</span><span class="tok-n">Success</span> <span class="tok-mi">1000</span><span class="tok-o">);;</span>
+<span class="tok-k">val</span> <span class="tok-n">a</span> <span class="tok-o">:</span> <span class="tok-n">TransactResult</span> <span class="tok-o">=</span> <span class="tok-n">Success</span> <span class="tok-mi">1100</span>
+
+<span class="tok-o">&gt;</span> <span class="tok-k">let</span> <span class="tok-nv">b</span> <span class="tok-o">=</span> <span class="tok-n">bind</span> <span class="tok-o">(</span><span class="tok-n">transact</span> <span class="tok-o">-</span><span class="tok-mi">500</span><span class="tok-o">)</span> <span class="tok-n">a</span><span class="tok-o">;;</span>
+<span class="tok-k">val</span> <span class="tok-n">b</span> <span class="tok-o">:</span> <span class="tok-n">TransactResult</span> <span class="tok-o">=</span> <span class="tok-n">Success</span> <span class="tok-mi">600</span>
+
+<span class="tok-o">&gt;</span> <span class="tok-k">let</span> <span class="tok-nv">c</span> <span class="tok-o">=</span> <span class="tok-n">bind</span> <span class="tok-o">(</span><span class="tok-n">transact</span> <span class="tok-o">-</span><span class="tok-mi">500</span><span class="tok-o">)</span> <span class="tok-n">b</span><span class="tok-o">;;</span>
+<span class="tok-k">val</span> <span class="tok-n">c</span> <span class="tok-o">:</span> <span class="tok-n">TransactResult</span> <span class="tok-o">=</span> <span class="tok-n">Success</span> <span class="tok-mi">100</span>
+
+<span class="tok-o">&gt;</span> <span class="tok-k">let</span> <span class="tok-nv">d</span> <span class="tok-o">=</span> <span class="tok-n">bind</span> <span class="tok-o">(</span><span class="tok-n">transact</span> <span class="tok-o">-</span><span class="tok-mi">200</span><span class="tok-o">)</span> <span class="tok-n">c</span><span class="tok-o">;;</span>
+<span class="tok-k">val</span> <span class="tok-n">d</span> <span class="tok-o">:</span> <span class="tok-n">TransactResult</span> <span class="tok-o">=</span> <span class="tok-n">Failure</span> <span class="tok-s">&quot;Failed to transact -200 from 100&quot;</span>
+
+<span class="tok-o">&gt;</span> <span class="tok-k">let</span> <span class="tok-nv">d</span> <span class="tok-o">=</span> <span class="tok-n">bind</span> <span class="tok-o">(</span><span class="tok-n">transact</span> <span class="tok-o">-</span><span class="tok-mi">200</span><span class="tok-o">)</span> <span class="tok-n">d</span><span class="tok-o">;;</span>
+<span class="tok-k">val</span> <span class="tok-n">d</span> <span class="tok-o">:</span> <span class="tok-n">TransactResult</span> <span class="tok-o">=</span> <span class="tok-n">Failure</span> <span class="tok-s">&quot;Failed to transact -200 from 100&quot;</span>
+
+<span class="tok-o">&gt;</span> <span class="tok-k">let</span> <span class="tok-nv">d</span> <span class="tok-o">=</span> <span class="tok-n">bind</span> <span class="tok-o">(</span><span class="tok-n">transact</span> <span class="tok-o">-</span><span class="tok-mi">4300</span><span class="tok-o">)</span> <span class="tok-n">d</span><span class="tok-o">;;</span>
+<span class="tok-k">val</span> <span class="tok-n">d</span> <span class="tok-o">:</span> <span class="tok-n">TransactResult</span> <span class="tok-o">=</span> <span class="tok-n">Failure</span> <span class="tok-s">&quot;Failed to transact -200 from 100&quot;</span>
+
+<span class="tok-o">&gt;</span></code></pre>
+</div>
 </div>
 <div class="sect1">
-<h2 id="_fundamentals">Fundamentals</h2>
+<h2 id="_advanced">Advanced</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Typically a version control system has a repository where it stores the history
-of all changes. Then there&#8217;s your local development directory where you checkout
-a copy of the repositories contents, do some edits and then commit them back to
-the repository. Git breaks this model and adds an intermediate stage called the
-'index' that sits between your working directory and the git repository. Changes
-make their way from the working tree to the index then to the repository.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="git_commit_workflow.png" alt="Commit Workflow">
-</div>
-<div class="title">Figure 1. Commit Workflow</div>
-</div>
-<div class="paragraph">
-<div class="title">Checking out repository</div>
-<p>Use <code>git clone &#8230;&#8203;</code> to clone a git repository locally.</p>
+<p>More advanced stuff can be done using compose <code>&gt;&gt;</code> to chain a sequence of transactions.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>git clone ssh://git@github.com/repo_path/repo.git</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Checking out repository (svn)</div>
-<p>You can use git with a svn repository. Note that this step can take a few hours
-because git checkouts out every revision in the svn repository and commits it
-locally.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git svn clone http://llvm.org/svn/llvm-project/libcxx/trunk libcxx</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Updating your sources</div>
-<div class="content">
-<pre>git pull</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Updating your sources (svn)</div>
-<div class="content">
-<pre>git svn rebase</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Updating your sources after editing</div>
-<div class="content">
-<pre>sashan@cyclops clang master $ git svn rebase
-include/clang/AST/Stmt.h: needs update
-lib/AST/Stmt.cpp: needs update
-update-index --refresh: command returned error: 1</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Oops &#8230;&#8203; git&#8217;s complaining that you have edited files in the working tree. Use
-<strong>git stash</strong> to save the changes locally.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master 1 $ git stash
-Saved working directory and index state WIP on master: 3923c27 Fix diagnostic reporting of previous default statements.
-HEAD is now at 3923c27 Fix diagnostic reporting of previous default statements.</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now you can rebase.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git svn rebase
-	M	docs/UsersManual.html
-r121768 = 024394010048e704192f4f34f21836a550f37a9f (refs/remotes/git-svn)</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>And then apply the stashed changes</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master 1 $ git stash pop</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Committing changes in the working tree directly to the repository</div>
-<p>This will add all editted files to index and then to repository. It will also
-prompt you to enter a commit log message. The -a parameter tells git to add
-all edited files.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git commit -a</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Selecting the files to commit</div>
-<p>This stages files for committing adding them to the index.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git add &lt;file name&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>After this you should run git commit to commit the files. This will commit the
-changes to your local repository.</p>
-</div>
-<div class="paragraph">
-<div class="title">Committing to a svn repository</div>
-<p>When you&#8217;re happy with the changes made locally you can commit them to the
-upstream repository as shown below:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git svn dcommit</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Generating a patch for email submission</div>
-<p>This will generate a patch file of the most recent commit that you can email as
-an attachment.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git format-patch -1 -p
-0001-Fix-diagnostic-reporting-of-previous-default-stateme.patch</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Adding edited files to the index</div>
-<p>Sometimes you want to add changes in the working tree to the index without
-committing to the repository at the same time. In this case doing a git commit
--a won&#8217;t help. You need to use git add. The example below shows a session
-using git add -ui. The '-u' is for update and means that only modified paths
-in the working tree will be added to the index. New paths won&#8217;t.  The '-i' is
-for interactive and therefore git will prompt you for a response. In the session
-below I enter interactive mode, choose to update the index, and then select a
-range of paths, 1 to 7, to update the index with. Importantly, after finishing
-the update I 'hit enter to exit the interactive update mode'.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang use_std_set_for_switch_cases $ git add -ui
-           staged     unstaged path
-  1:    unchanged      +51/-31 include/clang/AST/Stmt.h
-  2:    unchanged        +6/-1 lib/AST/Stmt.cpp
-  3:    unchanged        +4/-4 lib/Sema/JumpDiagnostics.cpp
-  4:    unchanged        +5/-3 lib/Sema/SemaCodeComplete.cpp
-  5:    unchanged       +14/-6 lib/Sema/SemaStmt.cpp
-  6:    unchanged        +8/-2 lib/Serialization/ASTReaderStmt.cpp
-  7:    unchanged        +3/-3 lib/Serialization/ASTWriterStmt.cpp
+<pre class="pygments highlight"><code data-lang="fsharp"><span></span><span class="tok-c1">// list of transaction functions</span>
+<span class="tok-k">let</span> <span class="tok-nv">transactions</span> <span class="tok-o">=</span> <span class="tok-o">[</span>
+  <span class="tok-n">bind</span> <span class="tok-o">(</span><span class="tok-n">transact</span> <span class="tok-mi">100</span><span class="tok-o">)</span>
+  <span class="tok-n">bind</span> <span class="tok-o">(</span><span class="tok-n">transact</span> <span class="tok-o">-</span><span class="tok-mi">500</span><span class="tok-o">)</span>
+  <span class="tok-n">bind</span> <span class="tok-o">(</span><span class="tok-n">transact</span> <span class="tok-o">-</span><span class="tok-mi">200</span><span class="tok-o">)</span>
+  <span class="tok-n">bind</span> <span class="tok-o">(</span><span class="tok-n">transact</span> <span class="tok-o">-</span><span class="tok-mi">200</span><span class="tok-o">)</span>
+  <span class="tok-n">bind</span> <span class="tok-o">(</span><span class="tok-n">transact</span> <span class="tok-o">-</span><span class="tok-mi">200</span><span class="tok-o">)</span>
+  <span class="tok-n">bind</span> <span class="tok-o">(</span><span class="tok-n">transact</span> <span class="tok-o">-</span><span class="tok-mi">100</span><span class="tok-o">)</span>
+<span class="tok-o">]</span>
 
-*** Commands ***
-  1: status	  2: update	  3: revert	  4: add untracked
-  5: patch	  6: diff	  7: quit	  8: help
-What now&gt; 2
-           staged     unstaged path
-  1:    unchanged      +51/-31 include/clang/AST/Stmt.h
-  2:    unchanged        +6/-1 lib/AST/Stmt.cpp
-  3:    unchanged        +4/-4 lib/Sema/JumpDiagnostics.cpp
-  4:    unchanged        +5/-3 lib/Sema/SemaCodeComplete.cpp
-  5:    unchanged       +14/-6 lib/Sema/SemaStmt.cpp
-  6:    unchanged        +8/-2 lib/Serialization/ASTReaderStmt.cpp
-  7:    unchanged        +3/-3 lib/Serialization/ASTWriterStmt.cpp
-Update&gt;&gt; 1-7
-           staged     unstaged path
-* 1:    unchanged      +51/-31 include/clang/AST/Stmt.h
-* 2:    unchanged        +6/-1 lib/AST/Stmt.cpp
-* 3:    unchanged        +4/-4 lib/Sema/JumpDiagnostics.cpp
-* 4:    unchanged        +5/-3 lib/Sema/SemaCodeComplete.cpp
-* 5:    unchanged       +14/-6 lib/Sema/SemaStmt.cpp
-* 6:    unchanged        +8/-2 lib/Serialization/ASTReaderStmt.cpp
-* 7:    unchanged        +3/-3 lib/Serialization/ASTWriterStmt.cpp
-Update&gt;&gt;
-updated 7 paths
+<span class="tok-c1">// turn all of them into a single transaction function</span>
+<span class="tok-k">let</span> <span class="tok-nv">transactions</span><span class="tok-k">&#39;</span> <span class="tok-o">=</span> <span class="tok-nn">List</span><span class="tok-p">.</span><span class="tok-n">reduce</span> <span class="tok-o">(&gt;&gt;)</span> <span class="tok-n">transactions</span>
 
-*** Commands ***
-  1: status	  2: update	  3: revert	  4: add untracked
-  5: patch	  6: diff	  7: quit	  8: help
-What now&gt; 7
-Bye.</pre>
+<span class="tok-c1">// apply the transactions to an initial account</span>
+<span class="tok-n">transactions&#39;</span> <span class="tok-o">(</span><span class="tok-n">Success</span> <span class="tok-mi">1000</span><span class="tok-o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<div class="title">Bisecting to find the commit that introduced new behaviour</div>
-<p>git bisect lets you find a commit that resulted in different behaviour. The man
-page describes it as 'git-bisect - Find by binary search the change that
-introduced a bug' but it&#8217;s a slightly misleading since it really finds the
-commit that introduced a certain behaviour and behaviour in this case, doesn&#8217;t
-have to be a bug.</p>
+<p>The last parts might look weird if you&#8217;re coming from an imperative background
+and there&#8217;s a lot going on there. Partial application (e.g. <code>transact 100</code>
+where the last parameter is ommitted) and compose are common in functional
+languages. Note that the <code>&gt;&gt;</code> works because the output type of <code>transact
+100</code> is the same as the input. You might be tempted to expand these constructs
+mechanically on paper and that might be instructive, but for day to day work
+it&#8217;s ponderous. It&#8217;s easier to be fluent if it&#8217;s bound to muscle memory. It&#8217;s a
+bit like writing a recursive functions. Once you get it, you get it.
+Remember you can copy and paste this into <code>dotnet fsi</code> to test it out.</p>
 </div>
 <div class="paragraph">
-<p>Anyway, to start, find out the commit hashes within which you know the behaviour
-changed and pass them to `git start &#8230;&#8203; ` as shown below with the oldest commit
-hash first:</p>
+<p>Now we&#8217;ve seen how you may come up with a monadic type from trying to solve the problem of
+nested match functions. <em>But surely there is something in .NET for this?</em> Yes, there is the <a href="https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/results">Result type</a> which provides support for monadic error handling.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops src (no $ git bisect start 22e6ee96f2daab9b7fcc135eff8ec133579da12d 7639a06e1d7f014929a9ab22fe5a35153bf9be85</pre>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_summary">Summary</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>You can add more transactions to the chain and be sure that the check on the balance being greater than zero will
+always be executed.</p>
+</li>
+<li>
+<p>Note that this doesn&#8217;t use mutable variables. There is no state. No writes are made to a variable <code>balance</code>.
+Instead a new balance is calculated and passed as input to the next transaction in the chain.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_references">References</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/results" class="bare">https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/results</a></p>
 </div>
 <div class="paragraph">
-<p>git will checkout a branch with the head set to a commit in the middle of the 2
-commits identified by the hashes above. Build the program and test for the
-desired behaviour. If what you see in the new build is the desired behaviour
-then mark it with <code>git bisect good</code> otherwise mark it with <code>git bisect bad</code>.
-Keep doing this until there are 0 bisections left. The head of the tree now will
-be at the commit that introduced the change.</p>
+<p>Here&#8217;s a better more detailed explanation than mine above:
+<a href="https://swlaschin.gitbooks.io/fsharpforfunandprofit/content/posts/recipe-part2.html" class="bare">https://swlaschin.gitbooks.io/fsharpforfunandprofit/content/posts/recipe-part2.html</a></p>
 </div>
 <div class="paragraph">
-<p>Anyway, to start, find out the commit hashes within which you know the behaviour
-changed and pass them to `git start &#8230;&#8203; ` as shown below with the oldest commit
-hash first:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops src (no $ git bisect start 22e6ee96f2daab9b7fcc135eff8ec133579da12d 7639a06e1d7f014929a9ab22fe5a35153bf9be85</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>git will checkout a branch with the head set to a commit in the middle of the 2
-commits identified by the hashes above. Build the program and test for the
-desired behaviour. If what you see in the new build is the desired behaviour
-then mark it with <code>git bisect good</code> otherwise mark it with <code>git bisect bad</code>.
-Keep doing this until there are 0 bisections left. The head of the tree now will
-be at the commit that introduced the change.</p>
-</div>
-<div class="paragraph">
-<div class="title">Rewriting History</div>
-<p>Hopefully this is something you will never need to do but sometimes people stupidly commit binaries
-and tarballs and password files into the repository. To remove them use <code>git filter-branch</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git filter-branch -f --tree-filter \
-  "rm -rf *.tar.gz; rm -rf some/shitty/dir" \
-  --tag-name-filter "cat" --prune-empty -- --all</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The <code>tree-filter</code> option takes a shell command and executes it from the root of the repository. The
-option <code>--tag-name-filter</code> renames the tags. In this case <code>cat</code> is the command so the tag name
-remains the same as the original.</p>
-</div>
-<div class="paragraph">
-<div class="title">Branching</div>
-<p>Branches give you the ability to work on a change in a parallel stream without affecting the master
-branch. Confusingly you use <code>git checkout -b &lt;branch name&gt;</code> to create a branch (confusingly you can
-also use <code>git checkout</code> to reset a file to its state at HEAD).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>master &gt; git checkout -b test-branch-2
-test-branch-2 &gt; git branch -avv
-master                     b392b5c [origin/master] Add function that reads config from an xml file. Add example settings.xml file.
-* test-branch-2              b392b5c Add function that reads config from an xml file. Add example settings.xml file.
-remotes/origin/HEAD        -&gt; origin/master
-remotes/origin/master      b392b5c Add function that reads config from an xml file. Add example settings.xml file.
-remotes/origin/test-branch 84459ad Just testing github workflow.</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now say you want this local branch to be created at the upstream. Then use <code>git push
---set-upstream</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>test-branch-2 &gt; git push --set-upstream origin test-branch-2
-Total 0 (delta 0), reused 0 (delta 0)
-
-To github.com:sashang/giraffe-sample.git
- * [new branch]      test-branch-2 -&gt; test-branch-2
-Branch 'test-branch-2' set up to track remote branch 'test-branch-2' from 'origin'.</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now say you want to delete the local branch:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>test-branch-2 &gt; git branch -D test-branch-2
-error: Cannot delete branch 'test-branch-2' checked out at</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Oops. We have to switch out of the branch first.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>test-branch-2 1 &gt; git checkout master
-Switched to branch 'master'
-Your branch is up to date with 'origin/master'.
-master &gt; git branch -D test-branch-2
-Deleted branch test-branch-2 (was b392b5c).
-master &gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then say we come back after a few months and we want to checkout that branch from the remote
-location:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>master &gt; git checkout -b tb2 origin/test-branch-2
-Branch 'tb2' set up to track remote branch 'test-branch-2' from 'origin'.
-Switched to a new branch 'tb2'</pre>
-</div>
+<p>And I think this is really good. It relates monoids to groups.
+<a href="https://swlaschin.gitbooks.io/fsharpforfunandprofit/content/posts/monoids-without-tears.html" class="bare">https://swlaschin.gitbooks.io/fsharpforfunandprofit/content/posts/monoids-without-tears.html</a></p>
 </div>
 </div>
 </div>

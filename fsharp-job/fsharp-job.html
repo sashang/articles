@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.17">
-<meta name="description" content="Notes about git">
-<meta name="keywords" content="git,subversion">
-<title>Fundamentals</title>
+<meta name="description" content="FSharp Job">
+<meta name="keywords" content="fsharp">
+<title>Untitled</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -730,324 +730,33 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 <div id="header">
 </div>
 <div id="content">
-<div class="paragraph">
-<p>These are my (ancient) notes about git from around the late 2000&#8217;s when I was
-using Subversion and transitioning to git. The notes describe using git and git
-with svn. In the case of svn the header is marked with <code>svn</code>.</p>
-</div>
-<div class="sect1">
-<h2 id="_fundamentals">Fundamentals</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Typically a version control system has a repository where it stores the history
-of all changes. Then there&#8217;s your local development directory where you checkout
-a copy of the repositories contents, do some edits and then commit them back to
-the repository. Git breaks this model and adds an intermediate stage called the
-'index' that sits between your working directory and the git repository. Changes
-make their way from the working tree to the index then to the repository.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="git_commit_workflow.png" alt="Commit Workflow">
-</div>
-<div class="title">Figure 1. Commit Workflow</div>
-</div>
-<div class="paragraph">
-<div class="title">Checking out repository</div>
-<p>Use <code>git clone &#8230;&#8203;</code> to clone a git repository locally.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git clone ssh://git@github.com/repo_path/repo.git</pre>
+<div class="quoteblock">
+<blockquote>
+"Beauty is the first test: there is no permanent place in the world for ugly mathematics."
+</blockquote>
+<div class="attribution">
+&#8212; G.H. Hardy<br>
+<cite>A Mathematician&#8217;s Apology</cite>
 </div>
 </div>
 <div class="paragraph">
-<div class="title">Checking out repository (svn)</div>
-<p>You can use git with a svn repository. Note that this step can take a few hours
-because git checkouts out every revision in the svn repository and commits it
-locally.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git svn clone http://llvm.org/svn/llvm-project/libcxx/trunk libcxx</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Updating your sources</div>
-<div class="content">
-<pre>git pull</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Updating your sources (svn)</div>
-<div class="content">
-<pre>git svn rebase</pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Updating your sources after editing</div>
-<div class="content">
-<pre>sashan@cyclops clang master $ git svn rebase
-include/clang/AST/Stmt.h: needs update
-lib/AST/Stmt.cpp: needs update
-update-index --refresh: command returned error: 1</pre>
-</div>
+<p>Seems a bit surreal but I accepted a job offer for an F# role. At this moment I&#8217;m happy letting it sink in and getting in touch with my emotions. This piece isn&#8217;t about the features of the language, or a piece about why everyone should use F#, or why it&#8217;s better than <em>&lt;insert language here&gt;</em>. It&#8217;s about the journey, and it&#8217;s been a long one.</p>
 </div>
 <div class="paragraph">
-<p>Oops &#8230;&#8203; git&#8217;s complaining that you have edited files in the working tree. Use
-<strong>git stash</strong> to save the changes locally.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master 1 $ git stash
-Saved working directory and index state WIP on master: 3923c27 Fix diagnostic reporting of previous default statements.
-HEAD is now at 3923c27 Fix diagnostic reporting of previous default statements.</pre>
-</div>
+<p>I started pottering around with OCaml in 2007. Fiddling in my spare time. I liked the language. Discriminated unions were great. The option type was great. I never delved into camlp4, the processor that lets you to meta-programming with the language. Powerful and weird all at the same time. I saw that Microsoft had an ML derivitive called F# so I had a play with that. I liked that it fixed the inversion of control associated with callbacks. Javascript has promises now that does a similar thing. I corrected an <a href="https://stackoverflow.com/questions/6182055/is-this-a-correct-desugaring-of-the-computation-workflow/6183478#6183478">error in Expert F# 2.0</a> along the way, but I never had an opportunity to make it my main language. At the time I was working in C++ on Linux. I didn&#8217;t want to be programming on Windows even in my spare time so I put it to rest.</p>
 </div>
 <div class="paragraph">
-<p>Now you can rebase.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git svn rebase
-	M	docs/UsersManual.html
-r121768 = 024394010048e704192f4f34f21836a550f37a9f (refs/remotes/git-svn)</pre>
-</div>
+<p>In 2018 I had another look at the language and the eco-system had moved on. .Net Core was available for Linux and I thought <em>great I&#8217;ll give this a go</em>. A personal connection wanted a system to help with tutoring and built a side project <a href="https://tewtin.com" class="bare">https://tewtin.com</a> based on the SAFE stack web framework. The community around F# was great.  I found them on a Slack forum and realised there were amazing programmers there doing astounding work. Astounding because I did not understand how they did what they did. I was constantly blown away by the creativity and ease they came up with these fantastic libraries and utilities, an ease that I have yet to match. In the mean time, I floundered like a baby duck trying to keep afloat.I streamed some <a href="https://www.twitch.tv/videos/366933831">coding sessions on twitch</a>, and got weird questions from my peers. <em>What is F#? Nobody uses it. Are you insane? Just use Javascript like everyone else.</em> I&#8217;d counter with, <em>but I can write the backend and frontend in the F# and I get static type checking</em>. To which I&#8217;d receive a non-committal reply. It was lonely forging ahead alone with something few people understand. Did I fear that I&#8217;d overcommitted to a 'dead' language? No. For some reason that never crossed my mind. I never used Java since I think it&#8217;s a terrible language and C++ is better for system level applications. It was hyped as a silver-bullet in the early 2000&#8217;s. Maybe that&#8217;s why I avoided it.  <em>Why make everything an object? Garbage collection doesn&#8217;t save you from leaking resources</em></p>
 </div>
 <div class="paragraph">
-<p>And then apply the stashed changes</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master 1 $ git stash pop</pre>
+<p>All the work I&#8217;ve put into F# has come to fruition. I feel vindicated. I accepted an offer from <a href="https://tab.com.au" class="bare">https://tab.com.au</a> to work in their distributed systems team where tons of data is processed per second using F# because it results in better performance. Performance is compute, and compute time in the cloud is money. When you&#8217;re spending hours during a day working with thousands of lines of code written by a variety of programmers with differing perspectives, within stifling companies, the experience using a language makes a difference to ones emotional well-being. Ever noticed how excited some engineers get when talking about their favourite language? It&#8217;s because there is a neural pathway in their brains linking the emotional parts of their brain with the technology. This property of a language is overlooked and engineers are apt to justify their choice of language based on a feature or performance. But a simple thought experiment can show that the subjective experience using a language does matter. Imagine a language called WhiteSpace++<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>
+which is twice the speed of any other language but all the code is written in whitespace. Nobody would use it because it would be unuseable. What does a 'useable' mean? It&#8217;s the subjective experience one has when using the language. Is it pleasant to work with or burdensome? Does it overload me with trivialities and book-keeping that get in the way of focusing on the real problem? All these considerations matter. Note that this doesn&#8217;t mean <code>F#</code> is the answer. You might find ASM or Bash satisfying. The point is the subjective experience when using a langauge is also important. Consider C# and F#, they are both functionally equivalent. You can get the same job done with both. The difference is only in aesthetics, what the language feels like to use. Using a language that I enjoy using, that lets me write beautiful code, and do work that I find intrinsically satisfying is such an amazing privilege, that I wish that blessing on every programmer out there, that their days aren&#8217;t spent in a jaded, colourless miasma of code.</p>
 </div>
 </div>
-<div class="paragraph">
-<div class="title">Committing changes in the working tree directly to the repository</div>
-<p>This will add all editted files to index and then to repository. It will also
-prompt you to enter a commit log message. The -a parameter tells git to add
-all edited files.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git commit -a</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Selecting the files to commit</div>
-<p>This stages files for committing adding them to the index.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git add &lt;file name&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>After this you should run git commit to commit the files. This will commit the
-changes to your local repository.</p>
-</div>
-<div class="paragraph">
-<div class="title">Committing to a svn repository</div>
-<p>When you&#8217;re happy with the changes made locally you can commit them to the
-upstream repository as shown below:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git svn dcommit</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Generating a patch for email submission</div>
-<p>This will generate a patch file of the most recent commit that you can email as
-an attachment.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang master $ git format-patch -1 -p
-0001-Fix-diagnostic-reporting-of-previous-default-stateme.patch</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Adding edited files to the index</div>
-<p>Sometimes you want to add changes in the working tree to the index without
-committing to the repository at the same time. In this case doing a git commit
--a won&#8217;t help. You need to use git add. The example below shows a session
-using git add -ui. The '-u' is for update and means that only modified paths
-in the working tree will be added to the index. New paths won&#8217;t.  The '-i' is
-for interactive and therefore git will prompt you for a response. In the session
-below I enter interactive mode, choose to update the index, and then select a
-range of paths, 1 to 7, to update the index with. Importantly, after finishing
-the update I 'hit enter to exit the interactive update mode'.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops clang use_std_set_for_switch_cases $ git add -ui
-           staged     unstaged path
-  1:    unchanged      +51/-31 include/clang/AST/Stmt.h
-  2:    unchanged        +6/-1 lib/AST/Stmt.cpp
-  3:    unchanged        +4/-4 lib/Sema/JumpDiagnostics.cpp
-  4:    unchanged        +5/-3 lib/Sema/SemaCodeComplete.cpp
-  5:    unchanged       +14/-6 lib/Sema/SemaStmt.cpp
-  6:    unchanged        +8/-2 lib/Serialization/ASTReaderStmt.cpp
-  7:    unchanged        +3/-3 lib/Serialization/ASTWriterStmt.cpp
-
-*** Commands ***
-  1: status	  2: update	  3: revert	  4: add untracked
-  5: patch	  6: diff	  7: quit	  8: help
-What now&gt; 2
-           staged     unstaged path
-  1:    unchanged      +51/-31 include/clang/AST/Stmt.h
-  2:    unchanged        +6/-1 lib/AST/Stmt.cpp
-  3:    unchanged        +4/-4 lib/Sema/JumpDiagnostics.cpp
-  4:    unchanged        +5/-3 lib/Sema/SemaCodeComplete.cpp
-  5:    unchanged       +14/-6 lib/Sema/SemaStmt.cpp
-  6:    unchanged        +8/-2 lib/Serialization/ASTReaderStmt.cpp
-  7:    unchanged        +3/-3 lib/Serialization/ASTWriterStmt.cpp
-Update&gt;&gt; 1-7
-           staged     unstaged path
-* 1:    unchanged      +51/-31 include/clang/AST/Stmt.h
-* 2:    unchanged        +6/-1 lib/AST/Stmt.cpp
-* 3:    unchanged        +4/-4 lib/Sema/JumpDiagnostics.cpp
-* 4:    unchanged        +5/-3 lib/Sema/SemaCodeComplete.cpp
-* 5:    unchanged       +14/-6 lib/Sema/SemaStmt.cpp
-* 6:    unchanged        +8/-2 lib/Serialization/ASTReaderStmt.cpp
-* 7:    unchanged        +3/-3 lib/Serialization/ASTWriterStmt.cpp
-Update&gt;&gt;
-updated 7 paths
-
-*** Commands ***
-  1: status	  2: update	  3: revert	  4: add untracked
-  5: patch	  6: diff	  7: quit	  8: help
-What now&gt; 7
-Bye.</pre>
-</div>
-</div>
-<div class="paragraph">
-<div class="title">Bisecting to find the commit that introduced new behaviour</div>
-<p>git bisect lets you find a commit that resulted in different behaviour. The man
-page describes it as 'git-bisect - Find by binary search the change that
-introduced a bug' but it&#8217;s a slightly misleading since it really finds the
-commit that introduced a certain behaviour and behaviour in this case, doesn&#8217;t
-have to be a bug.</p>
-</div>
-<div class="paragraph">
-<p>Anyway, to start, find out the commit hashes within which you know the behaviour
-changed and pass them to `git start &#8230;&#8203; ` as shown below with the oldest commit
-hash first:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops src (no $ git bisect start 22e6ee96f2daab9b7fcc135eff8ec133579da12d 7639a06e1d7f014929a9ab22fe5a35153bf9be85</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>git will checkout a branch with the head set to a commit in the middle of the 2
-commits identified by the hashes above. Build the program and test for the
-desired behaviour. If what you see in the new build is the desired behaviour
-then mark it with <code>git bisect good</code> otherwise mark it with <code>git bisect bad</code>.
-Keep doing this until there are 0 bisections left. The head of the tree now will
-be at the commit that introduced the change.</p>
-</div>
-<div class="paragraph">
-<p>Anyway, to start, find out the commit hashes within which you know the behaviour
-changed and pass them to `git start &#8230;&#8203; ` as shown below with the oldest commit
-hash first:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sashan@cyclops src (no $ git bisect start 22e6ee96f2daab9b7fcc135eff8ec133579da12d 7639a06e1d7f014929a9ab22fe5a35153bf9be85</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>git will checkout a branch with the head set to a commit in the middle of the 2
-commits identified by the hashes above. Build the program and test for the
-desired behaviour. If what you see in the new build is the desired behaviour
-then mark it with <code>git bisect good</code> otherwise mark it with <code>git bisect bad</code>.
-Keep doing this until there are 0 bisections left. The head of the tree now will
-be at the commit that introduced the change.</p>
-</div>
-<div class="paragraph">
-<div class="title">Rewriting History</div>
-<p>Hopefully this is something you will never need to do but sometimes people stupidly commit binaries
-and tarballs and password files into the repository. To remove them use <code>git filter-branch</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>git filter-branch -f --tree-filter \
-  "rm -rf *.tar.gz; rm -rf some/shitty/dir" \
-  --tag-name-filter "cat" --prune-empty -- --all</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The <code>tree-filter</code> option takes a shell command and executes it from the root of the repository. The
-option <code>--tag-name-filter</code> renames the tags. In this case <code>cat</code> is the command so the tag name
-remains the same as the original.</p>
-</div>
-<div class="paragraph">
-<div class="title">Branching</div>
-<p>Branches give you the ability to work on a change in a parallel stream without affecting the master
-branch. Confusingly you use <code>git checkout -b &lt;branch name&gt;</code> to create a branch (confusingly you can
-also use <code>git checkout</code> to reset a file to its state at HEAD).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>master &gt; git checkout -b test-branch-2
-test-branch-2 &gt; git branch -avv
-master                     b392b5c [origin/master] Add function that reads config from an xml file. Add example settings.xml file.
-* test-branch-2              b392b5c Add function that reads config from an xml file. Add example settings.xml file.
-remotes/origin/HEAD        -&gt; origin/master
-remotes/origin/master      b392b5c Add function that reads config from an xml file. Add example settings.xml file.
-remotes/origin/test-branch 84459ad Just testing github workflow.</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now say you want this local branch to be created at the upstream. Then use <code>git push
---set-upstream</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>test-branch-2 &gt; git push --set-upstream origin test-branch-2
-Total 0 (delta 0), reused 0 (delta 0)
-
-To github.com:sashang/giraffe-sample.git
- * [new branch]      test-branch-2 -&gt; test-branch-2
-Branch 'test-branch-2' set up to track remote branch 'test-branch-2' from 'origin'.</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now say you want to delete the local branch:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>test-branch-2 &gt; git branch -D test-branch-2
-error: Cannot delete branch 'test-branch-2' checked out at</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Oops. We have to switch out of the branch first.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>test-branch-2 1 &gt; git checkout master
-Switched to branch 'master'
-Your branch is up to date with 'origin/master'.
-master &gt; git branch -D test-branch-2
-Deleted branch test-branch-2 (was b392b5c).
-master &gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then say we come back after a few months and we want to checkout that branch from the remote
-location:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>master &gt; git checkout -b tb2 origin/test-branch-2
-Branch 'tb2' set up to track remote branch 'test-branch-2' from 'origin'.
-Switched to a new branch 'tb2'</pre>
-</div>
-</div>
-</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnotedef_1">
+<a href="#_footnoteref_1">1</a>. There is a Whitespace language
 </div>
 </div>
 <div id="footer">
